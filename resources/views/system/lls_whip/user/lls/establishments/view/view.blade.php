@@ -2,10 +2,16 @@
 @section('title', $title)
 @section('content')
 <div class="notika-status-area">
+    
     <div class="container">
+        @include('components.lls.header_title_container')
         <div class="row">
             @include('system.lls_whip.user.lls.establishments.view.sections.information')
             @include('system.lls_whip.user.lls.establishments.view.sections.survey')
+        </div>
+        <hr>
+        <div class="row">
+            @include('system.lls_whip.user.lls.establishments.view.sections.employee_table')
         </div>
     </div>
 </div>

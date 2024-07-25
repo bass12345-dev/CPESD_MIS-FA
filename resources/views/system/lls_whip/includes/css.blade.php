@@ -48,7 +48,6 @@
 
 <style>
 	.form-ic-cmp label{
-
 		top: 7px;
 		position: relative;
 	}
@@ -90,6 +89,14 @@
 	}
 	.notika-bg-danger {
 		background-color: red;
+	}
+
+	.header_title_container {
+		margin-bottom: 40px; 
+		text-align:center; 
+		background-color: #222E3C; 
+		color: #fff; 
+		padding: 20px;
 	}
 </style>
 
