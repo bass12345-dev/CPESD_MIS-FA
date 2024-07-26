@@ -1,7 +1,7 @@
 @extends('system.lls_whip.user.layout.user_master')
 @section('title', $title)
 @section('content')
-@include('system.lls_Whip.user.lls.establishments.lists.sections.table')
+@include('system.lls_whip.user.lls.establishments.lists.sections.table')
 @endsection
 @section('js')
 <script>
