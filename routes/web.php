@@ -90,6 +90,7 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
    //Employees
       Route::post("/lls/g-a-em",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_all_employees']);
       Route::post("/lls/i-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_employee']);
+      Route::post("/lls/g-e-i",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_employee_information']);
    //Establishment Employee
       Route::post("/lls/i-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_establishment_employee']);  
       Route::post("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  

@@ -6,7 +6,7 @@
             <button class="btn btn-danger cancel-edit hidden">Cancel Edit</button>
             <button class="btn btn-success submit hidden">Submit</button>
         </div>
-        <input type="hidden" name="establishment_id" value="{{$row->employee_id}}">
+        <input type="hidden" name="employee_id" value="{{$row->employee_id}}">
         <table class="table table-hover table-striped table-information " id="table-information" style="width: 100%; ">
 
             <tr>

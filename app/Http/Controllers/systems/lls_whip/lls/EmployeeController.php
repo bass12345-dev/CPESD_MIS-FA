@@ -9,6 +9,7 @@ use App\Repositories\lls\EmployeeQuery;
 use App\Services\user\USerService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class EmployeeController extends Controller
 {
@@ -87,10 +88,12 @@ class EmployeeController extends Controller
                 'response' => false
             ], 422);
         }
+    }
 
-
-
-
+    public function get_employee_information(Request $request){
+        $employee_id  = $request->input('id');
+        $items = $this->employeeQuery->get_employee_information($this->conn,$employee_id);
+        return response()->json($items);
     }
 
     public function get_establishment_employees(Request $request){
