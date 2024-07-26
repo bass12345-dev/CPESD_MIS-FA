@@ -16,12 +16,12 @@ class EmployeeQuery
                     'employees.last_name as last_name', 
                     'employees.extension as extension',
         )
-        ->where(DB::raw("concat(employees.first_name, ' ', employees.middle_name,' ', employees.last_name)"), 'LIKE', "%" . $search . "%")
+        ->where(DB::raw("concat(employees.first_name,' ', employees.last_name)"), 'LIKE', "%" . $search . "%")
         ->orderBy('employees.first_name', 'desc')->get();
         return $rows;
     }
 
-    public function get_establishment_employee($conn){
+    public function get_establishment_employee($conn,$id){
 
         $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
         ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
@@ -43,10 +43,12 @@ class EmployeeQuery
         //Status
         'employment_status.status as status',
         //Nature of Employment
+        'establishment_employee.employee_id as employee_id',
         'establishment_employee.nature_of_employment as nature_of_employment',
         'establishment_employee.year_employed as year_employed',
         'establishment_employee.level_of_employment as level_of_employment'
       )
+      ->where('establishment_employee.establishment_id', $id)
       ->orderBy('employees.first_name', 'asc')
       ->get();
     

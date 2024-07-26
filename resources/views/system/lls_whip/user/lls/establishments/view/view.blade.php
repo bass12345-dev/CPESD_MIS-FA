@@ -255,7 +255,10 @@ $(document).ready(function() {
         ],
         ajax: {
             url: base_url + "/admin/act/lls/g-a-e-e",
-            method: 'GET',
+            method: 'POST',
+            data : {
+                id : $('input[name=establishment_id]').val(),
+            },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
@@ -294,7 +297,7 @@ $(document).ready(function() {
                 orderable: false,
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return '<a href="">'+row.full_name+'</a>';
+                    return '<a href="'+base_url+'/admin/lls/employee/'+row.employee_id+'">'+row.full_name+'</a>';
                    
                 }
             },
@@ -397,7 +400,7 @@ $('#add_form').on('submit', function(e) {
     e.preventDefault();
     $(this).find('button').prop('disabled', true);
     $(this).find('button').html('<span class="loader"></span>')
-    var url = '/admin/act/lls/i-e';
+    var url = '/admin/act/lls/i-e-e';
     let form = $(this);
     _insertAjax(url, form, table);
 });

@@ -52,15 +52,18 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
       Route::get("/lls/add-new-establishment",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'add_new_establishment_view']);
       Route::get("/lls/establishments-list",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'establishments_list_view']);
       Route::get("/lls/establishment/{id}",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'establishments_view']);
+      //EMPLOYEES
+      Route::get("/lls/employees-record",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'index']);
+      Route::get("/lls/employee/{id}",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'view_employee']);
       // POSITION
       Route::get("/lls/establishments-positions",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'index']);
-      // POSITION
+      // Employment Status
       Route::get("/lls/employment-status-list",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'index']);
 
       Route::get("/sample",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'sample']);
 
    //WHIP
-   Route::get("/whip/dashboard",[App\Http\Controllers\systems\lls_whip\whip\DashboardController::class, 'index']);
+      Route::get("/whip/dashboard",[App\Http\Controllers\systems\lls_whip\whip\DashboardController::class, 'index']);
       //Contractor
       Route::get("/whip/add-new-contractor",[App\Http\Controllers\systems\lls_whip\whip\ContractorController::class, 'add_new_contractor']);
       Route::get("/whip/contractors-list",[App\Http\Controllers\systems\lls_whip\whip\ContractorController::class, 'contractors_list']);
@@ -82,12 +85,15 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::get("/lls/a-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'get_all_positions']);
       Route::post("/lls/i-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'insert_position']);
    //EMPLOYMENT STATUS
-    Route::get("/lls/a-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'get_all_status']);
-    Route::post("/lls/i-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'insert_status']);
-   //Employee
-    Route::post("/lls/i-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_employee']);  
-    Route::get("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  
-    Route::get("/lls/search-query",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'search_query']);  
+      Route::get("/lls/a-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'get_all_status']);
+      Route::post("/lls/i-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'insert_status']);
+   //Employees
+      Route::post("/lls/g-a-em",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_all_employees']);
+      Route::post("/lls/i-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_employee']);
+   //Establishment Employee
+      Route::post("/lls/i-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_establishment_employee']);  
+      Route::post("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  
+      Route::get("/lls/search-query",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'search_query']);  
    //SURVEY
       Route::post("/lls/get-survey",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
 
@@ -121,4 +127,3 @@ Route::middleware([SessionGuard::class])->prefix('/user/act')->group(function ()
 });
 
           
-

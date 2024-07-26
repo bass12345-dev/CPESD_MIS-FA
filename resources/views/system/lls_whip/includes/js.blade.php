@@ -84,6 +84,20 @@ function toast_message_success(message){
 	}).showToast();
 }
 
+function toast_message_error(message){
+	Toastify({
+	text: message,
+	close: true,
+	style: {
+    background: "#dc3545",
+  	},
+	offset: { // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+		y: 250 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+	},
+  	position: "center", // `left`, `center` or `right`
+	}).showToast();
+}
+
 
 
 function _insertAjax(url,form,table){
@@ -105,7 +119,9 @@ function _insertAjax(url,form,table){
 						if(table != null) {
 							table.ajax.reload();
 						}
-            	}
+            	}else {
+					toast_message_error(data.message);
+				}
 			},
 			error:function(err){
 				if (err.status == 422) { // when status code is 422, it's a validation issue

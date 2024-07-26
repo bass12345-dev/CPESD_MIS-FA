@@ -20,6 +20,7 @@ class EmployeeController extends Controller
 
     protected $employee_table;
     protected $order_by_asc = 'asc';
+    protected $order_by_desc = 'desc';
     protected $order_by_key = 'estab_emp_id';
     
 
@@ -32,39 +33,48 @@ class EmployeeController extends Controller
         $this->est_employee_table   = 'establishment_employee';
     }
     public function index(){
-        $data['title'] = 'Establishments Position';
-        return view('system.lls_whip.user.lls.positions.lists.lists')->with($data);
+        $data['title'] = 'Employees Records';
+        return view('system.lls_whip.user.lls.employees_records.lists.lists')->with($data);
+    }
+    public function view_employee($id){
+        $row                = $this->customRepository->q_get_where($this->conn,array('employee_id' => $id),$this->employee_table)->first();
+        $data['title']      = $this->uSerService->user_full_name($row);
+        $data['full_address'] = $this->uSerService->full_address($row);
+        $data['row']        = $row;
+        return view('system.lls_whip.user.lls.employees_records.view.view')->with($data);
     }
 
-    public function get_establishment_employees(){
-        $items = $this->employeeQuery->get_establishment_employee($this->conn);
-        $data = [];
-        foreach ($items as $row) {
-           $data[] = array(
+    public function get_all_employees(){
+        $es = $this->customRepository->q_get_order($this->conn,$this->employee_table,'employee_id',$this->order_by_desc)->get();
+        $items = [];
+        foreach ($es as $row) {
+           $items[] = array(
+                    'employee_id'           => $row->employee_id,
                     'full_name'             => $this->uSerService->user_full_name($row),
                     'full_address'          => $this->uSerService->full_address($row),
-                    'position'              => $row->position,
-                    'nature_of_employment'  => $row->nature_of_employment,
-                    'status_of_employment'  => $row->status,
-                    'year_employed'         => $row->year_employed,
-                    'level_of_employment'   => $row->level_of_employment
+                    'contact_number'       => $row->contact_number,
+                    'created'         => date('M d Y - h:i a', strtotime($row->created_on)),
            );
         }
-        return response()->json($data);
+        return response()->json($items);
     }
 
     public function insert_employee(Request $request){
-        $items  = array(
-            'employee_id'               => $request->input('employee_id'),
-            'position_id'               => $request->input('position'),
-            'nature_of_employment'      => $request->input('employment_nature'),
-            'status_of_employment_id'   => $request->input('employment_status'),
-            'year_employed'             => $request->input('year_employed'),
-            'level_of_employment'       => $request->input('employment_level'),
-            'created_on'                => Carbon::now()->format('Y-m-d H:i:s'),
-        );
 
-        $insert = $this->customRepository->insert_item($this->conn,$this->est_employee_table,$items);
+        $items  = array(
+            'first_name'            => $request->input('first_name'),
+            'middle_name'           => $request->input('middle_name'),
+            'last_name'             => $request->input('last_name'),
+            'extension'             => $request->input('extension'),
+            'province'              => $request->input('province'),
+            'city'                  => $request->input('city'),
+            'barangay'              => $request->input('barangay'),
+            'street'                => $request->input('street'),
+            'contact_number'        => $request->input('contact_number'),
+            'created_on'            => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        
+        $insert = $this->customRepository->insert_item($this->conn,$this->employee_table,$items);
         if ($insert) {
             // Registration successful
             return response()->json([
@@ -77,6 +87,70 @@ class EmployeeController extends Controller
                 'response' => false
             ], 422);
         }
+
+
+
+
+    }
+
+    public function get_establishment_employees(Request $request){
+        $id = $request->input('id');
+        $items = $this->employeeQuery->get_establishment_employee($this->conn,$id);
+        $data = [];
+        foreach ($items as $row) {
+           $data[] = array(
+                    'employee_id'           => $row->employee_id,
+                    'full_name'             => $this->uSerService->user_full_name($row),
+                    'full_address'          => $this->uSerService->full_address($row),
+                    'position'              => $row->position,
+                    'nature_of_employment'  => $row->nature_of_employment,
+                    'status_of_employment'  => $row->status,
+                    'year_employed'         => $row->year_employed,
+                    'level_of_employment'   => $row->level_of_employment
+           );
+        }
+        return response()->json($data);
+    }
+
+
+    public function insert_establishment_employee(Request $request){
+        $items  = array(
+            'establishment_id'          => $request->input('establishment_id'),
+            'employee_id'               => $request->input('employee_id'),
+            'position_id'               => $request->input('position'),
+            'nature_of_employment'      => $request->input('employment_nature'),
+            'status_of_employment_id'   => $request->input('employment_status'),
+            'year_employed'             => $request->input('year_employed'),
+            'level_of_employment'       =>  $request->input('employment_level'),
+            'created_on'                => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+
+        $count = $this->customRepository->q_get_where($this->conn,array('employee_id' => $items['employee_id'],'establishment_id' => $items['establishment_id']),$this->est_employee_table,)->count();
+
+        if($count == 0) {
+
+            $insert = $this->customRepository->insert_item($this->conn,$this->est_employee_table,$items);
+            if ($insert) {
+                // Registration successful
+                return response()->json([
+                    'message' => 'Employmee Added Successfully', 
+                    'response' => true
+                ], 201);
+            }else {
+                return response()->json([
+                    'message' => 'Something Wrong', 
+                    'response' => false
+                ], 422);
+            }
+
+        }else {
+            return response()->json([
+                'message' => 'Duplicate Entry', 
+                'response' => false
+            ]);
+        }
+
+       
     }
 
 

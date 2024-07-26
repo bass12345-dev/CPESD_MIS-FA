@@ -168,5 +168,9 @@ width:100%;
 .tt-suggestion p {
   margin: 0;
 }
+
+.mb-5 {
+	margin-bottom: 10px;
+}
 </style>
 
