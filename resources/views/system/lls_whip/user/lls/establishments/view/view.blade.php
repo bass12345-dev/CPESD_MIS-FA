@@ -21,6 +21,8 @@
 @include('system.lls_whip.includes._js._js')
 <script>
 var information_table = $('#table-information');
+var year_now;
+var survey_table = $('table.survey-information');
 $(document).on('click', 'button.edit-information', function() {
 
 information_table.find('input[type=hidden]').prop("type", "text");
@@ -39,6 +41,8 @@ $(this).addClass('hidden');
 $('.submit').addClass('hidden');
 $('button.edit-information').removeClass('hidden');
 });
+
+
 
 $(document).on('click', 'button.submit', function() {
     let form = {
@@ -81,6 +85,46 @@ $(document).on('click', 'button.submit', function() {
 
     });
 });
+
+
+function load_survey_data($this) {
+    survey($this.value);
+}
+
+
+
+
+function survey(year) {
+
+    let items = {
+        year: year,
+        id: $('input[name=establishment_id]').val(),
+    }
+
+    $.ajax({
+        url: base_url + '/admin/act/lls/g-e-s',
+        method: 'POST',
+        data: items,
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        beforeSend: function() {
+            $('#select_year').after('<span class="text-warning loading_survey" >Getting Survey...</span>');
+        }
+    }).done(function(resp) {
+        $('span.loading_survey').remove();
+        var table = $('table.survey-information');
+        var result = Object.keys(resp).map((key) => [key, resp[key]]);
+        $.each(result, function(i, row) {
+            table.find('span.' + row[0]).text(row[1]);
+            
+        });
+
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert('Something Wrong! Please Reload The Page')
+    });
+}
 
 
 $(document).ready(function() {
@@ -278,7 +322,8 @@ $('#add_form').on('submit', function(e) {
 $(document).ready(function() {
     $('button.edit-information').prop('disabled', false);
     $('button.edit-survey').prop('disabled', false);
-   
+    year_now = $('select#select_year :selected').val();
+    survey(year_now);
 
 });
 

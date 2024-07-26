@@ -3,6 +3,7 @@
 namespace App\Services\lls;
 
 use App\Repositories\CustomRepository;
+use App\Repositories\lls\EmployeeQuery;
 use Carbon\Carbon;
 
 class EstablishmentService
@@ -11,12 +12,17 @@ class EstablishmentService
     protected $conn;
     protected $customRepository;
     protected $establishments_table;
+    protected $establishment_employee_table;
+    protected $employeeQuery;
     protected $survey_table;
-    public function __construct(CustomRepository $customRepository){
+    public function __construct(CustomRepository $customRepository, EmployeeQuery $employeeQuery){
         $this->conn                 = config('app._database.lls_whip');
         $this->customRepository     = $customRepository;
         $this->establishments_table = 'establishments';
         $this->survey_table         = 'survey';
+        $this->establishment_employee_table = 'establishment_employee';
+        $this->employeeQuery        = $employeeQuery;
+
     }
     
 
@@ -65,33 +71,81 @@ class EstablishmentService
 
     public function get_survey($id,$year){
 
+            $arr = [];
+
+            foreach (config('app.lls_nature_of_employment') as $row) {
+                    array_push($arr,'inside '.$row[0]);
+            }
+
+            foreach (config('app.lls_nature_of_employment') as $row) {
+                array_push($arr,'outside '.$row[0]);
+            }
         
-        $query_survey   = $this->customRepository->q_get_where($this->conn,array('establishment_id' => $id,'year' => $year),$this->survey_table);
-        $count          = $query_survey->count();
-        $query_row      = $count == 0 ? null : $query_survey->first();
+            // $query_survey   = $this->employeeQuery->get_employee_survey_by_year($this->conn,$id,$year);
+            // $data=[];
+            // foreach ($query_survey as $row) {
+            //     $data = array(
+            //         ''
+            //     );
+            // }
 
-        $row = array(                    
-            'inside_permanent'       => $query_row == null ? 0 :  $query_row->inside_permanent,
-            'inside_probationary'    => $query_row == null ? 0 : $query_row->inside_probationary,
-            'inside_contractuals'     => $query_row == null ? 0 :   $query_row->inside_contractuals,
-            'inside_project_based'   => $query_row == null ? 0 : $query_row->inside_project_based,
-            'inside_seasonal'        =>  $query_row == null ? 0 :   $query_row->inside_seasonal,
-            'inside_job_order'       =>  $query_row == null ? 0 :   $query_row->inside_job_order,
-            'inside_mgt'             =>  $query_row == null ? 0 :   $query_row->inside_mgt,
-            'outside_permanent'     =>  $query_row == null ? 0 : $query_row->outside_permanent,
-            'outside_probationary'  => $query_row == null ? 0 : $query_row->outside_probationary,
-            'outside_contractuals'   => $query_row == null ? 0 : $query_row->outside_contractuals,  
-            'outside_project_based' =>  $query_row == null ? 0 : $query_row->outside_project_based,
-            'outside_seasonal'      => $query_row == null ? 0 : $query_row->outside_seasonal,
-            'outside_job_order'     => $query_row == null ? 0 : $query_row->outside_job_order,
-            'outside_mgt'           => $query_row == null ? 0 : $query_row->outside_mgt,
-            'inside_total'          =>  $query_row == null ? 0 : $this->total_inside($query_row),
-            'outside_total'         =>  $query_row == null ? 0 : $this->total_outside($query_row),
-        );
+            // $count          = $query_survey->count();
+            // $query_row      = $count == 0 ? null : $query_survey->first();
+    
+            // $row = array(                    
+            //     'inside_permanent'       => $query_row == null ? 0 :  $query_row->inside_permanent,
+            //     'inside_probationary'    => $query_row == null ? 0 : $query_row->inside_probationary,
+            //     'inside_contractuals'     => $query_row == null ? 0 :   $query_row->inside_contractuals,
+            //     'inside_project_based'   => $query_row == null ? 0 : $query_row->inside_project_based,
+            //     'inside_seasonal'        =>  $query_row == null ? 0 :   $query_row->inside_seasonal,
+            //     'inside_job_order'       =>  $query_row == null ? 0 :   $query_row->inside_job_order,
+            //     'inside_mgt'             =>  $query_row == null ? 0 :   $query_row->inside_mgt,
+            //     'outside_permanent'     =>  $query_row == null ? 0 : $query_row->outside_permanent,
+            //     'outside_probationary'  => $query_row == null ? 0 : $query_row->outside_probationary,
+            //     'outside_contractuals'   => $query_row == null ? 0 : $query_row->outside_contractuals,  
+            //     'outside_project_based' =>  $query_row == null ? 0 : $query_row->outside_project_based,
+            //     'outside_seasonal'      => $query_row == null ? 0 : $query_row->outside_seasonal,
+            //     'outside_job_order'     => $query_row == null ? 0 : $query_row->outside_job_order,
+            //     'outside_mgt'           => $query_row == null ? 0 : $query_row->outside_mgt,
+            //     'inside_total'          =>  $query_row == null ? 0 : $this->total_inside($query_row),
+            //     'outside_total'         =>  $query_row == null ? 0 : $this->total_outside($query_row),
+            // );
+    
+            return $arr;
+          
+        }
+    
 
-        return $row;
+
+    // public function get_survey($id,$year){
+
+        
+    //     $query_survey   = $this->customRepository->q_get_where($this->conn,array('establishment_id' => $id,'year' => $year),$this->survey_table);
+    //     $count          = $query_survey->count();
+    //     $query_row      = $count == 0 ? null : $query_survey->first();
+
+    //     $row = array(                    
+    //         'inside_permanent'       => $query_row == null ? 0 :  $query_row->inside_permanent,
+    //         'inside_probationary'    => $query_row == null ? 0 : $query_row->inside_probationary,
+    //         'inside_contractuals'     => $query_row == null ? 0 :   $query_row->inside_contractuals,
+    //         'inside_project_based'   => $query_row == null ? 0 : $query_row->inside_project_based,
+    //         'inside_seasonal'        =>  $query_row == null ? 0 :   $query_row->inside_seasonal,
+    //         'inside_job_order'       =>  $query_row == null ? 0 :   $query_row->inside_job_order,
+    //         'inside_mgt'             =>  $query_row == null ? 0 :   $query_row->inside_mgt,
+    //         'outside_permanent'     =>  $query_row == null ? 0 : $query_row->outside_permanent,
+    //         'outside_probationary'  => $query_row == null ? 0 : $query_row->outside_probationary,
+    //         'outside_contractuals'   => $query_row == null ? 0 : $query_row->outside_contractuals,  
+    //         'outside_project_based' =>  $query_row == null ? 0 : $query_row->outside_project_based,
+    //         'outside_seasonal'      => $query_row == null ? 0 : $query_row->outside_seasonal,
+    //         'outside_job_order'     => $query_row == null ? 0 : $query_row->outside_job_order,
+    //         'outside_mgt'           => $query_row == null ? 0 : $query_row->outside_mgt,
+    //         'inside_total'          =>  $query_row == null ? 0 : $this->total_inside($query_row),
+    //         'outside_total'         =>  $query_row == null ? 0 : $this->total_outside($query_row),
+    //     );
+
+    //     return $row;
       
-    }
+    // }
 
     public function Submit_Survey($row){
 

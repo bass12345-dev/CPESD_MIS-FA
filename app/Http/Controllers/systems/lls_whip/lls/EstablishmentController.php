@@ -137,6 +137,8 @@ class EstablishmentController extends Controller
         
     }
 
+
+
     public function get_survey_by_year(Request $request){
         $data = $this->establishmentService->get_survey($request->input('id'),$request->input('year'));
         return response()->json($data);
