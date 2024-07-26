@@ -52,6 +52,11 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
       Route::get("/lls/add-new-establishment",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'add_new_establishment_view']);
       Route::get("/lls/establishments-list",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'establishments_list_view']);
       Route::get("/lls/establishment/{id}",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'establishments_view']);
+      // POSITION
+      Route::get("/lls/establishments-positions",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'index']);
+      // POSITION
+      Route::get("/lls/employment-status-list",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'index']);
+
       Route::get("/sample",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'sample']);
 
    //WHIP
@@ -73,7 +78,16 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::get("/lls/g-a-e",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_all_establishment']);
       Route::post("/lls/u-e",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'update_establishment']);
       Route::post("/lls/s-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'submit_survey']);
-
+   //POSITION
+      Route::get("/lls/a-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'get_all_positions']);
+      Route::post("/lls/i-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'insert_position']);
+   //EMPLOYMENT STATUS
+    Route::get("/lls/a-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'get_all_status']);
+    Route::post("/lls/i-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'insert_status']);
+   //Employee
+    Route::post("/lls/i-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_employee']);  
+    Route::get("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  
+    Route::get("/lls/search-query",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'search_query']);  
    //SURVEY
       Route::post("/lls/get-survey",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
 

@@ -23,6 +23,8 @@ class EstablishmentController extends Controller
     protected $establishmentService;
     protected $establishments_table;
     protected $survey_table;
+    protected $position_table;
+    protected $employment_status_table;
     protected $order_by_asc = 'asc';
     protected $order_by_key = 'establishment_code';
     public function __construct(CustomRepository $customRepository, EstablishmentService $establishmentService){
@@ -33,6 +35,8 @@ class EstablishmentController extends Controller
         $this->establishmentService = $establishmentService;
         $this->establishments_table = 'establishments';
         $this->survey_table         = 'survey';
+        $this->position_table       = 'positions';
+        $this->employment_status_table = 'employment_status';
     }
     public function add_new_establishment_view(){
         $data['title'] = 'Add New Establishments';
@@ -40,7 +44,7 @@ class EstablishmentController extends Controller
         return view('system.lls_whip.user.lls.establishments.add_new.add_new')->with($data);
     }
     public function establishments_list_view(){
-        $data['title'] = 'Establishments';
+        $data['title']      = 'Establishments';
         return view('system.lls_whip.user.lls.establishments.lists.lists')->with($data);
     }
 
@@ -49,6 +53,10 @@ class EstablishmentController extends Controller
         $data['year_now']               = Carbon::now()->format('Y');
         $data['barangay']               = config('app.barangay');
         $data['title']                  = $data['row']->establishment_name;
+        $data['level_of_employment']    = config('app.level_of_employment');
+        $data['nature_of_employment']   = config('app.lls_nature_of_employment');
+        $data['positions']              =  $this->customRepository->q_get_order($this->conn,$this->position_table,'position','asc')->get();
+        $data['employment_status']      = $this->customRepository->q_get_order($this->conn,$this->employment_status_table,'status','asc')->get();
         return view('system.lls_whip.user.lls.establishments.view.view')->with($data);
     }
     

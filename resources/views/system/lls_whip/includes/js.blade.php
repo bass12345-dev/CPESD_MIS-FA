@@ -67,6 +67,7 @@
 <script src="{{ asset('lls_assets/js/jquery.dataTables.min.js')}}"></script>
 <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js" ></script>
 
 <script>
 function toast_message_success(message){

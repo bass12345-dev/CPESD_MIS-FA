@@ -125,6 +125,16 @@ class USerService
 
     }
 
+    public function full_address($row){
+        
+        $province   = $row->province == NULL ? '' :  explode("-", $row->province)[1];
+        $city       = $row->city == NULL ? '' : explode("-", $row->city)[1].' , ';
+        $barangay   = $row->barangay == NULL ? '' : explode("-", $row->barangay)[1].' , ';
+        $street     = $row->street == NULL ? '' : $row->street.' , ';
+
+        return $street.''.$barangay.''.$city.''.$province;
+    }
+
 
     public function get_systems(array $row_sys){
 

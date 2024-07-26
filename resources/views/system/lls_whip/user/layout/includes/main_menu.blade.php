@@ -2,7 +2,7 @@
     <div class="main-menu-area mg-tb-40">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 first_col_lls" >
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 first_col_lls" >
                     <div class="row d-flex text-center">
                         <h1>LLS</h1>
                     </div>
@@ -31,12 +31,16 @@
                                 </li>
                                 <li><a href="{{url('admin/lls/establishments-list')}}">Establishments List</a>
                                 </li>
+                                <li><a href="{{url('admin/lls/establishments-positions')}}">Positions</a>
+                                </li>
+                                <li><a href="{{url('admin/lls/employment-status-list')}}">Employment Status</a>
+                                </li>
                             </ul>
                         </div>
 
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="row d-flex text-center">
                         <h1>WHIP</h1>
                     </div>
@@ -65,6 +69,7 @@
                                 </li>
                                 <li><a href="{{url('admin/whip/contractors-list')}}">Contractors List</a>
                                 </li>
+                                
                             </ul>
                         </div>
                         <div id="all_projects" class="tab-pane notika-tab-menu-bg animated flipInX">
@@ -75,7 +80,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <hr>

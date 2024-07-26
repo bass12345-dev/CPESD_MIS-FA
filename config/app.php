@@ -121,6 +121,28 @@ return [
         ['whip','WHIP']
     ],
 
+    'level_of_employment' => [
+        ['rank_and_file','Rank And File'],
+        ['managerial','Managerial'],
+        ['proprietor','Proprietor/Owner'],
+    ],
+
+    'lls_nature_of_employment' => [
+        ['permanent','Permanent'],
+        ['probationary','Probationary'],
+        ['contractuals','Contractuals'],
+        ['project_based','Project Based'],
+        ['seasonal','Seasonal'],
+        ['job_order','Job order'],
+        ['mgt','Mgt'],        
+    ],
+
+    'whip_nature_of_employment' => [
+        ['skilled','Skilled'],
+        ['unskilled','Unskilled'],
+    ],
+    
+
 
     'barangay' => [
         "Apil",
