@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 24, 2024 at 10:30 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Jul 26, 2024 at 05:54 PM
+-- Server version: 8.3.0
+-- PHP Version: 8.2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,18 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `contractors` (
-  `contractor_id` int(11) NOT NULL,
-  `contractor_name` varchar(255) NOT NULL,
-  `proprietor` varchar(255) NOT NULL,
-  `street` varchar(255) DEFAULT NULL,
-  `barangay` varchar(255) DEFAULT NULL,
-  `city` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `phone_number` varchar(15) DEFAULT NULL,
-  `phone_number_owner` varchar(255) DEFAULT NULL,
-  `telephone_number` varchar(30) DEFAULT NULL,
-  `email_address` varchar(255) DEFAULT NULL,
-  `status` set('inactive','active') NOT NULL,
+  `contractor_id` int NOT NULL,
+  `contractor_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `proprietor` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `street` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `barangay` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `province` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone_number` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone_number_owner` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `telephone_number` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email_address` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` set('inactive','active') COLLATE utf8mb4_general_ci NOT NULL,
   `created_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -69,11 +69,60 @@ INSERT INTO `contractors` (`contractor_id`, `contractor_name`, `proprietor`, `st
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `employees`
+--
+
+CREATE TABLE `employees` (
+  `employee_id` int NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `extension` varchar(50) DEFAULT NULL,
+  `province` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `barangay` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `contact_number` varchar(15) DEFAULT NULL,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`employee_id`, `first_name`, `middle_name`, `last_name`, `extension`, `province`, `city`, `barangay`, `street`, `contact_number`, `created_on`) VALUES
+(4, 'Basil John', 'Calamongay', 'Manabo', NULL, '1004300000-Misamis Oriental', '1004312000-Kinoguitan', '1004312013-Salubsob', 'Purok 2', '09123213213', '2024-07-26 14:31:22'),
+(5, 'Almira Joy', NULL, 'Bugtong', NULL, '0307100000-Zambales', '0307109000-San Antonio', NULL, NULL, '123213213', '2024-07-26 14:32:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employment_status`
+--
+
+CREATE TABLE `employment_status` (
+  `employ_stat_id` int NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `employment_status`
+--
+
+INSERT INTO `employment_status` (`employ_stat_id`, `status`, `created_on`) VALUES
+(2, 'Active', '2024-07-26 07:13:59'),
+(3, 'Resigned', '2024-07-26 07:14:06'),
+(4, 'Terminated', '2024-07-26 07:14:11');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `establishments`
 --
 
 CREATE TABLE `establishments` (
-  `establishment_id` int(11) NOT NULL,
+  `establishment_id` int NOT NULL,
   `establishment_code` varchar(150) NOT NULL,
   `establishment_name` varchar(255) NOT NULL,
   `contact_number` varchar(11) DEFAULT NULL,
@@ -85,7 +134,7 @@ CREATE TABLE `establishments` (
   `position` varchar(150) DEFAULT NULL,
   `status` set('active','inactive') NOT NULL,
   `created_on` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `establishments`
@@ -115,18 +164,45 @@ INSERT INTO `establishments` (`establishment_id`, `establishment_code`, `establi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `establishment_employee`
+--
+
+CREATE TABLE `establishment_employee` (
+  `estab_emp_id` int NOT NULL,
+  `establishment_id` int NOT NULL,
+  `employee_id` int NOT NULL,
+  `position_id` int NOT NULL,
+  `nature_of_employment` varchar(255) NOT NULL,
+  `status_of_employment_id` int NOT NULL,
+  `year_employed` year NOT NULL,
+  `level_of_employment` set('rank_and_file','managerial','proprietor') NOT NULL,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `establishment_employee`
+--
+
+INSERT INTO `establishment_employee` (`estab_emp_id`, `establishment_id`, `employee_id`, `position_id`, `nature_of_employment`, `status_of_employment_id`, `year_employed`, `level_of_employment`, `created_on`) VALUES
+(4, 53, 4, 8, 'permanent', 2, '2024', 'managerial', '2024-07-26 14:33:04'),
+(5, 53, 5, 6, 'contractuals', 3, '2024', 'rank_and_file', '2024-07-26 14:34:36'),
+(6, 55, 4, 6, 'probationary', 3, '2024', 'rank_and_file', '2024-07-26 14:35:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `uuid` varchar(255) NOT NULL,
   `connection` text NOT NULL,
   `queue` text NOT NULL,
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -135,10 +211,10 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int UNSIGNED NOT NULL,
   `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `batch` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `migrations`
@@ -160,7 +236,7 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -169,16 +245,37 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
   `tokenable_type` varchar(255) NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `abilities` text,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `positions`
+--
+
+CREATE TABLE `positions` (
+  `position_id` int NOT NULL,
+  `position` varchar(250) NOT NULL,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `positions`
+--
+
+INSERT INTO `positions` (`position_id`, `position`, `created_on`) VALUES
+(6, 'Cashiers', '2024-07-26 06:29:19'),
+(7, 'Store manager', '2024-07-26 06:29:30'),
+(8, 'Sales Associate', '2024-07-26 06:29:48');
 
 -- --------------------------------------------------------
 
@@ -187,14 +284,14 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `projects` (
-  `project_id` int(11) NOT NULL,
-  `contractor_id` int(11) NOT NULL,
-  `project_title` varchar(255) NOT NULL,
+  `project_id` int NOT NULL,
+  `contractor_id` int NOT NULL,
+  `project_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `project_cost` float(10,2) NOT NULL,
-  `street` varchar(255) DEFAULT NULL,
-  `barangay` varchar(255) NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
+  `street` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `barangay` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `province` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `created_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -216,23 +313,23 @@ INSERT INTO `projects` (`project_id`, `contractor_id`, `project_title`, `project
 --
 
 CREATE TABLE `survey` (
-  `survey_id` int(11) NOT NULL,
-  `establishment_id` year(4) NOT NULL,
-  `year` year(4) NOT NULL,
-  `inside_permanent` int(150) DEFAULT NULL,
-  `inside_probationary` int(150) DEFAULT NULL,
-  `inside_contractuals` int(150) DEFAULT NULL,
-  `inside_project_based` int(150) DEFAULT NULL,
-  `inside_seasonal` int(150) DEFAULT NULL,
-  `inside_job_order` int(150) DEFAULT NULL,
-  `inside_mgt` int(150) DEFAULT NULL,
-  `outside_permanent` int(150) DEFAULT NULL,
-  `outside_probationary` int(150) DEFAULT NULL,
-  `outside_contractuals` int(150) DEFAULT NULL,
-  `outside_project_based` int(150) DEFAULT NULL,
-  `outside_seasonal` int(150) DEFAULT NULL,
-  `outside_job_order` int(150) DEFAULT NULL,
-  `outside_mgt` int(150) DEFAULT NULL
+  `survey_id` int NOT NULL,
+  `establishment_id` int NOT NULL,
+  `year` year NOT NULL,
+  `inside_permanent` int DEFAULT NULL,
+  `inside_probationary` int DEFAULT NULL,
+  `inside_contractuals` int DEFAULT NULL,
+  `inside_project_based` int DEFAULT NULL,
+  `inside_seasonal` int DEFAULT NULL,
+  `inside_job_order` int DEFAULT NULL,
+  `inside_mgt` int DEFAULT NULL,
+  `outside_permanent` int DEFAULT NULL,
+  `outside_probationary` int DEFAULT NULL,
+  `outside_contractuals` int DEFAULT NULL,
+  `outside_project_based` int DEFAULT NULL,
+  `outside_seasonal` int DEFAULT NULL,
+  `outside_job_order` int DEFAULT NULL,
+  `outside_mgt` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -240,7 +337,8 @@ CREATE TABLE `survey` (
 --
 
 INSERT INTO `survey` (`survey_id`, `establishment_id`, `year`, `inside_permanent`, `inside_probationary`, `inside_contractuals`, `inside_project_based`, `inside_seasonal`, `inside_job_order`, `inside_mgt`, `outside_permanent`, `outside_probationary`, `outside_contractuals`, `outside_project_based`, `outside_seasonal`, `outside_job_order`, `outside_mgt`) VALUES
-(2, '2053', '2024', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+(2, 53, '2024', 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(3, 53, '2022', 123, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -253,10 +351,34 @@ ALTER TABLE `contractors`
   ADD PRIMARY KEY (`contractor_id`);
 
 --
+-- Indexes for table `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`employee_id`);
+
+--
+-- Indexes for table `employment_status`
+--
+ALTER TABLE `employment_status`
+  ADD PRIMARY KEY (`employ_stat_id`);
+
+--
 -- Indexes for table `establishments`
 --
 ALTER TABLE `establishments`
   ADD PRIMARY KEY (`establishment_id`);
+
+--
+-- Indexes for table `establishment_employee`
+--
+ALTER TABLE `establishment_employee`
+  ADD PRIMARY KEY (`estab_emp_id`);
+
+--
+-- Indexes for table `positions`
+--
+ALTER TABLE `positions`
+  ADD PRIMARY KEY (`position_id`);
 
 --
 -- Indexes for table `projects`
@@ -278,25 +400,49 @@ ALTER TABLE `survey`
 -- AUTO_INCREMENT for table `contractors`
 --
 ALTER TABLE `contractors`
-  MODIFY `contractor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `contractor_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `employment_status`
+--
+ALTER TABLE `employment_status`
+  MODIFY `employ_stat_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `establishments`
 --
 ALTER TABLE `establishments`
-  MODIFY `establishment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `establishment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+
+--
+-- AUTO_INCREMENT for table `establishment_employee`
+--
+ALTER TABLE `establishment_employee`
+  MODIFY `estab_emp_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `positions`
+--
+ALTER TABLE `positions`
+  MODIFY `position_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `project_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `survey_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `survey_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
