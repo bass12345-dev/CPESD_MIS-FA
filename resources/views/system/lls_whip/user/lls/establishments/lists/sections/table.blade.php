@@ -12,6 +12,7 @@
                             <table id="data-table-basic" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Establishment Code</th>
                                         <th>Establishment Name</th>
                                         <th>Full Address</th>

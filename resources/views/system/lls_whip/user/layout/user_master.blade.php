@@ -13,6 +13,7 @@
 	</main>
 </body>
 @include('system.global_includes.js')
-@include('system.lls_Whip.includes.js')
+@include('system.lls_whip.includes.js')
+@include('system.global_includes.custom_js.datatable_settings')
 @yield('js')
 </html>

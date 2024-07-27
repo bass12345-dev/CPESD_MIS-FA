@@ -64,7 +64,7 @@
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-<script src="{{ asset('lls_assets/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/js/datatables.js')}}"></script>
 <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js" ></script>
@@ -114,14 +114,16 @@ function _insertAjax(url,form,table){
 				if(data.response){
 						toast_message_success(data.message);
 						form[0].reset();
-						form.find('button').prop('disabled',false);
-						form.find('button').text('Submit');
+						
 						if(table != null) {
 							table.ajax.reload();
 						}
             	}else {
 					toast_message_error(data.message);
 				}
+
+				form.find('button').prop('disabled',false);
+				form.find('button').text('Submit');
 			},
 			error:function(err){
 				if (err.status == 422) { // when status code is 422, it's a validation issue

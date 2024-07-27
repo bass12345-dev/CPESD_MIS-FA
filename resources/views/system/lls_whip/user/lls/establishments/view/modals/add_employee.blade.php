@@ -24,7 +24,8 @@
                                                 <input type="hidden" class="form-control" name="employee_id"
                                                     placeholder="ID" required>
                                                 <div id="the-basics">
-                                                    <input class="typeahead form-control" type="text" name="employee" placeholder="Search Employee" required style="width: 100%;">
+                                                    <input class="typeahead form-control" type="text" name="employee"
+                                                        placeholder="Search Employee" required style="width: 100%;">
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +86,8 @@
                                                 <i class="notika-icon notika-map"></i>
                                             </div>
                                             <div class="nk-int-st">
-                                                <select class="form-control" id="year_employed" name="year_employed" required>
+                                                <select class="form-control" id="year_employed" name="year_employed"
+                                                    required>
                                                     <option value="" selected>Select Year of Employed</option>
                                                     <?php
                                                         for ($i=2021; $i <= 2050; $i++) { 
@@ -114,15 +116,16 @@
                                     </div>
                                 </div>
 
+                                <div class="form-example-int mg-t-15">
+                                    <button type="submit" class="btn btn-primary notika-btn-success">Submit</button>
+                                </div>
+
 
                             </div>
                         </div>
                     </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
 
-            </div>
             </form>
         </div>
     </div>

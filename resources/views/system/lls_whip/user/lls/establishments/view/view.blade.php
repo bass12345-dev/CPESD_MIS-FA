@@ -46,13 +46,17 @@ $('button.edit-information').removeClass('hidden');
 
 $('#add_form').on('submit', function(e) {
     e.preventDefault();
-    year_now = $('select#select_year :selected').val();
-    survey(year_now);
+
     $(this).find('button[type="submit"]').prop('disabled', true);
     $(this).find('button[type="submit"]').html('<span class="loader"></span>')
     var url = '/admin/act/lls/i-e-e';
     let form = $(this);
     _insertAjax(url, form, table);
+    year_now = $('select#select_year :selected').val();
+    setTimeout(() => {
+        survey(year_now);
+    }, 1000);
+   
     
 });
 
@@ -84,6 +88,7 @@ function survey(year) {
         }
     }).done(function(resp) {
         $('span.loading_survey').remove();
+        console.log(resp)
         var table = $('table.survey-information');
         var result = Object.keys(resp).map((key) => [key, resp[key]]);
         $.each(result, function(i, row) {
