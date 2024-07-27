@@ -21,38 +21,36 @@ class EmployeeQuery
         return $rows;
     }
 
-    public function get_employee_survey_by_year($conn,$es_id,$year){
+    public function get_employee_survey_by_year_inside($conn,$es_id,$year,$nature,$default_city){
 
       $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
         ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
-        ->leftJoin('positions', 'positions.position_id', '=', 'establishment_employee.position_id')
-        ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
         ->select(   
-       
-        //User
-        'employees.first_name as first_name',
-        'employees.middle_name as middle_name',
-        'employees.last_name as last_name',
-        'employees.extension as extension',
-        'employees.province as province',
         'employees.city as city',
-        'employees.barangay as barangay',
-        'employees.street as street',
-        //Position
-        'positions.position as position',
-        //Status
-        'employment_status.status as status',
-        //Nature of Employment
-        'establishment_employee.employee_id as employee_id',
-        'establishment_employee.nature_of_employment as nature_of_employment',
-        'establishment_employee.year_employed as year_employed',
-        'establishment_employee.level_of_employment as level_of_employment'
       )
       ->where('establishment_employee.establishment_id', $es_id)
       ->where('establishment_employee.year_employed',$year)
-      // ->whereYear('establishment_employee.year_employed', '=', $year)
-      ->get();
+      ->where('establishment_employee.nature_of_employment',$nature)
+      ->where('city',$default_city)
+      ->count();
      
+      return $rows;
+
+    }
+
+
+    public function get_employee_survey_by_year_outside($conn,$es_id,$year,$nature,$default_city){
+
+      $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
+        ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+        ->select(   
+        'employees.city as city',
+      )
+      ->where('establishment_employee.establishment_id', $es_id)
+      ->where('establishment_employee.year_employed',$year)
+      ->where('establishment_employee.nature_of_employment',$nature)
+      ->where('city','!=',$default_city)
+      ->count();
       return $rows;
 
     }

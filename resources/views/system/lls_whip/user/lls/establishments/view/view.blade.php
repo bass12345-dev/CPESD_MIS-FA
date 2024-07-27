@@ -44,46 +44,16 @@ $('button.edit-information').removeClass('hidden');
 
 
 
-$(document).on('click', 'button.submit', function() {
-    let form = {
-        establishment_id: $('input[name=establishment_id]').val(),
-        establishment_code: $('input[name=establishment_code]').val(),
-        establishment_name: $('input[name=establishment_name]').val(),
-        street: $('input[name=street]').val(),
-        barangay: $('select[name=barangay] :selected').val(),
-        contact_number: $('input[name=phone_number]').val(),
-        email_address: $('input[name=email_address]').val(),
-        authorized_personnel: $('input[name=authorized_personnel]').val(),
-        status: $('select#select_status :selected').val(),
-        position: $('input[name=position]').val(),
-    }
-
-    $.ajax({
-        url: base_url + '/admin/act/lls/u-e',
-        method: 'POST',
-        data: form,
-        dataType: 'json',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        },
-        beforeSend: function() {
-            $('button.submit').prop('disabled', true);
-            $('button.submit').html('<span class="loader"></span>')
-        },
-        success: function(data) {
-            if (data.response) {
-                toast_message_success(data.message);
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
-            }
-        },
-        error: function(err) {
-            alert('Something Wrong')
-        }
-
-
-    });
+$('#add_form').on('submit', function(e) {
+    e.preventDefault();
+    year_now = $('select#select_year :selected').val();
+    survey(year_now);
+    $(this).find('button[type="submit"]').prop('disabled', true);
+    $(this).find('button[type="submit"]').html('<span class="loader"></span>')
+    var url = '/admin/act/lls/i-e-e';
+    let form = $(this);
+    _insertAjax(url, form, table);
+    
 });
 
 
@@ -118,7 +88,10 @@ function survey(year) {
         var result = Object.keys(resp).map((key) => [key, resp[key]]);
         $.each(result, function(i, row) {
             table.find('span.' + row[0]).text(row[1]);
-            
+            if (row[0] == 'inside_total' || row[0] == 'outside_total') {
+                table.find('strong.' + row[0]).text(row[1]);
+            }
+          
         });
 
     }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -310,14 +283,7 @@ $('#the-basics .typeahead').typeahead({
 });
 
 
-$('#add_form').on('submit', function(e) {
-    e.preventDefault();
-    $(this).find('button').prop('disabled', true);
-    $(this).find('button').html('<span class="loader"></span>')
-    var url = '/admin/act/lls/i-e-e';
-    let form = $(this);
-    _insertAjax(url, form, table);
-});
+
 
 $(document).ready(function() {
     $('button.edit-information').prop('disabled', false);
