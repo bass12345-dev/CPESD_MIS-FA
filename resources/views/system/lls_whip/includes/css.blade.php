@@ -47,6 +47,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('lls_assets/css/jquery.dataTables.min.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.2/jquery.typeahead.css"  />
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/yearpicker@0.2.0/lib/YearPicker.min.css" rel="stylesheet">
+<link href="{{asset('assets/css/yearpicker.css')}}" rel="stylesheet">
 
 <style>
 	.form-ic-cmp label{

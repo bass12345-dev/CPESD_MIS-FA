@@ -70,3 +70,4 @@
 <script src="https://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
+<script src="{{asset('assets/js/yearpicker.js')}}"></script>

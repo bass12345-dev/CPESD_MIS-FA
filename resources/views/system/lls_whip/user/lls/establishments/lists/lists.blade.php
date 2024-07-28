@@ -6,7 +6,8 @@
 @section('js')
 <script>
 $(document).ready(function() {
-    $('#data-table-basic').DataTable({
+   
+   table =  $('#data-table-basic').DataTable({
         responsive: true,
         ordering: false,
         processing: true,
@@ -83,6 +84,26 @@ $(document).ready(function() {
         ]
 
     });
+});
+
+$('button#multi-delete').on('click', function() {
+
+    var button_text = 'Delete selected items';
+    var text = '';
+    var url = '/admin/act/lls/d-e';
+    let items = get_select_items_datatable();
+    var data = {
+        id: items,
+    };
+
+    if (items.length == 0) {
+        toast_message_error('Please Select at Least One')
+    } else {
+        delete_item(data, url, button_text, text, table);
+        year_now = $('select#select_year :selected').val();
+ 
+    }
+
 });
 </script>
 @endsection

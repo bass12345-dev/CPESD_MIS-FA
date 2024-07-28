@@ -88,6 +88,7 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::get("/lls/g-a-e",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_all_establishment']);
       Route::post("/lls/u-e",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'update_establishment']);
       Route::post("/lls/s-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'submit_survey']);
+      Route::post("/lls/d-e",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'delete_establishment']);
    //POSITION
       Route::get("/lls/a-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'get_all_positions']);
       Route::post("/lls/i-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'insert_position']);

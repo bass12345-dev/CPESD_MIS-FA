@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 26, 2024 at 05:54 PM
+-- Generation Time: Jul 28, 2024 at 05:03 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.20
 
@@ -91,8 +91,13 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`employee_id`, `first_name`, `middle_name`, `last_name`, `extension`, `province`, `city`, `barangay`, `street`, `contact_number`, `created_on`) VALUES
-(4, 'Basil John', 'Calamongay', 'Manabo', NULL, '1004300000-Misamis Oriental', '1004312000-Kinoguitan', '1004312013-Salubsob', 'Purok 2', '09123213213', '2024-07-26 14:31:22'),
-(5, 'Almira Joy', NULL, 'Bugtong', NULL, '0307100000-Zambales', '0307109000-San Antonio', NULL, NULL, '123213213', '2024-07-26 14:32:09');
+(4, 'Basil John', 'Calamongay', 'Manabo', NULL, '1004300000-Misamis Oriental', '1004209000-City of Oroquieta', '1004312013-Salubsob', 'Purok 2', '09123213213', '2024-07-26 14:31:22'),
+(5, 'Almira Joy', NULL, 'Bugtong', NULL, '0307100000-Zambales', '0307109000-San Antonio', NULL, NULL, '123213213', '2024-07-26 14:32:09'),
+(6, 'Smaple', 'asd', 'sadsa', 'dsadsa', '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209001-Apil', NULL, NULL, '2024-07-27 05:38:32'),
+(7, 'asdsad', 'asdsad', 'asdsad', NULL, '0307100000-Zambales', '0307111000-San Marcelino', '0307111016-San Isidro', NULL, NULL, '2024-07-28 11:34:49'),
+(8, 'gdfdf', 'dfdf', 'dfdf', NULL, '0307100000-Zambales', '0307110000-San Felipe', NULL, 'sadsad', 'sadsad', '2024-07-28 11:35:40'),
+(9, 'Mark Anthony', NULL, 'sadsad', NULL, '0306900000-Tarlac', '0306911000-Pura', NULL, NULL, NULL, '2024-07-28 11:36:06'),
+(10, 'sadsad', 'asdsad', 'sadasd', 'asd', '0401000000-Batangas', '0401012000-Lemery', NULL, NULL, NULL, '2024-07-28 11:40:17');
 
 -- --------------------------------------------------------
 
@@ -184,9 +189,7 @@ CREATE TABLE `establishment_employee` (
 --
 
 INSERT INTO `establishment_employee` (`estab_emp_id`, `establishment_id`, `employee_id`, `position_id`, `nature_of_employment`, `status_of_employment_id`, `year_employed`, `level_of_employment`, `created_on`) VALUES
-(4, 53, 4, 8, 'permanent', 2, '2024', 'managerial', '2024-07-26 14:33:04'),
-(5, 53, 5, 6, 'contractuals', 3, '2024', 'rank_and_file', '2024-07-26 14:34:36'),
-(6, 55, 4, 6, 'probationary', 3, '2024', 'rank_and_file', '2024-07-26 14:35:00');
+(41, 53, 10, 8, 'project_based', 3, '2024', 'proprietor', '2024-07-28 15:44:38');
 
 -- --------------------------------------------------------
 
@@ -406,7 +409,7 @@ ALTER TABLE `contractors`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `employee_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `employment_status`
@@ -424,7 +427,7 @@ ALTER TABLE `establishments`
 -- AUTO_INCREMENT for table `establishment_employee`
 --
 ALTER TABLE `establishment_employee`
-  MODIFY `estab_emp_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `estab_emp_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `positions`

@@ -35,9 +35,9 @@
                                 </li>
                                 <li><a href="{{url('admin/lls/employees-record')}}">Employees Record</a>
                                 </li>
-                                <li><a href="{{url('admin/lls/establishments-positions')}}">Positions</a>
+                                <li><a href="{{url('admin/lls/establishments-positions')}}">Manage Positions</a>
                                 </li>
-                                <li><a href="{{url('admin/lls/employment-status-list')}}">Employment Status</a>
+                                <li><a href="{{url('admin/lls/employment-status-list')}}">Manage Employment Status</a>
                                 </li>
                             </ul>
                         </div>

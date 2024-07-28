@@ -51,6 +51,48 @@ $(document).on('click', 'button.cancel-edit', function() {
     $('button.edit-information').removeClass('hidden');
 });
 
+$(document).on('click', 'button.submit', function() {
+    let form = {
+        establishment_id: $('input[name=establishment_id]').val(),
+        establishment_code: $('input[name=establishment_code]').val(),
+        establishment_name: $('input[name=establishment_name]').val(),
+        street: $('input[name=street]').val(),
+        barangay: $('select[name=barangay] :selected').val(),
+        contact_number: $('input[name=phone_number]').val(),
+        email_address: $('input[name=email_address]').val(),
+        authorized_personnel: $('input[name=authorized_personnel]').val(),
+        status: $('select#select_status :selected').val(),
+        position: $('input[name=position]').val(),
+    }
+
+    $.ajax({
+        url: base_url + '/admin/act/lls/u-e',
+        method: 'POST',
+        data: form,
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        beforeSend: function() {
+            $('button.submit').prop('disabled', true);
+            $('button.submit').html('<span class="loader"></span>')
+        },
+        success: function(data) {
+            if (data.response) {
+                toast_message_success(data.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
+        },
+        error: function(err) {
+            alert('Something Wrong')
+        }
+
+
+    });
+});
+
 
 
 $('button#multi-delete').on('click', function() {

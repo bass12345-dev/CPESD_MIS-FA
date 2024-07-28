@@ -87,11 +87,11 @@
                                     </div>
                                     <div class="nk-int-st">
                                         <select class="form-control" name="barangay" required>
-                                            <option>Select Barangay</option>
+                                            <option value="">Select Barangay</option>
                                             <?php
                                             foreach ($barangay as $row) :
                                         ?>
-                                            <option>{{$row}}</option>
+                                            <option value="{{$row}}">{{$row}}</option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

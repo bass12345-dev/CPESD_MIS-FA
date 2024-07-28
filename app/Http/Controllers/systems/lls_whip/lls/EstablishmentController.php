@@ -78,6 +78,27 @@ class EstablishmentController extends Controller
         }
     }
 
+
+    public function delete_establishment(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('establishment_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->establishments_table,$where);
+            }
+
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
+    }
+
     public function update_establishment(Request $request){
 
         $resp = $this->establishmentService->Update_Establishment($request);
@@ -89,7 +110,7 @@ class EstablishmentController extends Controller
             ], 201);
         }else {
             return response()->json([
-                'message' => 'Something Wrong', 
+                'message' => 'Something Wrong/No Changes Applied', 
                 'response' => false
             ], 422);
         }
