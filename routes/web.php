@@ -59,6 +59,9 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
       Route::get("/lls/establishments-positions",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'index']);
       // Employment Status
       Route::get("/lls/employment-status-list",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'index']);
+      //Reports
+      Route::get("/lls/compliant-reports",[App\Http\Controllers\systems\lls_whip\lls\CompliantController::class, 'index']);
+
 
       Route::get("/sample",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'sample']);
 
@@ -71,6 +74,10 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
 
       //Projects
       Route::get("/whip/projects-list",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'index']);
+
+      
+
+
 });
        
 //ACTIONS LLS WHIP
@@ -92,7 +99,8 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::post("/lls/i-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_employee']);
       Route::post("/lls/g-e-i",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_employee_information']);
    //Establishment Employee
-      Route::post("/lls/i-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_establishment_employee']);  
+      Route::post("/lls/i-u-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_or_update_establishment_employee']);  
+      Route::post("/lls/d-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'delete_establishment_employee']);  
       Route::post("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  
       Route::get("/lls/search-query",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'search_query']);  
    //SURVEY

@@ -12,7 +12,7 @@
 @include('system.lls_whip.user.lls.employees_records.lists.modals.add_employee_modal')
 @endsection
 @section('js')
-@include('system.lls_whip.includes._js._js')
+@include('system.lls_whip.includes._js.location_js')
 <script>
 $(document).ready(function() {
     table = $('#data-table-basic').DataTable({
@@ -26,34 +26,7 @@ $(document).ready(function() {
         },
         "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" +
             "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-        buttons: [{
-                extend: 'copy',
-                text: 'Copy',
-                className: 'btn btn-warning rounded-pill ',
-                footer: true,
-                exportOptions: {
-                    columns: 'th:not(:last-child)',
-
-                }
-            },
-            {
-                extend: 'print',
-                text: 'Print',
-                className: 'btn btn-info rounded-pill  ms-2',
-                footer: true,
-                exportOptions: {
-                    columns: 'th:not(:last-child)'
-                }
-            }, {
-                extend: 'csv',
-                text: 'CSV',
-                className: 'btn btn-success rounded-pill ms-2',
-                footer: true,
-                exportOptions: {
-                    columns: 'th:not(:last-child)',
-                }
-            },
-        ],
+        buttons: datatables_buttons(),
         ajax: {
             url: base_url + "/admin/act/lls/g-a-em",
             method: 'POST',
@@ -112,7 +85,7 @@ $(document).ready(function() {
     });
 });
 
-$('#add_form').on('submit', function(e) {
+$('#add_employee_form').on('submit', function(e) {
     e.preventDefault();
     $(this).find('button').prop('disabled', true);
     $(this).find('button').html('<span class="loader"></span>')

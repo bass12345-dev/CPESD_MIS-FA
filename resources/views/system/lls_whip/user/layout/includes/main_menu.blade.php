@@ -2,18 +2,20 @@
     <div class="main-menu-area mg-tb-40">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 first_col_lls" >
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 first_col_lls">
                     <div class="row d-flex text-center">
                         <h1>LLS</h1>
                     </div>
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro first">
-                        <li ><a data-toggle="tab" href="#Home" class="active"><i class="notika-icon notika-house"></i> Home</a>
+                        <li><a data-toggle="tab" href="#Home" class="active"><i class="notika-icon notika-house"></i>
+                                Home</a>
                         </li>
-                        <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i>Establishments</a>
+                        <li><a data-toggle="tab" href="#mailbox"><i
+                                    class="notika-icon notika-mail"></i>Establishments</a>
                         </li>
-                      
-                        
-        
+                        <li><a data-toggle="tab" href="#reports"><i
+                                    class="fas fa-file"></i>Reports</a>
+                        </li>
                     </ul>
                     <div class="tab-content custom-menu-content">
                         <div id="Home" class="tab-pane in active notika-tab-menu-bg animated flipInX">
@@ -39,10 +41,17 @@
                                 </li>
                             </ul>
                         </div>
+                        <div id="reports" class="tab-pane in  notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown active">
+                                <li><a href="{{url('admin/lls/compliant-reports')}}">Compliant Reports</a>
+                                </li>
+                            
+                            </ul>
+                        </div>
 
                     </div>
                 </div>
-                <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="row d-flex text-center">
                         <h1>WHIP</h1>
                     </div>
@@ -82,7 +91,7 @@
                         </div>
 
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
         <hr>

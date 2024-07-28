@@ -13,6 +13,7 @@ class EstablishmentService
     protected $customRepository;
     protected $establishments_table;
     protected $establishment_employee_table;
+    protected $est_employee_table;
     protected $employeeQuery;
     protected $survey_table;
     protected $default_city;
@@ -24,6 +25,7 @@ class EstablishmentService
         $this->establishment_employee_table = 'establishment_employee';
         $this->employeeQuery        = $employeeQuery;
         $this->default_city         = '1004209000-City of Oroquieta';
+        $this->est_employee_table   = 'establishment_employee';
 
     }
     
@@ -142,8 +144,55 @@ class EstablishmentService
             $arr[13]['outside_mgt'];
         }
     
+    
+    public function insert_establishment_employee(array $items){
+            $data = [];;
+            $count = $this->customRepository->q_get_where($this->conn,array('employee_id' => $items['employee_id'],'establishment_id' => $items['establishment_id']),$this->est_employee_table,)->count();
+            if($count == 0) {
+                $items["created_on"] = Carbon::now()->format('Y-m-d H:i:s');
+                $insert = $this->customRepository->insert_item($this->conn,$this->est_employee_table,$items);
+                if ($insert) {
+                    // Registration successful
+                    $data = [
+                        'message' => 'Employee Added Successfully', 
+                        'response' => true
+                    ];
+                }else {
+                    $data = [
+                        'message' => 'Something Wrong', 
+                        'response' => false
+                    ];
+                    
+                }
+    
+            }else {
+                $data = [
+                    'message' => 'Duplicate Entry', 
+                    'response' => false
+                ];
+            }
+           return $data;
+        }
 
 
+        public function update_establishment_employee(array $where,array $items){
+            $update = $this->customRepository->update_item($this->conn,$this->est_employee_table,$where,$items);
+
+            if ($update) {
+                    // Registration successful
+                    $data = [
+                        'message' => 'Employee Added Successfully', 
+                        'response' => true
+                    ];
+                }else {
+                    $data = [
+                        'message' => 'Something Wrong', 
+                        'response' => false
+                    ];
+                    
+                }
+           return $data;
+        }
 
     public function Submit_Survey($row){
 

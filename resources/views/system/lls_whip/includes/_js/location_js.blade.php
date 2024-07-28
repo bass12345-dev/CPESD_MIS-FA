@@ -2,6 +2,7 @@
     var province_options    = $("#province_select");
     var city_options        = $("#city_select");
     var brgy_options        = $("#brgy_select");
+
     function load_provinces(){
         province_options.append(new Option('Select Province', ''));
         $.ajax({url: 'https://psgc.cloud/api/provinces',method: 'GET',dataType :'json',beforeSend :  function(){province_options.after('<span class="text-warning loading_provinces" >Loading Provinces...</span><a href="javascript:;" class="refetch_provinces"></a>');}
@@ -71,14 +72,9 @@
         });
     });
 
-    $(document).on('ready', function(){
-        load_provinces();
-   });
 
+load_provinces();
 
-   function capitalizeFirstLetter(string) {
-           return string.charAt(0).toUpperCase() + string.slice(1);
-       }
 
 
 </script>

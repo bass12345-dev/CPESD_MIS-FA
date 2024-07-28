@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\lls\EmployeeStoreRequest;
 use App\Repositories\CustomRepository;
 use App\Repositories\lls\EmployeeQuery;
+use App\Services\lls\EstablishmentService;
 use App\Services\user\USerService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ class EmployeeController extends Controller
     protected $customRepository;
     protected $employeeQuery;
     protected $uSerService;
+    protected $establishmentService;
     protected $conn;
     protected $est_employee_table;
 
@@ -25,10 +27,11 @@ class EmployeeController extends Controller
     protected $order_by_key = 'estab_emp_id';
     
 
-    public function __construct(CustomRepository $customRepository, EmployeeQuery $employeeQuery, USerService $uSerService){
+    public function __construct(CustomRepository $customRepository, EmployeeQuery $employeeQuery, USerService $uSerService , EstablishmentService $establishmentService){
         $this->customRepository     = $customRepository;
         $this->employeeQuery        = $employeeQuery;
         $this->uSerService          = $uSerService;
+        $this->establishmentService = $establishmentService;
         $this->conn                 = config('app._database.lls_whip');
         $this->employee_table       = 'employees';
         $this->est_employee_table   = 'establishment_employee';
@@ -90,6 +93,27 @@ class EmployeeController extends Controller
         }
     }
 
+    public function delete_establishment_employee(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('estab_emp_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->est_employee_table,$where);
+            }
+
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
+    }
+
+
     public function get_employee_information(Request $request){
         $employee_id  = $request->input('id');
         $items = $this->employeeQuery->get_employee_information($this->conn,$employee_id);
@@ -102,11 +126,14 @@ class EmployeeController extends Controller
         $data = [];
         foreach ($items as $row) {
            $data[] = array(
+                    'establishment_employee_id' => $row->estab_emp_id,
                     'employee_id'           => $row->employee_id,
                     'full_name'             => $this->uSerService->user_full_name($row),
                     'full_address'          => $this->uSerService->full_address($row),
                     'position'              => $row->position,
+                    'position_id'           => $row->position_id,
                     'nature_of_employment'  => $row->nature_of_employment,
+                    'status_id'                  => $row->employ_stat_id,
                     'status_of_employment'  => $row->status,
                     'year_employed'         => $row->year_employed,
                     'level_of_employment'   => $row->level_of_employment
@@ -116,7 +143,8 @@ class EmployeeController extends Controller
     }
 
 
-    public function insert_establishment_employee(Request $request){
+    public function insert_or_update_establishment_employee(Request $request){
+
         $items  = array(
             'establishment_id'          => $request->input('establishment_id'),
             'employee_id'               => $request->input('employee_id'),
@@ -125,36 +153,23 @@ class EmployeeController extends Controller
             'status_of_employment_id'   => $request->input('employment_status'),
             'year_employed'             => $request->input('year_employed'),
             'level_of_employment'       =>  $request->input('employment_level'),
-            'created_on'                => Carbon::now()->format('Y-m-d H:i:s'),
         );
 
-        $count = $this->customRepository->q_get_where($this->conn,array('employee_id' => $items['employee_id'],'establishment_id' => $items['establishment_id']),$this->est_employee_table,)->count();
-
-        if($count == 0) {
-
-            $insert = $this->customRepository->insert_item($this->conn,$this->est_employee_table,$items);
-            if ($insert) {
-                // Registration successful
-                return response()->json([
-                    'message' => 'Employmee Added Successfully', 
-                    'response' => true
-                ], 201);
-            }else {
-                return response()->json([
-                    'message' => 'Something Wrong', 
-                    'response' => false
-                ], 422);
-            }
-
+        if(empty($request->input('establishment_employee_id'))){
+            $resp = $this->establishmentService->insert_establishment_employee($items);
+            
         }else {
-            return response()->json([
-                'message' => 'Duplicate Entry', 
-                'response' => false
-            ]);
+            $where = array('estab_emp_id' => $request->input('establishment_employee_id'));
+            $resp = $this->establishmentService->update_establishment_employee($where,$items);
         }
 
-       
+        return response()->json($resp);
+     
     }
+
+
+
+
 
 
     public function search_query(){

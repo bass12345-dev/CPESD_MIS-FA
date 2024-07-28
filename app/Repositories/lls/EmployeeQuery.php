@@ -90,7 +90,7 @@ class EmployeeQuery
         ->leftJoin('positions', 'positions.position_id', '=', 'establishment_employee.position_id')
         ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
         ->select(   
-       
+        'establishment_employee.estab_emp_id as estab_emp_id',
         //User
         'employees.first_name as first_name',
         'employees.middle_name as middle_name',
@@ -101,8 +101,10 @@ class EmployeeQuery
         'employees.barangay as barangay',
         'employees.street as street',
         //Position
+        'positions.position_id as position_id',
         'positions.position as position',
         //Status
+        'employment_status.employ_stat_id as employ_stat_id',
         'employment_status.status as status',
         //Nature of Employment
         'establishment_employee.employee_id as employee_id',

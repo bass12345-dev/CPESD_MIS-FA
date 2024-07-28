@@ -1,16 +1,16 @@
-<div class="modal animated bounce" id="add_employee_modal" role="dialog">
+<div class="modal animated bounce" id="add_employee_modal1" role="dialog">
     <div class="modal-dialog modal-large">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="add_form">
+                <form id="add_employee_form">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-element-list">
                                 <div class="basic-tb-hd">
-                                    <h2>Add Employee</h2>
+                                    <h2>Add New</h2>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -128,14 +128,15 @@
                                     </div>
 
                                 </div>
+
+                                <div class="form-example-int mg-t-15">
+                                    <button type="submit" class="btn btn-primary notika-btn-success">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-
-            </div>
+            
             </form>
         </div>
     </div>

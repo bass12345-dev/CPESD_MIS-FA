@@ -6,7 +6,7 @@
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
                             <h2>List of Employees</h2>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#add_employee_modal">Add Employee</button>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#add_employee_modal1">Add Employee</button>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">

@@ -10,10 +10,10 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-element-list">
                                 <div class="basic-tb-hd">
-                                    <h2>Add Employee</h2>
+                                    <h2 class="title">Add Employee</h2>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 name_section">
                                         <div class="form-group ic-cmp-int">
                                             <div class="form-ic-cmp">
                                                 <i class="notika-icon notika-support"></i>
@@ -23,10 +23,13 @@
                                                     class="form-control" name="establishment_id" required>
                                                 <input type="hidden" class="form-control" name="employee_id"
                                                     placeholder="ID" required>
+                                                <input type="hidden" class="form-control" name="establishment_employee_id"
+                                                    placeholder="Establishment Employee ID" >
                                                 <div id="the-basics">
                                                     <input class="typeahead form-control" type="text" name="employee"
                                                         placeholder="Search Employee" required style="width: 100%;">
                                                 </div>
+                                                <div class="display_name"></div>
                                             </div>
                                         </div>
                                     </div>

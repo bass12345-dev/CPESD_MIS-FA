@@ -15,5 +15,7 @@
 @include('system.global_includes.js')
 @include('system.lls_whip.includes.js')
 @include('system.global_includes.custom_js.datatable_settings')
+@include('system.global_includes.custom_js.toast_message')
+@include('system.global_includes.custom_js._ajax')
 @yield('js')
 </html>
