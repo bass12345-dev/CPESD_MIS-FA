@@ -121,7 +121,33 @@ class EmployeeQuery
     }   
 
   
+  public function count_inside($conn,$es_id,$year,$default_city){
 
+    $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
+    ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+    ->select(   
+      'employees.city as city',
+    )
+    ->where('establishment_employee.establishment_id', $es_id)
+    ->where('city', $default_city)
+    ->count();
+    return $rows;
+
+  }
+
+  public function count_outside($conn,$es_id,$year,$default_city){
+
+    $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
+    ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+    ->select(   
+      'employees.city as city',
+    )
+    ->where('establishment_employee.establishment_id', $es_id)
+    ->where('city','!=',$default_city)
+    ->count();
+    return $rows;
+
+  }
     
 
     

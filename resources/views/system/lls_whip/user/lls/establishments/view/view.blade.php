@@ -119,6 +119,7 @@ $('button#multi-delete').on('click', function() {
 
 $(document).on('click', 'button.add-employee', function() {
     $('h2.title').text('Add Employee');
+    $('input[name=employee]').val($(this).data('employee-name')).attr('disabled',false);
 });
 
 
@@ -129,7 +130,14 @@ $('#add_form').on('submit', function(e) {
     $(this).find('button[type="submit"]').html('<span class="loader"></span>')
     var url = '/admin/act/lls/i-u-e-e';
     let form = $(this);
+
+    if(!form.find('input[name=establishment_employee_id]').val()){
     _insertAjax(url, form, table);
+    
+    }else {
+        _updatetAjax(url, form, table);
+    }
+
     setTimeout(() => {
         survey(year_now);
     }, 1000);

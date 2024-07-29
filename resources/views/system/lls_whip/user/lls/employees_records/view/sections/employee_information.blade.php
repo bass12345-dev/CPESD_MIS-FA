@@ -12,34 +12,28 @@
             <tr>
                 <td>Full Name</td>
                 <td class="text-start"><span class="title">{{$title}} </span>
-                    <input type="hidden" class="form-control mb-5" name="first_name" placeholder="First Name"
+                    <input type="hidden" class="form-control mb-5 title" name="first_name" placeholder="First Name"
                         value="{{$row->first_name}}">
-                    <input type="hidden" class="form-control mb-5" name="middle_name" placeholder="Middle Name"
+                    <input type="hidden" class="form-control mb-5 title" name="middle_name" placeholder="Middle Name"
                         value="{{$row->middle_name}}">
-                    <input type="hidden" class="form-control mb-5" name="last_name" placeholder="Last Name"
+                    <input type="hidden" class="form-control mb-5 title" name="last_name" placeholder="Last Name"
                         value="{{$row->last_name}}">
-                    <input type="hidden" class="form-control mb-5" name="extension" placeholder="Extension"
+                    <input type="hidden" class="form-control mb-5 title" name="extension" placeholder="Extension"
                         value="{{$row->extension}}">
                 </td>
             </tr>
-
             <tr>
                 <td>Full Address</td>
                 <td class="text-start"><span class="title">{{$full_address}} </span>
-                    <input type="hidden" class="form-control mb-5" name="province" placeholder="Province"
-                        value="{{explode("-", $row->province)[1]}}">
-                    <input type="hidden" class="form-control mb-5" name="city" placeholder="City"
-                        value="{{explode("-", $row->city)[1]}}">
-                    <input type="hidden" class="form-control mb-5" name="barangay" placeholder="Barangay"
-                        value="{{ $row->barangay == NULL  ? '' : explode("-", $row->barangay)[1]}}">
-                    <input type="hidden" class="form-control mb-5" name="street" placeholder="Street"
-                        value="{{$row->street}}">
+                    <select class="form-control province_select" name="province" id="province_select" disabled required hidden></select>
+                    <select class="form-control" id="city_select" name="city" required hidden></select>
+                    <select class="form-control" id="brgy_select" name="barangay"  hidden></select>
                 </td>
             </tr>
             <tr>
                 <td>Contact Number</td>
                 <td class="text-start"><span class="title">{{$row->contact_number}}</span>
-                    <input type="hidden" class="form-control" name="contact_number" value="{{$row->contact_number}}">
+                    <input type="hidden" class="form-control title" name="contact_number" value="{{$row->contact_number}}">
                 </td>
             </tr>
 

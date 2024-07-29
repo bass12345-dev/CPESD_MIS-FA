@@ -158,13 +158,22 @@ class EstablishmentController extends Controller
         
     }
 
-
-
     public function get_survey_by_year(Request $request){
         $data = $this->establishmentService->get_survey($request->input('id'),$request->input('year'));
         return response()->json($data);
     }
 
+
+    //REPORTS
+    public function generate_compliant_report(Request $request){
+       $year = $request->input('year');
+       $data = $this->establishmentService->compliant_process($year);
+       return response()->json($data);
+       
+    }
+
+
+    
     public function sample(){
         // $rows =  DB::select("select cpesd_mis_users_db.users.first_name,dts.documents.document_name
         //     from cpesd_mis_users_db.users INNER JOIN dts.documents 

@@ -91,14 +91,17 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::post("/lls/d-e",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'delete_establishment']);
    //POSITION
       Route::get("/lls/a-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'get_all_positions']);
-      Route::post("/lls/i-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'insert_position']);
+      Route::post("/lls/i-u-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'insert_update_position']);
+      Route::post("/lls/d-p",[App\Http\Controllers\systems\lls_whip\lls\PositionsController::class, 'delete_position']);
    //EMPLOYMENT STATUS
       Route::get("/lls/a-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'get_all_status']);
-      Route::post("/lls/i-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'insert_status']);
+      Route::post("/lls/i-u-e-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'insert_update_status']);
+      Route::post("/lls/d-s",[App\Http\Controllers\systems\lls_whip\lls\EmploymentStatusController::class, 'delete_status']);
    //Employees
       Route::post("/lls/g-a-em",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_all_employees']);
       Route::post("/lls/i-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_employee']);
       Route::post("/lls/g-e-i",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_employee_information']);
+      Route::post("/lls/d-em",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'delete_employee']);
    //Establishment Employee
       Route::post("/lls/i-u-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'insert_or_update_establishment_employee']);  
       Route::post("/lls/d-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'delete_establishment_employee']);  
@@ -107,6 +110,9 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
    //SURVEY
    Route::post("/lls/g-e-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
       // Route::post("/lls/get-survey",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
+
+   //COMPLIANT REPORTS
+   Route::post("/lls/generate-compliant-report",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'generate_compliant_report']);
 
    //ACTIONS WHIP
    //Contractor

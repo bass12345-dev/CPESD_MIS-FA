@@ -9,7 +9,7 @@
                 @include('system.lls_whip.user.lls.employment_status.lists.sections.table')
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                @include('system.lls_whip.user.lls.employment_status.lists.sections.add_form')
+                @include('system.lls_whip.user.lls.employment_status.lists.sections.add_update_form')
             </div>
         </div>
     </div>
@@ -28,34 +28,7 @@
                 "processing": '<div class="d-flex justify-content-center "><img class="top-logo mt-4" src="{{asset("assets/img/dts/peso_logo.png")}}"></div>'
             },
             "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            buttons: [
-            {
-               extend: 'copy',
-               text: 'Copy',
-               className: 'btn btn-warning rounded-pill ',
-               footer: true,
-               exportOptions: {
-                  columns: 'th:not(:last-child)',
-                 
-               }
-            }, 
-            {
-               extend: 'print',
-               text: 'Print',
-               className: 'btn btn-info rounded-pill  ms-2',
-               footer: true,
-               exportOptions: {
-                  columns: 'th:not(:last-child)'
-               }
-            }, {
-               extend: 'csv',
-               text: 'CSV',
-               className: 'btn btn-success rounded-pill ms-2',
-               footer: true,
-               exportOptions: {
-                  columns: 'th:not(:last-child)',
-               }
-            }, ],
+            buttons: datatables_buttons(),
             ajax: {
             url: base_url + "/admin/act/lls/a-e-s",
             method: 'GET',
@@ -66,6 +39,9 @@
         },
         columns: [
                 {
+                    data: 'employ_stat_id'
+                },
+                {
                     data: 'status'
                 },
                 {
@@ -75,7 +51,18 @@
                     data: null
                 },
             ],
+            'select': {
+                        'style': 'multi',
+                    },
             columnDefs: [{
+                            'targets': 0,
+                            'checkboxes': {
+                                'selectRow': true
+                            }
+                        },
+                
+                
+                {
                     targets: -1,
                     data: null,
                     orderable: false,
@@ -83,8 +70,10 @@
                     render: function (data, type, row) {
                         //return '<button class="btn btn-success">Update</button> <button class="btn btn-success">Delete</button>';
                         return '<div class="actions">\
-                                <div ><button class="btn btn-success">Update</button> </div>\
-                                <div ><button class="btn btn-danger">Delete</button> </div>\
+                                <div ><button class="btn btn-success update-status" \
+                                data-id="'+row.employ_stat_id+'"\
+                                data-name="'+row.status+'"\
+                                >Update</button> </div>\
                                 </div>\
                                 ';
                     }
@@ -94,14 +83,44 @@
          });
 	});
 
+    $(document).on('click', 'button.update-status', function(){
+        $('#add_update_form').find('input[name=status_id]').val($(this).data('id'));
+        $('#add_update_form').find('input[name=status]').val($(this).data('name'));
+    })
+
+    $('button#multi-delete').on('click', function() {
+
+    var button_text = 'Delete selected items';
+    var text = '';
+    var url = '/admin/act/lls/d-s';
+    let items = get_select_items_datatable();
+    var data = {
+        id: items,
+    };
+
+    if (items.length == 0) {
+        toast_message_error('Please Select at Least One')
+    } else {
+        delete_item(data, url, button_text, text, table);
+        
+
+    }
+
+    });
+
+
     
-     $('#add_form').on('submit', function(e){
+     $('#add_update_form').on('submit', function(e){
         e.preventDefault();
         $(this).find('button').prop('disabled',true);
         $(this).find('button').html('<span class="loader"></span>')
-        var url = '/admin/act/lls/i-e-s';
+        var url = '/admin/act/lls/i-u-e-s';
         let form = $(this);
-        _insertAjax(url,form,table);
+        if(!$('form#add_update_form').find('input[name=status_id]').val()){
+            _insertAjax(url,form,table);
+        }else {
+            _updatetAjax(url,form,table);
+        }
     });
 
   

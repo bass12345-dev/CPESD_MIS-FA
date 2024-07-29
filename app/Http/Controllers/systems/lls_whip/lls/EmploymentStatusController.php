@@ -38,7 +38,9 @@ class EmploymentStatusController extends Controller
         return response()->json($items);
     }
 
-    public function insert_status(Request $request){
+    
+
+    public function insert_update_status(Request $request){
 
 
         $validated = $request->validate([
@@ -47,20 +49,64 @@ class EmploymentStatusController extends Controller
 
         $items = array(
             'status'      =>$validated['status'],
-            'created_on'  => Carbon::now()->format('Y-m-d H:i:s'),
         );
-        $insert = $this->customRepository->insert_item($this->conn,$this->status_table,$items);
-        if ($insert) {
+
+
+        if(empty($request->input('status_id'))){
+            $items["created_on"] = Carbon::now()->format('Y-m-d H:i:s');
+            $insert = $this->customRepository->insert_item($this->conn,$this->status_table,$items);
+            if ($insert) {
+                // Registration successful
+                return response()->json([
+                    'message' => 'Employment Status Added Successfully', 
+                    'response' => true
+                ], 201);
+            }else {
+                return response()->json([
+                    'message' => 'Something Wrong', 
+                    'response' => false
+                ], 422);
+            }
+
+        }else {
+            $where = array('employ_stat_id' => $request->input('status_id'));
+            $update = $this->customRepository->update_item($this->conn,$this->status_table,$where,$items);
+            if ($update) {
             // Registration successful
             return response()->json([
-                'message' => 'Employment Status Added Successfully', 
+                'message' => 'Employee Status Updated Successfully', 
                 'response' => true
             ], 201);
-        }else {
-            return response()->json([
-                'message' => 'Something Wrong', 
-                'response' => false
-            ], 422);
+
+            }else {
+                    return response()->json([
+                        'message' => 'Something Wrong', 
+                        'response' => false
+                    ], 422);
+                }
         }
+
+       
+    }
+
+
+    public function delete_status(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('employ_stat_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->status_table,$where);
+            }
+
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
     }
 }

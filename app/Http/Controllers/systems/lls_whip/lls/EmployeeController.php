@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 
+
 class EmployeeController extends Controller
 {
     protected $customRepository;
@@ -91,6 +92,26 @@ class EmployeeController extends Controller
                 'response' => false
             ], 422);
         }
+    }
+
+    public function delete_employee(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('employee_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->employee_table,$where);
+            }
+
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
     }
 
     public function delete_establishment_employee(Request $request)

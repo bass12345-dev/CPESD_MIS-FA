@@ -181,7 +181,7 @@ class EstablishmentService
             if ($update) {
                     // Registration successful
                     $data = [
-                        'message' => 'Employee Added Successfully', 
+                        'message' => 'Employee Updated Successfully', 
                         'response' => true
                     ];
                 }else {
@@ -229,6 +229,50 @@ class EstablishmentService
         return $user;
 
 
+    }
+
+
+    public function compliant_process($year){
+        $establishments = $this->customRepository->q_get_order($this->conn,$this->establishments_table,'establishment_code','asc')->get();
+        $data = [];
+        foreach ($establishments as $row) {
+                $data[] = array(
+                    'establishment_name' => $row->establishment_name,
+                    'is_compliant'      => $this->compliant_calc($row->establishment_id,$year)
+                );
+                
+        }
+
+       return $data;
+    }
+
+    function compliant_calc($id,$year){
+        $count_inside = $this->employeeQuery->count_inside($this->conn,$id,$year,$this->default_city);
+        $count_outside = $this->employeeQuery->count_outside($this->conn,$id,$year,$this->default_city);
+        $total = $count_inside + $count_outside;
+        $resp = '';
+        if($total == 0){
+            $resp = [
+                'resp' => false,
+                'percent' => 0
+            ];
+        }else {
+            $calc = round($count_inside/$total*100, 2); 
+            if($calc >= 70){
+                $resp = [
+                    'resp' => true,
+                    'percent' => $calc
+                ];
+                
+            }else {
+                $resp = [
+                    'resp' => false,
+                    'percent' => $calc
+                ];
+                
+            }
+        }
+        return $resp;
     }
 
 

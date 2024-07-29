@@ -7,15 +7,17 @@
                         <div class="basic-tb-hd">
                             <h2>List of Employees</h2>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#add_employee_modal1">Add Employee</button>
+                            <button class="btn btn-danger multi-delete" id="multi-delete" >Delete</button>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Full Name</th>
                                         <th>Address</th>
                                         <th>Contact Number</th>
-                                        <th>Action</th>
+                                    
                                     </tr>
                                 </thead>
                               

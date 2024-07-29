@@ -43,6 +43,42 @@ function _insertAjax(url, form, table) {
     });
 }
 
+
+
+function _updatetAjax(url, form, table) {
+    $.ajax({
+        url: base_url + url,
+        method: 'POST',
+        data: form.serialize(),
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        },
+        success: function(data) {
+            if (data.response) {
+                toast_message_success(data.message);
+                if (table != null) {
+                    table.ajax.reload();
+                }
+            } else {
+                toast_message_error(data.message);
+            }
+
+            form.find('button').prop('disabled', false);
+            form.find('button').text('Submit');
+        },
+        error: function(err) {
+            if (err.status == 422) { // when status code is 422, it's a validation issue
+                form.find('button').prop('disabled', false);
+                form.find('button').text('Submit');
+                toast_message_error('Something Wrong');
+            }
+        }
+
+
+    });
+}
+
 function delete_item(id, url, button_text = '', text = '',table) {
 
     Swal.fire({

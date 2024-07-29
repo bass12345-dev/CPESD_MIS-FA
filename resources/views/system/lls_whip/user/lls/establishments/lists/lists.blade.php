@@ -100,7 +100,7 @@ $('button#multi-delete').on('click', function() {
         toast_message_error('Please Select at Least One')
     } else {
         delete_item(data, url, button_text, text, table);
-        year_now = $('select#select_year :selected').val();
+        
  
     }
 

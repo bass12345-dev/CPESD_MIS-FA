@@ -38,23 +38,67 @@ class PositionsController extends Controller
         return response()->json($items);
     }
 
-    public function insert_position(Request $request){
+    public function insert_update_position(Request $request){
+
         $items = array(
             'position'      => $request->input('position'),
-            'created_on'    => Carbon::now()->format('Y-m-d H:i:s'),
         );
-        $insert = $this->customRepository->insert_item($this->conn,$this->position_table,$items);
-        if ($insert) {
+        if(empty($request->input('employee_id'))){
+            $items["created_on"] = Carbon::now()->format('Y-m-d H:i:s');
+            $insert = $this->customRepository->insert_item($this->conn,$this->position_table,$items);
+            if ($insert) {
             // Registration successful
             return response()->json([
                 'message' => 'Position Added Successfully', 
                 'response' => true
             ], 201);
+
+            }else {
+                    return response()->json([
+                        'message' => 'Something Wrong', 
+                        'response' => false
+                    ], 422);
+                }
+                    
         }else {
+
+            $where = array('position_id' => $request->input('employee_id'));
+            $update = $this->customRepository->update_item($this->conn,$this->position_table,$where,$items);
+            if ($update) {
+            // Registration successful
             return response()->json([
-                'message' => 'Something Wrong', 
-                'response' => false
-            ], 422);
+                'message' => 'Position Updated Successfully', 
+                'response' => true
+            ], 201);
+
+            }else {
+                    return response()->json([
+                        'message' => 'Something Wrong', 
+                        'response' => false
+                    ], 422);
+                }
+            
         }
+  
+    }
+
+    public function delete_position(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('position_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->position_table,$where);
+            }
+
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
     }
 }

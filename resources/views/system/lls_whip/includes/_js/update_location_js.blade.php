@@ -14,19 +14,11 @@
             province_options.removeAttr('disabled');
         });
     }
-    
 
-
-
-    province_options.on('change', function() {
-        city_options.find('optgroup').remove();
-        city_options.find('option').remove();
-        var province_string = $(this).find(":selected").val().split("-");
-        var province_selected = province_string[0];
-        var url = 'https://psgc.cloud/api/provinces/'+province_selected+'/cities-municipalities';
-        let city_arr = [];
-        $.ajax({url: url,method: 'GET',dataType :'json',beforeSend :  function(){city_options.after('<span class="text-warning loading_cities" >Loading Cities and Municipalities...</span>');}
-        }).done(function(cities) {
+    function load_cities(){
+        city_options.append(new Option('Select City', ''));
+        $.ajax({url: 'https://psgc.cloud/api/cities-municipalities',method: 'GET',dataType :'json',beforeSend :  function(){city_options.after('<span class="text-warning loading_provinces" >Loading Provinces...</span><a href="javascript:;" class="refetch_provinces"></a>');}
+        }).done(function(data) {
             $('span.loading_cities').remove(); 
             var filteredMun = $(cities).filter(function(idx){
                 return cities[idx].type === "Mun" 
@@ -52,29 +44,18 @@
              city_options.prepend(new Option('Select City Or Municipalities', ''));
              $(`#city_select option[value='']`).prop('selected', true);
              city_options.removeAttr('disabled');
-        }); 
-    });
-
-    city_options.on('change', function() {
-        
-        brgy_options.find('option').remove();
-        var city_string = $(this).find(":selected").val().split("-");
-        var city_selected = city_string[0];
-        brgy_options.append(new Option('Select Barangay', ''));
-        var url = 'https://psgc.cloud/api/cities-municipalities/'+city_selected+'/barangays';
-        let city_arr = [];
-        $.ajax({url: url,method: 'GET',dataType :'json',beforeSend :  function(){brgy_options.after('<span class="text-warning loading_brgy" >Loading Brgy...</span>');}
-        }).done(function(data) {
-            $('span.loading_brgy').remove(); 
-            $.each(data, function(i, row) {
-                brgy_options.append(new Option(row.name, row.code+'-'+row.name));
-            });    
-            brgy_options.removeAttr('disabled');
         });
-    });
+    }
+    
 
 
-load_provinces();
+
+
+
+    load_cities();
+    load_provinces();
+
+
 
 
 

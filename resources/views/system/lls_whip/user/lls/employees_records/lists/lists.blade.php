@@ -38,7 +38,11 @@ $(document).ready(function() {
             },
             dataSrc: ""
         },
-        columns: [{
+        columns: [
+            {
+                data: 'employee_id'
+            },
+            {
                 data: null
             },
             {
@@ -48,14 +52,21 @@ $(document).ready(function() {
                 data: 'contact_number'
             },
            
-            {
-                data: null
-            },
+           
+
         ],
-        columnDefs: [
+        'select': {
+            'style': 'multi',
+        },
+        columnDefs: [{
+                'targets': 0,
+                'checkboxes': {
+                    'selectRow': true
+                }
+            },
 
             {
-                targets: 0,
+                targets: 1,
                 data: null,
                 orderable: false,
                 className: 'text-center',
@@ -67,22 +78,32 @@ $(document).ready(function() {
 
           
 
-            {
-                targets: -1,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function(data, type, row) {
-                    //return '<button class="btn btn-success">Update</button> <button class="btn btn-success">Delete</button>';
-                    return '<div class="actions">\
-                                <div ><button class="btn btn-danger">Delete</button> </div>\
-                                </div>\
-                                ';
-                }
-            }
+           
+           
         ]
 
     });
+});
+
+
+$('button#multi-delete').on('click', function() {
+
+var button_text = 'Delete selected items';
+var text = '';
+var url = '/admin/act/lls/d-em';
+let items = get_select_items_datatable();
+var data = {
+    id: items,
+};
+
+if (items.length == 0) {
+    toast_message_error('Please Select at Least One')
+} else {
+    delete_item(data, url, button_text, text, table);
+    
+
+}
+
 });
 
 $('#add_employee_form').on('submit', function(e) {
