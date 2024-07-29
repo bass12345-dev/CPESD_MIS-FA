@@ -12,6 +12,7 @@ class PositionsController extends Controller
     protected $customRepository;
     protected $conn;
     protected $position_table;
+    protected $establishment_employee_table;
     protected $order_by_asc = 'asc';
     protected $order_by_key = 'position';
 
@@ -19,6 +20,7 @@ class PositionsController extends Controller
         $this->customRepository = $customRepository;
         $this->conn                 = config('app._database.lls_whip');
         $this->position_table       = 'positions';
+        $this->establishment_employee_table = 'establishment_employee';
     }
     public function index(){
         $data['title'] = 'Establishments Position';
@@ -86,13 +88,20 @@ class PositionsController extends Controller
     {
 
         $id = $request->input('id')['id'];
+        $message = '';
         if (is_array($id)) {
             foreach ($id as $row) {
-               $where = array('position_id' => $row);
-               $this->customRepository->delete_item($this->conn,$this->position_table,$where);
+                $count = $this->customRepository->q_get_where($this->conn,array('position_id' => $row),$this->establishment_employee_table)->count();
+                if($count > 0){
+                    $message = 'Some data cannot be deleted because it is used in another operations/';
+                }else {
+                    $where = array('position_id' => $row);
+                    $this->customRepository->delete_item($this->conn,$this->position_table,$where);
+                    $message = 'Deleted Successfully/';
+                }
             }
 
-            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+            $data = array('message' => $message, 'response' => true);
         } else {
             $data = array('message' => 'Error', 'response' => false);
         }

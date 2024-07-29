@@ -12,12 +12,14 @@ class EmploymentStatusController extends Controller
     protected $customRepository;
     protected $conn;
     protected $status_table;
+    protected $establishment_employee_table;
     protected $order_by_asc = 'asc';
     protected $order_by_key = 'status';
 
     public function __construct(CustomRepository $customRepository){
         $this->customRepository = $customRepository;
         $this->conn               = config('app._database.lls_whip');
+        $this->establishment_employee_table = 'establishment_employee';
         $this->status_table       = 'employment_status';
     }
     public function index(){
@@ -94,13 +96,25 @@ class EmploymentStatusController extends Controller
     {
 
         $id = $request->input('id')['id'];
+        $message = '';
         if (is_array($id)) {
             foreach ($id as $row) {
-               $where = array('employ_stat_id' => $row);
-               $this->customRepository->delete_item($this->conn,$this->status_table,$where);
+                if($row != 5){
+                    $count = $this->customRepository->q_get_where($this->conn,array('status_of_employment_id' => $row),$this->establishment_employee_table)->count();
+                    if($count > 0){
+                        $message = 'Some status cannot be deleted because it is used in another operations/';
+                    }else {
+                         $where = array('employ_stat_id' => $row);
+                        $this->customRepository->delete_item($this->conn,$this->status_table,$where);
+                        $message = 'Deleted Successfully/';
+                    }
+                }else {
+                    $message = $message.'Active Cannot be Deleted';
+                }
+               
             }
 
-            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+            $data = array('message' => $message, 'response' => true);
         } else {
             $data = array('message' => 'Error', 'response' => false);
         }

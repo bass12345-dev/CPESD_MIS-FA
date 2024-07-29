@@ -234,7 +234,10 @@ $(document).ready(function() {
                 data: 'status_of_employment'
             },
             {
-                data: 'year_employed'
+                data: 'start_date'
+            },
+            {
+                data: 'end_date'
             },
             {
                 data: null
@@ -301,7 +304,8 @@ $(document).ready(function() {
                                 data-nature="' + row.nature_of_employment + '"\
                                 data-position="' + row.position_id+ '"\
                                 data-status="' + row.status_id + '"\
-                                data-year="' + row.year_employed + '"\
+                                data-start="' + row.start_date + '"\
+                                data-end="' + row.end_date + '"\
                                 data-level="' + row.level_of_employment + '"\
                                 ><i class="fas fa-pen"></i></button> </div>\
                                 </div>\
@@ -324,7 +328,9 @@ $(document).on('click', 'button.update-establishment-employee', function() {
     $('select[name=employment_status]').val($(this).data('status'));
     $('select[name=year_employed]').val($(this).data('year'));
     $('select[name=employment_level]').val($(this).data('level'));
-    
+    $('input[name=start]').val(moment($(this).data('start')).format('YYYY-MM'));
+    var end = $(this).data('end') === '-' ? '' : $(this).data('end');
+    $('input[name=end]').val(moment(end).format('YYYY-MM'));
 });
 
 

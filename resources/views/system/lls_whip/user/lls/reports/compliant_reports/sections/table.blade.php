@@ -4,9 +4,15 @@
         <div class="basic-tb-hd">
             <h2>{{$title}}</h2>
             <div class="row">
-                <div class="col-md-6" style="display:flex;">
-                    <input id='calendar' class="form-control yearpicker" />
-                    <button class="btn btn-success" id="by-year"  style="margin-left:5px; padding-right: 46px;">Generate Report</button>
+                <div class="col-md-8" style="display:flex;">
+                    <!-- <input id='calendar' class="form-control yearpicker" /> -->
+                     <div class="nk-int-st"  style="margin-left:5px;">
+                        <label>Select Month and Year</label>
+                     <input type="month" name="select_month" class="form-control">
+                     </div>
+                     <div class="nk-int-st">
+                        <button class="btn btn-success" id="by-year"  style="margin-left:5px; margin-top:23px;">Generate Report</but>
+                    </div>
                 </div>
             </div>
         </div>
@@ -15,8 +21,10 @@
                 <thead>
                     <tr>
                         <th>Establishment</th>
-                        <th>Percentage</th>
-                        <th>Status</th>
+                        <th>Compliance Percentage</th>
+                        <th>Compliance Status</th>
+                        <th>Total Rank and File Inside</th>
+                        <th>Total Rank and File Employee</th>
                     </tr>
                 </thead>
             </table>

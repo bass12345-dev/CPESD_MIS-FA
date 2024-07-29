@@ -23,8 +23,9 @@
                                                     class="form-control" name="establishment_id" required>
                                                 <input type="hidden" class="form-control" name="employee_id"
                                                     placeholder="ID" required>
-                                                <input type="hidden" class="form-control" name="establishment_employee_id"
-                                                    placeholder="Establishment Employee ID" >
+                                                <input type="hidden" class="form-control"
+                                                    name="establishment_employee_id"
+                                                    placeholder="Establishment Employee ID">
                                                 <div id="the-basics">
                                                     <input class="typeahead form-control" type="text" name="employee"
                                                         placeholder="Search Employee" required style="width: 100%;">
@@ -83,26 +84,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="form-group ic-cmp-int">
-                                            <div class="form-ic-cmp">
-                                                <i class="notika-icon notika-map"></i>
-                                            </div>
-                                            <div class="nk-int-st">
-                                                <select class="form-control" id="year_employed" name="year_employed"
-                                                    required>
-                                                    <option value="" selected>Select Year of Employed</option>
-                                                    <?php
-                                                        for ($i=2021; $i <= 2050; $i++) { 
-                                                            $selected = $i == $year_now ? 'selected' : '';
-                                                        echo ' <option '.$selected.'>'.$i.'</option>';
-                                                        }
-                                                ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                  
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="form-group ic-cmp-int">
                                             <div class="form-ic-cmp">
                                                 <i class="notika-icon notika-map"></i>
@@ -118,6 +101,32 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-map"></i>
+                                            </div>
+                                            <div class="nk-int-st">
+                                                <label>Start</label>
+                                                <input type="month" name="start" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-map"></i>
+                                            </div>
+                                            <div class="nk-int-st">
+                                                <label>End</label>
+                                                <input type="month" name="end" class="form-control" placeholder="End">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="form-example-int mg-t-15">
                                     <button type="submit" class="btn btn-primary notika-btn-success">Submit</button>

@@ -166,7 +166,7 @@ class EstablishmentController extends Controller
 
     //REPORTS
     public function generate_compliant_report(Request $request){
-       $year = $request->input('year');
+       $year = $request->input('date').'-01';
        $data = $this->establishmentService->compliant_process($year);
        return response()->json($data);
        

@@ -238,6 +238,7 @@ class EstablishmentService
         foreach ($establishments as $row) {
                 $data[] = array(
                     'establishment_name' => $row->establishment_name,
+                    'establishment_id'  => $row->establishment_id,
                     'is_compliant'      => $this->compliant_calc($row->establishment_id,$year)
                 );
                 
@@ -251,27 +252,34 @@ class EstablishmentService
         $count_outside = $this->employeeQuery->count_outside($this->conn,$id,$year,$this->default_city);
         $total = $count_inside + $count_outside;
         $resp = '';
-        if($total == 0){
+        if($total < 10){
             $resp = [
                 'resp' => false,
-                'percent' => 0
+                'percent' => 0,
+                
             ];
         }else {
             $calc = round($count_inside/$total*100, 2); 
             if($calc >= 70){
                 $resp = [
                     'resp' => true,
-                    'percent' => $calc
+                    'percent' => $calc,
+                   
+                   
                 ];
                 
             }else {
                 $resp = [
                     'resp' => false,
-                    'percent' => $calc
+                    'percent' => $calc,
+                   
                 ];
                 
             }
         }
+
+        $resp['total_employee'] = $total;
+        $resp['total_inside'] = $count_inside;
         return $resp;
     }
 

@@ -25,12 +25,15 @@ class EmployeeQuery
 
       $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
         ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+        ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
         ->select(   
         'employees.city as city',
       )
       ->where('establishment_employee.establishment_id', $es_id)
-      ->where('establishment_employee.year_employed',$year)
+      ->whereYear('establishment_employee.start_date',$year)
       ->where('establishment_employee.nature_of_employment',$nature)
+      ->where('employment_status.employ_stat_id',5)
+      ->where('establishment_employee.level_of_employment','rank_and_file')
       ->where('city',$default_city)
       ->count();
      
@@ -43,12 +46,15 @@ class EmployeeQuery
 
       $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
         ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+        ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
         ->select(   
         'employees.city as city',
       )
       ->where('establishment_employee.establishment_id', $es_id)
-      ->where('establishment_employee.year_employed',$year)
+      ->whereYear('establishment_employee.start_date',$year)
       ->where('establishment_employee.nature_of_employment',$nature)
+      ->where('employment_status.employ_stat_id',5)
+      ->where('establishment_employee.level_of_employment','rank_and_file')
       ->where('city','!=',$default_city)
       ->count();
       return $rows;
@@ -109,7 +115,8 @@ class EmployeeQuery
         //Nature of Employment
         'establishment_employee.employee_id as employee_id',
         'establishment_employee.nature_of_employment as nature_of_employment',
-        'establishment_employee.year_employed as year_employed',
+        'establishment_employee.start_date as start_date',
+        'establishment_employee.end_date as end_date',
         'establishment_employee.level_of_employment as level_of_employment'
       )
       ->where('establishment_employee.establishment_id', $id)
@@ -121,29 +128,37 @@ class EmployeeQuery
     }   
 
   
-  public function count_inside($conn,$es_id,$year,$default_city){
+  public function count_inside($conn,$es_id,$date,$default_city){
 
     $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
     ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+    ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
     ->select(   
       'employees.city as city',
     )
     ->where('establishment_employee.establishment_id', $es_id)
     ->where('city', $default_city)
+    ->where('employment_status.employ_stat_id',5)
+    ->whereDate('establishment_employee.start_date', '<=', $date)
+    ->where('establishment_employee.level_of_employment','rank_and_file')
     ->count();
     return $rows;
 
   }
 
-  public function count_outside($conn,$es_id,$year,$default_city){
+  public function count_outside($conn,$es_id,$date,$default_city){
 
     $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
     ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+    ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
     ->select(   
       'employees.city as city',
     )
     ->where('establishment_employee.establishment_id', $es_id)
     ->where('city','!=',$default_city)
+    ->where('employment_status.employ_stat_id',5)
+    ->whereDate('establishment_employee.start_date', '<=', $date)
+    ->where('establishment_employee.level_of_employment','rank_and_file')
     ->count();
     return $rows;
 

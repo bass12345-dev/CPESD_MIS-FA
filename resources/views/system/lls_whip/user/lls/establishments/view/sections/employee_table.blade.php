@@ -19,7 +19,8 @@
                                         <th>Position</th>
                                         <th>Nature of Employment</th>
                                         <th>Status Of Employment</th>
-                                        <th>Year Employed</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
                                         <th>Level Of Employment</th>
                                         <th>Action</th>
                                     </tr>

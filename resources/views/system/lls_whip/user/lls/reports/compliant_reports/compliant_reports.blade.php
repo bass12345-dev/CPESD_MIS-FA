@@ -15,25 +15,31 @@
 @section('js')
 
 <script>
-var year;
- $("#calendar").yearpicker({
-  onChange : function(value){
-    year = value;
-  }
-});
+
+//  $("#calendar").yearpicker({
+//   onChange : function(value){
+//     year = value;
+//   }
+// });
 
 $(document).on('click', 'button#by-year' , function(){
     $('#data-table-basic').DataTable().destroy();
-    generate_compliant_report();
+    var date = $('input[name=select_month]').val();
+    if(!date){
+        toast_message_error('Please Select Month and Year');
+    }else{
+        generate_compliant_report(date);
+    }
+   
 });
 
 
-function generate_compliant_report(){
+function generate_compliant_report(date){
 
     $.ajax({
         url: base_url + '/admin/act/lls/generate-compliant-report',
         method: 'POST',
-        data: {year : year},
+        data: {date : date},
         dataType: 'json',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -67,19 +73,35 @@ function generate_compliant_report(){
        
         columns: [
             {
-                data: 'establishment_name'
+                data: null
             },
+            {
+                data: null
+            },
+            {
+                data: null
+            },
+            
             {
                 data: null
             },
             {
                 data: null
             },
-           
            
 
         ],
         columnDefs: [
+            {
+                targets: 0,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return '<a href="' + base_url + '/admin/lls/establishment/' + row
+                        .establishment_id + '">' + row.establishment_name + '</a>'
+                }
+            },
             {
                 targets: 1,
                 data: null,
@@ -97,6 +119,27 @@ function generate_compliant_report(){
                 className: 'text-center',
                 render: function(data, type, row) {
                     return row.is_compliant.resp == true ? '<span class="badge notika-bg-success">Compliant</span>' : '<span class="badge notika-bg-danger">Not Compliant</span>';
+                   
+                }
+            },
+            {
+                targets: -2,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return row.is_compliant.total_inside;
+                   
+                }
+            },
+
+            {
+                targets: -1,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return row.is_compliant.total_employee;
                    
                 }
             },

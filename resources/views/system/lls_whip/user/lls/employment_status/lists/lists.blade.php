@@ -73,7 +73,7 @@
                                 <div ><button class="btn btn-success update-status" \
                                 data-id="'+row.employ_stat_id+'"\
                                 data-name="'+row.status+'"\
-                                >Update</button> </div>\
+                                ><i class="fas fa-pen"></i></button> </div>\
                                 </div>\
                                 ';
                     }

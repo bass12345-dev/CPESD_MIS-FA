@@ -154,9 +154,10 @@ class EmployeeController extends Controller
                     'position'              => $row->position,
                     'position_id'           => $row->position_id,
                     'nature_of_employment'  => $row->nature_of_employment,
-                    'status_id'                  => $row->employ_stat_id,
+                    'status_id'             => $row->employ_stat_id,
                     'status_of_employment'  => $row->status,
-                    'year_employed'         => $row->year_employed,
+                    'start_date'            =>  $row->start_date == NULL ? '-' :  Carbon::parse($row->start_date)->format('M Y'),
+                    'end_date'              => $row->end_date == NULL ? '-' :  Carbon::parse($row->end_date)->format('M Y'),
                     'level_of_employment'   => $row->level_of_employment
            );
         }
@@ -172,8 +173,9 @@ class EmployeeController extends Controller
             'position_id'               => $request->input('position'),
             'nature_of_employment'      => $request->input('employment_nature'),
             'status_of_employment_id'   => $request->input('employment_status'),
-            'year_employed'             => $request->input('year_employed'),
             'level_of_employment'       =>  $request->input('employment_level'),
+            'start_date'                => $request->input('start') == NULL ? NULL :  Carbon::parse($request->input('start'))->format('Y-m-d'),
+            'end_date'                  => $request->input('end') == NULL ? NULL :  Carbon::parse($request->input('end'))->format('Y-m-d'),
         );
 
         if(empty($request->input('establishment_employee_id'))){
