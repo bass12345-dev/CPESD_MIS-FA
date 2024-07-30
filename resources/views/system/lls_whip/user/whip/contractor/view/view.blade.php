@@ -1,4 +1,4 @@
-@extends('system.lls_whip.user.layout.user_master')
+@extends('system.lls_whip.user.whip_layout.whip_master')
 @section('title', $title)
 @section('content')
 <div class="notika-status-area">
@@ -7,13 +7,17 @@
             @include('system.lls_whip.user.whip.contractor.view.sections.information')
             @include('system.lls_whip.user.whip.contractor.view.projects_section.tables.projects_table')
         </div>
+        <div class="row">
+            @include('system.lls_whip.user.whip.contractor.view.employee_section.tables.employee_table')
+            
+        </div>
     </div>
 </div>
 @include('system.lls_whip.user.whip.contractor.view.projects_section.modals.add_project_modal')
 @include('system.lls_whip.user.whip.contractor.view.sections.modals.update_contractor_modal')
 @endsection
 @section('js')
-@include('system.lls_whip.includes._js._js')
+@include('system.lls_whip.includes._js.location_js')
 <script>
      $(document).ready(function() {
 		table =  $('#data-table-basic').DataTable({

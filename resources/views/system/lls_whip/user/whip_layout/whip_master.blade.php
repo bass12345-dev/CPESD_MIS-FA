@@ -5,9 +5,9 @@
 	@include('system.lls_Whip.includes.css')
 </head>
 <body>
-	@include('system.lls_whip.user.layout.includes.header_top_area')
-	@include('system.lls_whip.user.layout.includes.main_menu')
-	@include('system.lls_whip.user.layout.includes.mobile_menu')
+	@include('system.lls_whip.user.whip_layout.includes.header_top_area')
+	@include('system.lls_whip.user.whip_layout.includes.main_menu')
+	@include('system.lls_whip.user.whip_layout.includes.mobile_menu')
 	<main class="content">
 		@yield('content')
 	</main>

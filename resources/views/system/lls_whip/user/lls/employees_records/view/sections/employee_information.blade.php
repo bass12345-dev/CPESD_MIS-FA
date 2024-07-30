@@ -1,4 +1,4 @@
-<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
     <div class="card flex-fill p-3">
         <div class="card-header">
             <h5 class="card-title mb-0">Employee Information</h5>
@@ -25,9 +25,9 @@
             <tr>
                 <td>Full Address</td>
                 <td class="text-start"><span class="title">{{$full_address}} </span>
-                    <select class="form-control province_select" name="province" id="province_select" disabled required hidden></select>
-                    <select class="form-control" id="city_select" name="city" required hidden></select>
-                    <select class="form-control" id="brgy_select" name="barangay"  hidden></select>
+                    <select class="form-control province_select" name="province" id="province_select"  required></select>
+                    <select class="form-control" id="city_select" name="city" required ></select>
+                    <select class="form-control" id="brgy_select" name="barangay"  ></select>
                 </td>
             </tr>
             <tr>

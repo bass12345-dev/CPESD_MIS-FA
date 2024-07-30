@@ -115,6 +115,22 @@
                                 </div>
                                 <div class="row">
 
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-travel"></i>
+                                            </div>
+                                            <div class="nk-int-st">
+                                                <select class="form-control" name="gender" required>
+                                                    <option value="">Select Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group ic-cmp-int">
                                             <div class="form-ic-cmp">

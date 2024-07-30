@@ -78,11 +78,12 @@ class EmployeeQuery
         //Nature of Employment
         'establishment_employee.employee_id as employee_id',
         'establishment_employee.nature_of_employment as nature_of_employment',
-        'establishment_employee.year_employed as year_employed',
+        'establishment_employee.start_date as start_date',
+        'establishment_employee.end_date as end_date',
         'establishment_employee.level_of_employment as level_of_employment'
       )
       ->where('establishment_employee.employee_id', $id)
-      ->orderBy('establishment_employee.estab_emp_id', 'desc')
+      ->orderBy('establishment_employee.start_date', 'desc')
       ->get();
     
     return $rows;
@@ -127,7 +128,85 @@ class EmployeeQuery
 
     }   
 
+
+
+
+  //DASHBOARD DISPLAY
+
+  public function inside($conn,$default_city){
+    $rows = DB::connection($conn)->table('employees as employees')
+    // ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
+    // ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
+    ->select(   
+      'employees.city as city',
+    )
+    ->where('city', $default_city)
+    // ->where('employment_status.employ_stat_id',5)
+    // ->where('establishment_employee.level_of_employment','rank_and_file')
+    ->count();
+    return $rows;
+
+  }
+
+  public function outside($conn,$default_city){
+    $rows = DB::connection($conn)->table('employees as employees')
+    // ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
+    // ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
+    ->select(   
+      'employees.city as city',
+    )
+    ->where('city','!=',$default_city)
+    // ->where('employment_status.employ_stat_id',5)
+    // ->where('establishment_employee.level_of_employment','rank_and_file')
+    ->count();
+    return $rows;
+
+  }
+
+
+  public function countByGenderEmployedInside($conn,$where,$default_city){
+    $rows = DB::connection($conn)->table('employees as employees')
+    ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
+    ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
+    ->select(   
+      'employees.city as city',
+      'employees.gender as gender',
+    )
+    ->where($where)
+    ->where('city',$default_city)
+    ->where('employment_status.employ_stat_id',5)
+    ->where('establishment_employee.level_of_employment','rank_and_file')
+    ->count();
+    return $rows;
+
+  }
+
+
+  public function countByGenderEmployedOutside($conn,$where,$default_city){
+    $rows = DB::connection($conn)->table('employees as employees')
+    ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
+    ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
+    ->select(   
+      'employees.city as city',
+      'employees.gender as gender',
+    )
+    ->where($where)
+    ->where('city','!=',$default_city)
+    ->where('employment_status.employ_stat_id',5)
+    ->where('establishment_employee.level_of_employment','rank_and_file')
+    ->count();
+    return $rows;
+
+  }
+
   
+
+  
+
+
+
+  //REPORTS
+
   public function count_inside($conn,$es_id,$date,$default_city){
 
     $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')

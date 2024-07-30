@@ -263,7 +263,7 @@ class EstablishmentService
             if($calc >= 70){
                 $resp = [
                     'resp' => true,
-                    'percent' => $calc,
+                    'percent' => $calc.'%',
                    
                    
                 ];
@@ -271,7 +271,7 @@ class EstablishmentService
             }else {
                 $resp = [
                     'resp' => false,
-                    'percent' => $calc,
+                    'percent' => $calc.'%',
                    
                 ];
                 

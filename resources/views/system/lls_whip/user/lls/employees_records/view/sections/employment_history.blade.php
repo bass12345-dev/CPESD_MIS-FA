@@ -1,4 +1,4 @@
-<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
     <div class="card flex-fill p-3">
         <div class="card-header">
             <h5 class="card-title mb-0">Employment History</h5>
@@ -16,7 +16,8 @@
                                     <th>Nature of Employment</th>
                                     <th>Status Of Employment</th>
                                     <th>Level Of Employment</th>
-                                    <th>Year Employed</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                 </tr>
                             </thead>
                         </table>

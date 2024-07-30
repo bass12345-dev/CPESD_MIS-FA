@@ -14,7 +14,7 @@
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <div class="logo-area">
                         <a href="">
-                            <h3>Labor Localization</h3>
+                            <h3>WHIP</h3>
                             <!-- <img src="img/logo/logo.png" alt="" /> -->
                         </a>
                     </div>

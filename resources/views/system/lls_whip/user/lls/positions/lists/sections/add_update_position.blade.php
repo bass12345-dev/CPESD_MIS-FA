@@ -12,7 +12,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group ic-cmp-int">
                                     <div class="form-ic-cmp">
-                                        <i class="notika-icon notika-house"></i>
+                                        <i class="notika-icon notika-edit"></i>
                                     </div>
                                     <div class="nk-int-st">
                                         <input type="hidden" class="form-control" name="position_id"

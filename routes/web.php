@@ -75,6 +75,9 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
       //Projects
       Route::get("/whip/projects-list",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'index']);
 
+      //EMPLOYEES
+      Route::get("/whip/employees-record",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'index']);
+
       
 
 
@@ -113,6 +116,9 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
 
    //COMPLIANT REPORTS
    Route::post("/lls/generate-compliant-report",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'generate_compliant_report']);
+   //Dashboard
+   Route::get("/lls/c-b-g-i",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_inside']);
+   Route::get("/lls/c-b-g-o",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_outside']);
 
    //ACTIONS WHIP
    //Contractor

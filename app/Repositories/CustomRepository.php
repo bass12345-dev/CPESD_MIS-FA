@@ -8,7 +8,9 @@ class CustomRepository
 {
 
  
-
+    public static function q_get($conn,$table){
+        return DB::connection($conn)->table($table);
+    }
     public static function q_get_where($conn,$where,$table){
         return DB::connection($conn)->table($table)->where($where);
     }

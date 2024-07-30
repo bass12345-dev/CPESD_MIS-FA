@@ -46,6 +46,8 @@ class EmployeeController extends Controller
         $data['title']      = $this->uSerService->user_full_name($row);
         $data['full_address'] = $this->uSerService->full_address($row);
         $data['row']        = $row;
+
+   
         return view('system.lls_whip.user.lls.employees_records.view.view')->with($data);
     }
 
@@ -75,6 +77,7 @@ class EmployeeController extends Controller
             'city'                  => $request->input('city'),
             'barangay'              => $request->input('barangay'),
             'street'                => $request->input('street'),
+            'gender'                => $request->input('gender'),
             'contact_number'        => $request->input('contact_number'),
             'created_on'            => Carbon::now()->format('Y-m-d H:i:s'),
         );
@@ -178,13 +181,24 @@ class EmployeeController extends Controller
             'end_date'                  => $request->input('end') == NULL ? NULL :  Carbon::parse($request->input('end'))->format('Y-m-d'),
         );
 
-        if(empty($request->input('establishment_employee_id'))){
-            $resp = $this->establishmentService->insert_establishment_employee($items);
-            
+        if($items['start_date'] <= $items['end_date'] ||  empty($items['end_date'])){
+
+            if(empty($request->input('establishment_employee_id'))){
+                $resp = $this->establishmentService->insert_establishment_employee($items);
+                
+            }else {
+                $where = array('estab_emp_id' => $request->input('establishment_employee_id'));
+                $resp = $this->establishmentService->update_establishment_employee($where,$items);
+            }
+
         }else {
-            $where = array('estab_emp_id' => $request->input('establishment_employee_id'));
-            $resp = $this->establishmentService->update_establishment_employee($where,$items);
+            $resp = [
+                'message' => 'Start Date is greater than End Date', 
+                'response' => false
+            ];
         }
+
+       
 
         return response()->json($resp);
      

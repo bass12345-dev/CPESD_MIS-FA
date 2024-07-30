@@ -1,10 +1,10 @@
-@extends('system.lls_whip.user.layout.user_master')
+@extends('system.lls_whip.user.whip_layout.whip_master')
 @section('title', $title)
 @section('content')
 @include('system.lls_whip.user.whip.contractor.add_new.sections.form')
 @endsection
 @section('js')
-@include('system.lls_whip.includes._js._js')
+@include('system.lls_whip.includes._js.location_js')
 <script>
     $('#add_form').on('submit', function(e){
         e.preventDefault();

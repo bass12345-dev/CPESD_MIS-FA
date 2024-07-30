@@ -12,7 +12,7 @@
 </div>
 @endsection
 @section('js')
-@include('system.lls_whip.includes._js.new_location')
+
 <script>
 
 $(document).ready(function() {
@@ -24,9 +24,11 @@ $(document).on('click', 'button.edit-information', function() {
     $('.submit').removeClass('hidden');
     $(this).addClass('hidden');
     $('input.title').prop('type','text');
-    $('select[name=province]').val('<?php echo $row->province; ?>');
-    $('select[name=city]').val('<?php echo $row->city; ?>');
-    $('select[name=barangay]').val('<?php echo $row->barangay; ?>');
+    var province = '<?php echo $row->province; ?>'.split("-")[0];
+    $('select[name=province]').val(province);
+    // var city = '<?php echo $row->city; ?>'.split("-")[0];
+    // $('select[name=city]').val(city);
+    
 });
 
 $(document).on('click', 'button.cancel-edit', function() {
@@ -40,7 +42,7 @@ $(document).on('click', 'button.cancel-edit', function() {
 
 $(document).ready(function() {
     table = $('#data-table-basic').DataTable({
-        responsive: true,
+        
         ordering: false,
         processing: true,
         searchDelay: 500,
@@ -78,7 +80,10 @@ $(document).ready(function() {
                 data: 'level_of_employment'
             },
             {
-                data: 'year_employed'
+                data: null
+            },
+            {
+                data: null
             },
            
            
@@ -97,6 +102,39 @@ $(document).ready(function() {
                    
                 }
             },
+            {
+                targets: -3,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    var result = row.level_of_employment.replaceAll('_', ' ');
+                    return capitalizeFirstLetter(result);
+
+                }
+            },
+
+            {
+                targets: -2,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return moment(row.start_date).format('MMMM YYYY');
+
+                }
+            },
+            {
+                targets: -1,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return row.end_date == null ? '-' :  moment(row.end_date).format('MMMM YYYY');
+
+                }
+            },
+            
            
         ]
 
@@ -104,55 +142,56 @@ $(document).ready(function() {
 });
 
 
-    var province_options    = $("#province_select");
-    var city_options        = $("#city_select");
-    var brgy_options        = $("#brgy_select");
+var province_options    = $("#province_select");
+var city_options        = $("#city_select");
+var brgy_options        = $("#brgy_select");
 
-    function load_provinces(){
+
+
+
+
+
+function load_provinces(){
         province_options.append(new Option('Select Province', ''));
         $.ajax({url: 'https://psgc.cloud/api/provinces',method: 'GET',dataType :'json',beforeSend :  function(){province_options.after('<span class="text-warning loading_provinces" >Loading Provinces...</span><a href="javascript:;" class="refetch_provinces"></a>');}
         }).done(function(data) {
             $('span.loading_provinces').remove(); 
             $.each(data, function(i, row) {
-                province_options.append(new Option(row.name, row.code+'-'+row.name));
+                province_options.append(new Option(row.name, row.code));
             });    
             province_options.removeAttr('disabled');
         });
     }
 
-    function load_cities(){
-       
+// function load_mun_cit(){
+//         city_options.append(new Option('Select City', ''));
+//         $.ajax({url: 'https://psgc.cloud/api/cities',method: 'GET',dataType :'json',beforeSend :  function(){city_options.after('<span class="text-warning loading_provinces" >Loading Cities...</span><a href="javascript:;" class="refetch_provinces"></a>');}
+//         }).done(function(data) {
+//             $('span.loading_provinces').remove(); 
+//             $.each(data, function(i, row) {
+//                 city_options.append(new Option(row.name, row.code));
+//             });    
+//                 city_options.removeAttr('disabled');
+//         });
+// }
 
-        $.ajax({url: 'https://psgc.cloud/api/cities-municipalities',method: 'GET',dataType :'json',beforeSend :  function(){city_options.after('<span class="text-warning loading_provinces" >Loading Provinces...</span><a href="javascript:;" class="refetch_provinces"></a>');}
-        }).done(function(cities) {
-            $('span.loading_cities').remove(); 
-            var filteredMun = $(cities).filter(function(idx){
-                return cities[idx].type === "Mun" 
-            });
-            var filteredCities = $(cities).filter(function(idx){
-                return cities[idx].type === "City" 
-            });
-            var optgroup = "<optgroup label='Cities'>";
-            $(filteredCities).each(function(){
-                    name = this.name;
-                    optgroup += "<option value='" + this.code + "-"+name+"'>" + name + "</option>"
-            });
-            optgroup += "</optgroup>"
-            city_options.append(optgroup);
+// function load_barangays(){
+//         brgy_options.append(new Option('Select Barangays', ''));
+//         $.ajax({url: 'https://psgc.cloud/api/barangays',method: 'GET',dataType :'json',beforeSend :  function(){brgy_options.after('<span class="text-warning loading_provinces" >Loading Barangays...</span><a href="javascript:;" class="refetch_provinces"></a>');}
+//         }).done(function(data) {
+//             $('span.loading_provinces').remove(); 
+//             $.each(data, function(i, row) {
+//                 brgy_options.append(new Option(row.name, row.code));
+//             });    
+//                 brgy_options.removeAttr('disabled');
+//         });
+// }
 
-            var optgroup = "<optgroup label='Municipalities'>";
-            $(filteredMun).each(function(){
-                name = this.name;
-                optgroup += "<option value='" + this.code + "-"+name+"'>" + name + "</option>"
-            });
-             optgroup += "</optgroup>"
-             city_options.append(optgroup);
-             city_options.prepend(new Option('Select City Or Municipalities', ''));
-             $(`#city_select option[value='']`).prop('selected', true);
-             city_options.removeAttr('disabled');
-        });
-    }
-    load_cities();
-    load_provinces();
+    
+    
+// load_barangays()
+// load_provinces();
+load_mun_cit();
+
 </script>
 @endsection
