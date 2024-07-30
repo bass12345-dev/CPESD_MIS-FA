@@ -80,11 +80,11 @@ CREATE TABLE `employees` (
   `extension` varchar(50) DEFAULT NULL,
   `province` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
-  `barangay` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `barangay` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `contact_number` varchar(15) DEFAULT NULL,
   `created_on` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employees`
@@ -113,7 +113,7 @@ CREATE TABLE `employment_status` (
   `employ_stat_id` int NOT NULL,
   `status` varchar(255) NOT NULL,
   `created_on` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employment_status`
@@ -187,7 +187,7 @@ CREATE TABLE `establishment_employee` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `created_on` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `establishment_employee`
@@ -284,7 +284,7 @@ CREATE TABLE `positions` (
   `position_id` int NOT NULL,
   `position` varchar(250) NOT NULL,
   `created_on` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `positions`

@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="add_form">
+                <form id="add_update_form">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="form-element-list">
@@ -72,7 +72,7 @@
                                                 <i class="notika-icon notika-mail"></i>
                                             </div>
                                             <div class="nk-int-st">
-                                                <select class="form-control" name="employment_status" required>
+                                                <select class="form-control" name="employment_status" id="employment_status" required>
                                                     <option value="" selected>Select Employment Status</option>
                                                     <?php foreach($employment_status as $row):?>
                                                     <option value="{{$row->employ_stat_id}}">{{$row->status}}</option>

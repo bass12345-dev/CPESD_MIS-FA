@@ -119,32 +119,50 @@ $('button#multi-delete').on('click', function() {
 
 $(document).on('click', 'button.add-employee', function() {
     $('h2.title').text('Add Employee');
+    $('form#add_update_form')[0].reset();
     $('input[name=employee]').val($(this).data('employee-name')).attr('disabled',false);
 });
 
 
-$('#add_form').on('submit', function(e) {
+$('#add_update_form').on('submit', function(e) {
     e.preventDefault();
 
-    $(this).find('button[type="submit"]').prop('disabled', true);
-    $(this).find('button[type="submit"]').html('<span class="loader"></span>')
-    var url = '/admin/act/lls/i-u-e-e';
-    let form = $(this);
+        $(this).find('button[type="submit"]').prop('disabled', true);
+        $(this).find('button[type="submit"]').html('<span class="loader"></span>')
+        var url = '/admin/act/lls/i-u-e-e';
+        let form = $(this);
+        
+        var status = $('select[name=employment_status] :selected').val();
+        if(status == 5 && $('input[name=end]').val() != null){
+            toast_message_error('End field must be empty because you select "Active" Employment Status');
+            $(this).find('button[type="submit"]').prop('disabled', false);
+            $(this).find('button[type="submit"]').text('Submit');
+        }else {
 
-    if(!form.find('input[name=establishment_employee_id]').val()){
-    _insertAjax(url, form, table);
-    
-    }else {
-        _updatetAjax(url, form, table);
-    }
+            if(!form.find('input[name=establishment_employee_id]').val()){
+        _insertAjax(url, form, table);
+        
+        }else {
+            _updatetAjax(url, form, table);
+        }
 
-    setTimeout(() => {
-        survey(year_now);
-    }, 1000);
+        setTimeout(() => {
+            survey(year_now);
+        }, 1000);
 
+        }
 
+        
 });
 
+$(document).on('change' , 'select[name=employment_status]', function(){
+    var status = $('select[name=employment_status] :selected').val();
+    if(status != 5){
+        $('input[name=end]').prop('required' , true);
+    }else {
+        $('input[name=end]').prop('required' , false);
+    }
+});
 
 function load_survey_data($this) {
     survey($this.value);
@@ -284,7 +302,8 @@ $(document).ready(function() {
                 orderable: false,
                 className: 'text-center',
                 render: function(data, type, row) {
-                    return capitalizeFirstLetter(row.level_of_employment);
+                    var result = row.level_of_employment.replaceAll('_', ' ');
+                    return capitalizeFirstLetter(result);
 
                 }
             },
@@ -318,19 +337,26 @@ $(document).ready(function() {
 });
 
 $(document).on('click', 'button.update-establishment-employee', function() {
-    $('form#add_form').find('input[name=establishment_employee_id]').val($(this).data('id'));
-    // $('.name_section').remove();
+    $('form#add_update_form').find('input[name=establishment_employee_id]').val($(this).data('id'));
+    var status = $(this).data('status');
     $('input[name=employee_id]').val($(this).data('employee-id'))
     $('input[name=employee]').val($(this).data('employee-name')).attr('disabled',true);
     $('h2.title').text($(this).data('employee-name'));
     $('select[name=employment_nature]').val($(this).data('nature'));
     $('select[name=position]').val($(this).data('position'));
-    $('select[name=employment_status]').val($(this).data('status'));
+    $('select[name=employment_status]').val(status);
     $('select[name=year_employed]').val($(this).data('year'));
     $('select[name=employment_level]').val($(this).data('level'));
     $('input[name=start]').val(moment($(this).data('start')).format('YYYY-MM'));
     var end = $(this).data('end') === '-' ? '' : $(this).data('end');
     $('input[name=end]').val(moment(end).format('YYYY-MM'));
+    if(status != 5){
+        $('input[name=end]').prop('required' , true);
+    }else {
+        $('input[name=end]').prop('required' , false);
+    }
+
+
 });
 
 

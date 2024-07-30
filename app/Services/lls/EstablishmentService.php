@@ -186,7 +186,7 @@ class EstablishmentService
                     ];
                 }else {
                     $data = [
-                        'message' => 'Something Wrong', 
+                        'message' => 'Something Wrong/No Changes Applied', 
                         'response' => false
                     ];
                     
