@@ -135,14 +135,10 @@ class EmployeeQuery
 
   public function inside($conn,$default_city){
     $rows = DB::connection($conn)->table('employees as employees')
-    // ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
-    // ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
     ->select(   
       'employees.city as city',
     )
     ->where('city', $default_city)
-    // ->where('employment_status.employ_stat_id',5)
-    // ->where('establishment_employee.level_of_employment','rank_and_file')
     ->count();
     return $rows;
 
@@ -150,14 +146,10 @@ class EmployeeQuery
 
   public function outside($conn,$default_city){
     $rows = DB::connection($conn)->table('employees as employees')
-    // ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
-    // ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
     ->select(   
       'employees.city as city',
     )
     ->where('city','!=',$default_city)
-    // ->where('employment_status.employ_stat_id',5)
-    // ->where('establishment_employee.level_of_employment','rank_and_file')
     ->count();
     return $rows;
 
