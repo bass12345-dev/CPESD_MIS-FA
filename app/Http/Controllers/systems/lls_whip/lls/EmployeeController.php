@@ -161,7 +161,8 @@ class EmployeeController extends Controller
                     'status_of_employment'  => $row->status,
                     'start_date'            =>  $row->start_date == NULL ? '-' :  Carbon::parse($row->start_date)->format('M Y'),
                     'end_date'              => $row->end_date == NULL ? '-' :  Carbon::parse($row->end_date)->format('M Y'),
-                    'level_of_employment'   => $row->level_of_employment
+                    'level_of_employment'   => $row->level_of_employment,
+                    'gender'                => $row->gender
            );
         }
         return response()->json($data);

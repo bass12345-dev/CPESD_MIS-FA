@@ -15,6 +15,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Full Name</th>
+                                        <th>Gender</th>
                                         <th>Address</th>
                                         <th>Position</th>
                                         <th>Nature of Employment</th>

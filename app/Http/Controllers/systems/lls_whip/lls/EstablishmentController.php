@@ -131,7 +131,8 @@ class EstablishmentController extends Controller
                     'email_address'             => $row->email_address,
                     'authorized_personnel'      => $row->authorized_personnel,
                     'position'                  => $row->position,
-                    'status'                    => $row->status
+                    'status'                    => $row->status,
+                    
            );
         }
 

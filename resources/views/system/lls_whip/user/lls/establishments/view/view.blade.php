@@ -234,6 +234,9 @@ $(document).ready(function() {
                 data: null
             },
             {
+                data: null
+            },
+            {
                 data: 'full_address'
             },
             {
@@ -279,9 +282,19 @@ $(document).ready(function() {
 
                 }
             },
+            {
+                targets: 2,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return capitalizeFirstLetter(row.gender);
+
+                }
+            },
 
             {
-                targets: 4,
+                targets: 5,
                 data: null,
                 orderable: false,
                 className: 'text-center',

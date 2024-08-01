@@ -107,6 +107,7 @@ class EmployeeQuery
         'employees.city as city',
         'employees.barangay as barangay',
         'employees.street as street',
+        'employees.gender as gender',
         //Position
         'positions.position_id as position_id',
         'positions.position as position',
@@ -159,15 +160,15 @@ class EmployeeQuery
   public function countByGenderEmployedInside($conn,$where,$default_city){
     $rows = DB::connection($conn)->table('employees as employees')
     ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
-    ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
     ->select(   
       'employees.city as city',
       'employees.gender as gender',
     )
     ->where($where)
     ->where('city',$default_city)
-    ->where('employment_status.employ_stat_id',5)
+    ->where('establishment_employee.status_of_employment_id',5)
     ->where('establishment_employee.level_of_employment','rank_and_file')
+    // ->groupBy('employees.employee_id')
     ->count();
     return $rows;
 
@@ -177,14 +178,13 @@ class EmployeeQuery
   public function countByGenderEmployedOutside($conn,$where,$default_city){
     $rows = DB::connection($conn)->table('employees as employees')
     ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
-    ->leftJoin('employment_status', 'employment_status.employ_stat_id', '=', 'establishment_employee.status_of_employment_id')
     ->select(   
       'employees.city as city',
       'employees.gender as gender',
     )
     ->where($where)
     ->where('city','!=',$default_city)
-    ->where('employment_status.employ_stat_id',5)
+    ->where('establishment_employee.status_of_employment_id',5)
     ->where('establishment_employee.level_of_employment','rank_and_file')
     ->count();
     return $rows;
