@@ -6,11 +6,13 @@
                     <div class="data-table-list">
                         <div class="basic-tb-hd">
                             <h2>Contractors List</h2>
+                            <button class="btn btn-danger multi-delete" id="multi-delete" >Delete</button>
                         </div>
                         <div class="table-responsive">
                             <table id="data-table-basic" class="table table-striped">
                             <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Contractor Name</th>
                                         <th>Proprietor</th>
                                         <th>Full Address</th>
@@ -19,7 +21,7 @@
                                         <th>Telephone Number</th>
                                         <th>Email Address</th>
                                         <th>Status</th>
-                                        <th></th>
+                                       
                                     </tr>
                                 </thead>
                             </table>

@@ -19,10 +19,11 @@
                                                 <i class="notika-icon notika-support"></i>
                                             </div>
                                             <div class="nk-int-st">
-                                                <input type="hidden" value="{{$row->establishment_id}}" class="form-control" name="establishment_id" required>
-                                                <input type="hidden" class="form-control" name="employee_id" placeholder="ID" required>
-                                                <input type="hidden" class="form-control" name="establishment_employee_id" placeholder="Establishment Employee ID">
                                                 <div id="the-basics">
+                                                    <input type="hidden" class="form-control" name="contractor_employee_id" value="" placeholder="ID" required>
+                                                    <input type="hidden" class="form-control" name="project_id" value="{{$row->project_id}}" placeholder="ID" required>
+                                                    <input type="hidden" class="form-control" name="contractor_id" value="{{$row->contractor_id}}" placeholder="ID" required>
+                                                    <input type="hidden" class="form-control" name="employee_id" placeholder="ID" required>
                                                     <input class="typeahead form-control" type="text" name="employee" placeholder="Search Employee" required style="width: 100%;">
                                                 </div>
                                                 <div class="display_name"></div>

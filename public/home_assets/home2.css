@@ -74,7 +74,6 @@ body{
     left: 0;
     right: 0;
     z-index: -99999;   
-    background-color: blue;
 }
 .bg-img img {
     width: 100%;
@@ -209,10 +208,10 @@ body{
 	padding: 20px;
 	color: #000;
 	 */
-     font-family: "Inter", sans-serif;
+     /* font-family: "Inter", sans-serif;
     position: absolute; 
     bottom: 0; 
     left: 0; 
     z-index: -9990;
     
-} */
+}  */

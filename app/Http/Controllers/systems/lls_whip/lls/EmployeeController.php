@@ -37,17 +37,20 @@ class EmployeeController extends Controller
         $this->employee_table       = 'employees';
         $this->est_employee_table   = 'establishment_employee';
     }
-    public function index(){
+    public function index(Request $request){
         $data['title'] = 'Employees Records';
-        return view('system.lls_whip.user.lls.employees_records.lists.lists')->with($data);
+        $segments = $request->segments();
+        if($segments[1] == 'lls') {
+            return view('system.lls_whip.user.lls.employees_records.lists.lists')->with($data);
+        }else if($segments[1] == 'whip') {
+            return view('system.lls_whip.user.whip.employees_records.lists.lists')->with($data);
+        }
     }
     public function view_employee($id){
         $row                = $this->customRepository->q_get_where($this->conn,array('employee_id' => $id),$this->employee_table)->first();
         $data['title']      = $this->uSerService->user_full_name($row);
         $data['full_address'] = $this->uSerService->full_address($row);
         $data['row']        = $row;
-
-   
         return view('system.lls_whip.user.lls.employees_records.view.view')->with($data);
     }
 
@@ -106,7 +109,7 @@ class EmployeeController extends Controller
                $where = array('employee_id' => $row);
                $this->customRepository->delete_item($this->conn,$this->employee_table,$where);
             }
-
+            $this->customRepository->delete_item($this->conn,$this->est_employee_table,$where);
             $data = array('message' => 'Deleted Succesfully', 'response' => true);
         } else {
             $data = array('message' => 'Error', 'response' => false);

@@ -26,10 +26,11 @@ class ProjectStoreRequest extends FormRequest
                 'contractor_id'         => 'nullable',
                 'project_title'         => 'required|string|min:3',
                 'project_cost'          => ['required','numeric', 'min:1','max:1000000000000.99', 'regex:/^\d+(\.\d{1,2})?$/'],
-                'street'                => 'required|string|min:3',
-                'barangay'              => 'required|string|min:3',
-                'city'                  => 'required|string|min:3',
-                'province'              => 'required|string|min:3',
+                'street'                => 'nullable',
+                'barangay'              => 'required|string|min:1',
+                'city'                  => 'required|string|min:1',
+                'province'              => 'required|string|min:1',
+                'project_status'        => 'nullable'
         ];
     }
 }

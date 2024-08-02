@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\systems\lls_whip\lls;
+namespace App\Http\Controllers\systems\lls_whip\whip;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\CustomRepository;
 use Illuminate\Http\Request;
+use App\Repositories\CustomRepository;
 use Carbon\Carbon;
-
 class PositionsController extends Controller
 {
+
     protected $customRepository;
     protected $conn;
     protected $position_table;
@@ -22,29 +22,17 @@ class PositionsController extends Controller
         $this->position_table       = 'positions';
         $this->establishment_employee_table = 'establishment_employee';
     }
-    public function index(){
-        $data['title'] = 'Establishments Position';
-        return view('system.lls_whip.user.lls.positions.lists.lists')->with($data);
-    }
 
-    public function get_all_positions(){
-        $es = $this->customRepository->q_get_where_order($this->conn,$this->position_table,array('type' => 'lls'),$this->order_by_key,$this->order_by_asc)->get();
-        $items = [];
-        foreach ($es as $row) {
-           $items[] = array(
-                    'position_id'     => $row->position_id,
-                    'position'        => $row->position,
-                    'created'         => date('M d Y - h:i a', strtotime($row->created_on)),
-           );
-        }
-        return response()->json($items);
+    public function index(){
+        $data['title'] = 'WHIP Positions';
+        return view('system.lls_whip.user.whip.positions.lists')->with($data);
     }
 
     public function insert_update_position(Request $request){
 
         $items = array(
             'position'      => $request->input('position'),
-            'type'          => 'lls'
+            'type'          => 'whip'
         );
         if(empty($request->input('position_id'))){
             $items["created_on"] = Carbon::now()->format('Y-m-d H:i:s');
@@ -85,30 +73,17 @@ class PositionsController extends Controller
   
     }
 
-    public function delete_position(Request $request)
-    {
 
-        $id = $request->input('id')['id'];
-        $message = '';
-        if (is_array($id)) {
-            foreach ($id as $row) {
-                $count = $this->customRepository->q_get_where($this->conn,array('position_id' => $row),$this->establishment_employee_table)->count();
-                if($count > 0){
-                    $message = 'Some data cannot be deleted because it is used in another operations/';
-                }else {
-                    $where = array('position_id' => $row);
-                    $this->customRepository->delete_item($this->conn,$this->position_table,$where);
-                    $message = 'Deleted Successfully/';
-                }
-            }
-
-            $data = array('message' => $message, 'response' => true);
-        } else {
-            $data = array('message' => 'Error', 'response' => false);
+    public function get_all_positions(){
+        $es = $this->customRepository->q_get_where_order($this->conn,$this->position_table,array('type' => 'whip'),$this->order_by_key,$this->order_by_asc)->get();
+        $items = [];
+        foreach ($es as $row) {
+           $items[] = array(
+                    'position_id'     => $row->position_id,
+                    'position'        => $row->position,
+                    'created'         => date('M d Y - h:i a', strtotime($row->created_on)),
+           );
         }
-
-
-
-        return response()->json($data);
+        return response()->json($items);
     }
 }

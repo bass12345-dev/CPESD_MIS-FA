@@ -5,8 +5,8 @@
 @endsection
 @section('js')
 <script>
-   $(document).ready(function() {
-		 $('#data-table-basic').DataTable({
+    $(document).ready(function() {
+       table =  $('#data-table-basic').DataTable({
             responsive: true,
             ordering: false,
             processing: true,
@@ -16,47 +16,27 @@
                 "processing": '<div class="d-flex justify-content-center "><img class="top-logo mt-4" src="{{asset("assets/img/dts/peso_logo.png")}}"></div>'
             },
             "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            buttons: [
-            {
-               extend: 'copy',
-               text: 'Copy',
-               className: 'btn btn-warning rounded-pill ',
-               footer: true,
-               exportOptions: {
-                  columns: 'th:not(:last-child)',
-                 
-               }
-            }, 
-            {
-               extend: 'print',
-               text: 'Print',
-               className: 'btn btn-info rounded-pill  ms-2',
-               footer: true,
-               exportOptions: {
-                  columns: 'th:not(:last-child)'
-               }
-            }, {
-               extend: 'csv',
-               text: 'CSV',
-               className: 'btn btn-success rounded-pill ms-2',
-               footer: true,
-               exportOptions: {
-                  columns: 'th:not(:last-child)',
-               }
-            }, ],
+            buttons: datatables_buttons(),
             ajax: {
-        url: base_url + "/admin/act/whip/g-a-p",
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                url: base_url + "/admin/act/whip/g-a-p",
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                dataSrc: ""
             },
-            dataSrc: ""
-        },
-        columns: [  {
+            columns: [{
+                    data: 'project_id'
+                },
+                {
                     data: 'project_title'
-                }, {
+                },
+                {
+                    data: 'contractor'
+                },
+                {
                     data: 'project_cost'
-                }, 
+                },
                 {
                     data: 'project_location'
                 },
@@ -64,21 +44,56 @@
                     data: null
                 }
             ],
-            columnDefs: [
-                {  targets: -1,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function (data, type, row) {
-                    return '<div class="progress">\
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 40%">\
-                            <span class="sr-only">100% Complete (success)</span>\
-                        </div>\
-                        </div>';
+            'select': {
+                'style': 'multi',
+            },
+            columnDefs: [{
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                },
+                {
+                    targets: 1,
+                    data: null,
+                    render: function(data, type, row) {
+                        return '<a href="' + base_url + '/admin/whip/project-information/' + row.project_id + '" data-toggle="tooltip" data-placement="top" title="View ' + row.project_title + '">' + row.project_title + '</a>';
+                    }
+                },
+                {
+                    targets: -1,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return row.project_status == 'completed' ? 
+                        '<span class="badge notika-bg-success">Completed</span>' :
+                        '<span class="badge notika-bg-danger">Ongoing</span>';
+                    }
                 }
-            }]
+            ]
 
-         });
-	});
+        });
+    });
+
+
+    $('button#multi-delete').on('click', function() {
+        var button_text = 'Delete selected items';
+        var text = '';
+        var url = '/admin/act/whip/d-p';
+        let items = get_select_items_datatable();
+        var data = {
+            id: items,
+        };
+
+        if (items.length == 0) {
+            toast_message_error('Please Select at Least One')
+        } else {
+            delete_item(data, url, button_text, text, table);
+
+
+        }
+
+    });
 </script>
 @endsection

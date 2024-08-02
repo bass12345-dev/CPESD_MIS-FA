@@ -25,6 +25,8 @@ function _insertAjax(url, form, table) {
             form.find('button').text('Submit');
         },
         error: function(err) {
+            form.find('button').prop('disabled', false);
+            form.find('button').text('Submit');
             if (err.status == 422) { // when status code is 422, it's a validation issue
                 form.find('button').prop('disabled', false);
                 form.find('button').text('Submit');

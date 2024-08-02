@@ -32,11 +32,14 @@
                                 </li>
                                 <li><a href="{{url('admin/whip/contractors-list')}}">Contractors List</a>
                                 </li>
-                                
+                                <li><a href="{{url('admin/whip/whip-positions')}}">Manage Positions</a>
+                                </li>
                             </ul>
                         </div>
                         <div id="all_projects" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
+                                <li><a href="{{url('admin/whip/add-new-project')}}">Add New</a>
+                                </li>
                                 <li><a href="{{url('admin/whip/projects-list')}}">Projects List</a>
                                 </li>
                             </ul>

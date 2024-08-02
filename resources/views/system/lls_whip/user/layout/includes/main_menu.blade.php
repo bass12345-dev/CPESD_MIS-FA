@@ -14,6 +14,9 @@
                         <li><a data-toggle="tab" href="#employees"><i
                                     class="fas fa-users"></i>Employees Record</a>
                         </li>
+                        <li><a data-toggle="tab" href="#employment_status"><i
+                                    class="fas fa-users"></i>Employment Status</a>
+                        </li>
                         <li><a data-toggle="tab" href="#reports"><i
                                     class="fas fa-file"></i>Reports</a>
                         </li>
@@ -36,8 +39,7 @@
                                 
                                 <li><a href="{{url('admin/lls/establishments-positions')}}">Manage Positions</a>
                                 </li>
-                                <li><a href="{{url('admin/lls/employment-status-list')}}">Manage Employment Status</a>
-                                </li>
+                                
                             </ul>
                         </div>
                         <div id="employees" class="tab-pane in  notika-tab-menu-bg animated flipInX">
@@ -45,6 +47,11 @@
                                 <li><a href="{{url('admin/lls/employees-record')}}">Manage Employees Record</a>
                                 </li>
                             
+                            </ul>
+                        </div>
+                        <div id="employment_status" class="tab-pane in  notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown active">
+                                <li><a href="{{url('admin/lls/employment-status-list')}}">Manage Employment Status</a></li>
                             </ul>
                         </div>
                         <div id="reports" class="tab-pane in  notika-tab-menu-bg animated flipInX">

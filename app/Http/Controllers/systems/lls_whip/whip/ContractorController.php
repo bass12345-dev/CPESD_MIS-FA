@@ -5,7 +5,9 @@ namespace App\Http\Controllers\systems\lls_whip\whip;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\whip\ContractorStoreRequest;
 use App\Repositories\CustomRepository;
+use App\Repositories\whip\ContractorQuery;
 use App\Services\whip\ContractorsService;
+use Illuminate\Http\Request;
 
 class ContractorController extends Controller
 {   
@@ -15,11 +17,13 @@ class ContractorController extends Controller
     protected $contractors_table;
     protected $order_by_asc = 'asc';
     protected $order_by_key = 'contractor_id';
-    public function __construct(CustomRepository $customRepository, ContractorsService $contractorService){
+    protected $Contractorquery;
+    public function __construct(CustomRepository $customRepository, ContractorsService $contractorService, ContractorQuery $contractorQuery){
         $this->conn                 = config('app._database.lls_whip');
         $this->customRepository     = $customRepository;
         $this->contractorService    = $contractorService;
         $this->contractors_table    = 'contractors';
+        $this->Contractorquery      = $contractorQuery;
     }
     public function add_new_contractor(){
         $data['title'] = 'Add New Contractor';
@@ -80,5 +84,40 @@ class ContractorController extends Controller
 
         return response()->json($items);
     }
+
+
+    public function delete_contractors(Request $request){
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('contractor_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->contractors_table,$where);
+            }
+
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+
+
+
+        return response()->json($data);
+    }
    
+
+
+    public function search_query(){
+        $q = trim($_GET['key']);
+        $emp = $this->Contractorquery->q_search($this->conn,$q);
+        $data = [];
+        foreach ($emp as $row) {
+            $data[] = array(
+                'contractor_id'      => $row->contractor_id,
+                'contractor_name'    => $row->contractor_name,
+                
+            );
+        }
+        return response()->json($data);
+    }
 }

@@ -19,17 +19,18 @@ class ProjectsService
     
 
     //REGISTER PROJECT
-    public function registerProj(array $userData)
+    public function registerProj(array $item)
     {
 
         $items = array(
-            'contractor_id'         => $userData['contractor_id'],
-            'project_title'         => $userData['project_title'],
-            'project_cost'          => $userData['project_cost'],
-            'street'                => $userData['street'],
-            'barangay'              => $userData['barangay'],
-            'city'                  => $userData['city'],
-            'province'              => $userData['province'],
+            'contractor_id'         => $item['contractor_id'],
+            'project_title'         => $item['project_title'],
+            'project_cost'          => $item['project_cost'],
+            'street'                => $item['street'],
+            'barangay'              => $item['barangay'],
+            'city'                  => $item['city'],
+            'province'              => $item['province'],
+            'project_status'        => 'ongoing',
             'created_on'            => Carbon::now()->format('Y-m-d H:i:s'),
             
         );

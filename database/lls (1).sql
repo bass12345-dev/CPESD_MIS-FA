@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2024 at 10:53 AM
+-- Generation Time: Aug 02, 2024 at 10:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,6 +69,34 @@ INSERT INTO `contractors` (`contractor_id`, `contractor_name`, `proprietor`, `st
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contractor_employee`
+--
+
+CREATE TABLE `contractor_employee` (
+  `contractor_employee_id` int(11) NOT NULL,
+  `contractor_id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `nature_of_employment` varchar(255) NOT NULL,
+  `status_of_employment_id` int(11) NOT NULL,
+  `level_of_employment` set('rank_and_file','managerial','proprietor') NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `created_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contractor_employee`
+--
+
+INSERT INTO `contractor_employee` (`contractor_employee_id`, `contractor_id`, `project_id`, `employee_id`, `position_id`, `nature_of_employment`, `status_of_employment_id`, `level_of_employment`, `start_date`, `end_date`, `created_on`) VALUES
+(1, 23, 19, 40, 18, 'permanent', 5, 'rank_and_file', '2024-08-01', NULL, '2024-08-02 06:44:00'),
+(2, 23, 19, 42, 17, 'permanent', 5, 'rank_and_file', '2024-11-01', NULL, '2024-08-02 07:36:08');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `employees`
 --
 
@@ -92,25 +120,16 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`employee_id`, `first_name`, `middle_name`, `last_name`, `extension`, `province`, `city`, `barangay`, `street`, `gender`, `contact_number`, `created_on`) VALUES
-(21, 'asdasdsa', NULL, 'sadsa', NULL, '0307700000-Aurora', '0307701000-Baler', '0307701009-Pingit', NULL, 'male', NULL, '2024-07-29 13:55:57'),
-(22, 'Basdasd', 'asdsa', 'sadsa', NULL, '0402100000-Cavite', '0402112000-Magallanes', '0402112009-Barangay 4', NULL, 'male', NULL, '2024-07-29 13:56:13'),
-(23, 'Casdsad', 'sadsa', 'asdasd', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209009-Clarin Settlement', NULL, 'female', 'asdsa', '2024-07-29 13:56:32'),
-(24, 'Dasdsad', NULL, 'asdas', NULL, '0307100000-Zambales', '0307103000-Candelaria', NULL, NULL, 'female', NULL, '2024-07-29 13:56:56'),
-(25, 'Easdasdas', NULL, 'dasdsa', NULL, '0908300000-Zamboanga Sibugay', '0908313000-Siay', NULL, NULL, 'female', '123213', '2024-07-29 13:57:14'),
-(26, 'Fasdsad', NULL, 'asdsad', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', NULL, NULL, 'male', NULL, '2024-07-29 13:57:27'),
-(27, 'Gasdasd', NULL, 'asdsad', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', NULL, NULL, 'male', NULL, '2024-07-29 13:57:46'),
-(28, 'Hasdsad', NULL, 'sadasd', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', NULL, NULL, 'female', NULL, '2024-07-29 13:58:19'),
-(29, 'Ifdsfds', NULL, 'fdsfds', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', NULL, NULL, 'female', NULL, '2024-07-29 13:58:45'),
-(30, 'Jasfdsf', NULL, 'sdfdsf', NULL, '0300800000-Bataan', '0300802000-Bagac', NULL, NULL, 'female', NULL, '2024-07-29 13:59:04'),
-(31, 'Kasdsad', 'asdasd', 'asdsad', 'asdasd', '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', NULL, NULL, 'male', NULL, '2024-07-29 13:59:20'),
-(32, 'Basil John', 'sad', 'sdsad', NULL, '0103300000-La Union', '0103314000-City of San Fernando', '0103314003-Bacsil', NULL, 'male', '09126548518', '2024-07-30 02:47:12'),
-(33, 'Batr', 'asdsa', 'asdsa', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209002-Binuangan', NULL, 'male', NULL, '2024-07-30 03:25:39'),
-(34, 'Vatsdf', 'dsf', 'dsfds', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209003-Bolibol', NULL, 'male', NULL, '2024-07-30 03:26:30'),
-(35, 'Natsf', 'dfdsf', 'dsfdsf', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209003-Bolibol', NULL, 'female', NULL, '2024-07-30 03:27:32'),
-(36, 'Putsdfd', NULL, 'sdsfsdf', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209003-Bolibol', NULL, 'female', NULL, '2024-07-30 03:28:41'),
-(37, 'asdsad', 'sadsa', 'sadsad', NULL, '0103300000-La Union', '0103301000-Agoo', '0103301002-Balawarte', NULL, 'male', NULL, '2024-07-30 06:09:01'),
-(38, 'mlasd', 'sadsad', 'sadsad', NULL, '0103300000-La Union', '0103314000-City of San Fernando', '0103314002-Apaleng', NULL, 'male', NULL, '2024-07-30 06:09:31'),
-(39, 'yuuyytuy', 'sadsad', 'asdsad', NULL, '0103300000-La Union', '0103314000-City of San Fernando', '0103314003-Bacsil', NULL, 'female', NULL, '2024-07-30 06:22:10');
+(40, 'Asdffgghhh', NULL, 'Asdffgghhh', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209001-Apil', NULL, 'male', NULL, '2024-08-02 00:42:25'),
+(42, 'Casdasdsad', NULL, 'Casdasdsad', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209016-Lamac Upper', NULL, 'female', NULL, '2024-08-02 00:42:55'),
+(43, 'Dasdasdsad', NULL, 'sadsadsad', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209016-Lamac Upper', NULL, 'male', NULL, '2024-08-02 00:43:19'),
+(44, 'Edsfasfdsfsdfds', NULL, 'Edsfasfdsfsdfds', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209015-Lamac Lower', NULL, 'male', NULL, '2024-08-02 00:43:37'),
+(45, 'Fasdasdasdsa', NULL, 'Fasdasdasdsa', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209039-Talairon', NULL, 'male', NULL, '2024-08-02 00:44:04'),
+(46, 'Gasdasdsad', NULL, 'Gasdasdsad', NULL, '1004200000-Misamis Occidental', '1004209000-City of Oroquieta', '1004209008-Canubay', NULL, 'female', NULL, '2024-08-02 00:44:29'),
+(47, 'Haqsdasdas', NULL, 'Haqsdasdas', NULL, '0103300000-La Union', '0103303000-Bacnotan', NULL, NULL, 'male', NULL, '2024-08-02 00:52:53'),
+(48, 'Iadsadsadsa', 'asdsad', 'sadasd', NULL, '0102900000-Ilocos Sur', '0102906000-City of Candon', '0102906003-Amguid', NULL, 'female', NULL, '2024-08-02 01:04:35'),
+(49, 'aasdasdasdas', NULL, 'dasdasdasd', NULL, '0102800000-Ilocos Norte', '0102805000-City of Batac', '0102805003-Baligat', NULL, 'male', NULL, '2024-08-02 06:45:55'),
+(50, 'asdsad', 'sadsa', 'dsad', 'as', '0103300000-La Union', '0103301000-Agoo', '0103301007-Macalva Sur', NULL, 'male', NULL, '2024-08-02 07:35:55');
 
 -- --------------------------------------------------------
 
@@ -203,23 +222,12 @@ CREATE TABLE `establishment_employee` (
 --
 
 INSERT INTO `establishment_employee` (`estab_emp_id`, `establishment_id`, `employee_id`, `position_id`, `nature_of_employment`, `status_of_employment_id`, `level_of_employment`, `start_date`, `end_date`, `created_on`) VALUES
-(71, 53, 31, 6, 'probationary', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 02:28:12'),
-(72, 53, 32, 6, 'permanent', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 02:47:32'),
-(73, 53, 28, 8, 'contractuals', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 02:54:34'),
-(74, 55, 32, 6, 'project_based', 5, 'rank_and_file', '2024-09-01', NULL, '2024-07-30 03:19:17'),
-(75, 53, 23, 6, 'probationary', 5, 'rank_and_file', '2024-08-01', NULL, '2024-07-30 03:22:40'),
-(76, 53, 24, 6, 'probationary', 5, 'rank_and_file', '2024-06-01', NULL, '2024-07-30 03:22:55'),
-(77, 53, 25, 6, 'permanent', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 03:23:03'),
-(78, 53, 26, 8, 'probationary', 5, 'rank_and_file', '2024-08-01', NULL, '2024-07-30 03:23:18'),
-(79, 53, 27, 8, 'probationary', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 03:23:37'),
-(80, 53, 29, 6, 'probationary', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 03:23:59'),
-(81, 53, 30, 6, 'probationary', 5, 'rank_and_file', '2024-02-01', NULL, '2024-07-30 03:24:15'),
-(82, 53, 33, 6, 'permanent', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 03:25:50'),
-(83, 53, 34, 6, 'probationary', 5, 'rank_and_file', '2024-11-01', NULL, '2024-07-30 03:26:54'),
-(84, 53, 35, 6, 'permanent', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 03:27:46'),
-(85, 53, 36, 6, 'permanent', 5, 'rank_and_file', '2024-08-01', NULL, '2024-07-30 03:28:55'),
-(86, 53, 38, 6, 'permanent', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 06:09:55'),
-(88, 55, 36, 6, 'probationary', 5, 'rank_and_file', '2024-07-01', NULL, '2024-07-30 07:33:11');
+(89, 53, 46, 6, 'permanent', 5, 'rank_and_file', '2024-08-01', NULL, '2024-08-02 00:45:06'),
+(90, 53, 45, 6, 'probationary', 5, 'rank_and_file', '2024-08-01', NULL, '2024-08-02 00:45:32'),
+(92, 53, 42, 6, 'permanent', 5, 'rank_and_file', '2024-09-01', NULL, '2024-08-02 00:46:11'),
+(93, 53, 47, 6, 'permanent', 5, 'rank_and_file', '2024-08-01', NULL, '2024-08-02 00:54:37'),
+(94, 55, 47, 6, 'permanent', 5, 'rank_and_file', '2024-08-01', NULL, '2024-08-02 01:08:02'),
+(95, 53, 44, 18, 'probationary', 5, 'rank_and_file', '2024-08-01', NULL, '2024-08-02 06:01:57');
 
 -- --------------------------------------------------------
 
@@ -298,6 +306,7 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `positions` (
   `position_id` int(11) NOT NULL,
   `position` varchar(250) NOT NULL,
+  `type` set('lls','whip') NOT NULL,
   `created_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -305,10 +314,12 @@ CREATE TABLE `positions` (
 -- Dumping data for table `positions`
 --
 
-INSERT INTO `positions` (`position_id`, `position`, `created_on`) VALUES
-(6, 'Cashiers', '2024-07-26 06:29:19'),
-(7, 'Store manager', '2024-07-26 06:29:30'),
-(8, 'Sales Associate', '2024-07-26 06:29:48');
+INSERT INTO `positions` (`position_id`, `position`, `type`, `created_on`) VALUES
+(6, 'Cashiers', 'lls', '2024-07-26 06:29:19'),
+(7, 'Store manager', 'lls', '2024-07-26 06:29:30'),
+(8, 'Sales Associate', 'lls', '2024-07-26 06:29:48'),
+(17, 'Mason', 'whip', '2024-08-02 05:38:10'),
+(18, 'Laborer', 'whip', '2024-08-02 05:38:13');
 
 -- --------------------------------------------------------
 
@@ -325,6 +336,7 @@ CREATE TABLE `projects` (
   `barangay` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `province` varchar(255) NOT NULL,
+  `project_status` set('ongoing','completed') NOT NULL,
   `created_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -332,14 +344,13 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`project_id`, `contractor_id`, `project_title`, `project_cost`, `street`, `barangay`, `city`, `province`, `created_on`) VALUES
-(8, 6, 'fdsf', 123123, 'sdsfdsf 123213', '0105512016-San Felipe Central', '0105512000-Binalonan', '0105500000-Pangasinan', '2024-07-21 17:04:26'),
-(9, 6, 'sample', 123, 'fdsfd sdfsdf', '0102913005-Casilagan', '0102913000-Nagbukel', '0102900000-Ilocos Sur', '2024-07-21 17:04:48'),
-(10, 6, 'sadasd', 213213, 'dasdsad', '0401010017-Poblacion', '0401010000-Ibaan', '0401000000-Batangas', '2024-07-21 17:10:19'),
-(11, 6, 'sadsad', 213213, 'asdsa asdsa', '0103310014-Magallanes', '0103310000-Luna', '0103300000-La Union', '2024-07-21 17:14:36'),
-(12, 6, 'asdas', 123213, 'sadsad asdsad', '0304914012-Villarosa', '0304914000-Licab', '0304900000-Nueva Ecija', '2024-07-22 10:01:06'),
-(13, 10, 'asdsa', 12333, 'sadsadsa', '0105503016-Macatiw', '0105503000-City of Alaminos', '0105500000-Pangasinan', '2024-07-30 08:50:42'),
-(14, 10, 'sadasdas', 1500000000, 'asdasdasd', '0102906002-Allangigan Segundo', '0102906000-City of Candon', '0102900000-Ilocos Sur', '2024-07-30 08:52:53');
+INSERT INTO `projects` (`project_id`, `contractor_id`, `project_title`, `project_cost`, `street`, `barangay`, `city`, `province`, `project_status`, `created_on`) VALUES
+(8, 6, 'fdsf', 123123, 'sdsfdsf 123213', '0105512016-San Felipe Central', '0105512000-Binalonan', '0105500000-Pangasinan', 'ongoing', '2024-07-21 17:04:26'),
+(9, 6, 'sample', 123, 'fdsfd sdfsdf', '0102913005-Casilagan', '0102913000-Nagbukel', '0102900000-Ilocos Sur', 'ongoing', '2024-07-21 17:04:48'),
+(10, 6, 'sadasd', 213213, 'dasdsad', '0401010017-Poblacion', '0401010000-Ibaan', '0401000000-Batangas', 'ongoing', '2024-07-21 17:10:19'),
+(11, 6, 'sadsad', 213213, 'asdsa asdsa', '0103310014-Magallanes', '0103310000-Luna', '0103300000-La Union', 'ongoing', '2024-07-21 17:14:36'),
+(12, 6, 'asdas', 123213, 'sadsad asdsad', '0304914012-Villarosa', '0304914000-Licab', '0304900000-Nueva Ecija', 'ongoing', '2024-07-22 10:01:06'),
+(19, 23, 'asdsadasasdsad', 213213, NULL, '0102903016-Ora', '0102903000-Bantay', '0102900000-Ilocos Sur', 'ongoing', '2024-08-02 05:27:12');
 
 -- --------------------------------------------------------
 
@@ -384,6 +395,12 @@ INSERT INTO `survey` (`survey_id`, `establishment_id`, `year`, `inside_permanent
 --
 ALTER TABLE `contractors`
   ADD PRIMARY KEY (`contractor_id`);
+
+--
+-- Indexes for table `contractor_employee`
+--
+ALTER TABLE `contractor_employee`
+  ADD PRIMARY KEY (`contractor_employee_id`);
 
 --
 -- Indexes for table `employees`
@@ -435,13 +452,19 @@ ALTER TABLE `survey`
 -- AUTO_INCREMENT for table `contractors`
 --
 ALTER TABLE `contractors`
-  MODIFY `contractor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `contractor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `contractor_employee`
+--
+ALTER TABLE `contractor_employee`
+  MODIFY `contractor_employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `employment_status`
@@ -459,19 +482,19 @@ ALTER TABLE `establishments`
 -- AUTO_INCREMENT for table `establishment_employee`
 --
 ALTER TABLE `establishment_employee`
-  MODIFY `estab_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `estab_emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `positions`
 --
 ALTER TABLE `positions`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `survey`

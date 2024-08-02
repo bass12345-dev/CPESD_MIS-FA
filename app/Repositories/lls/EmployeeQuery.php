@@ -17,7 +17,7 @@ class EmployeeQuery
                     'employees.extension as extension',
         )
         ->where(DB::raw("concat(employees.first_name,' ', employees.last_name)"), 'LIKE', "%" . $search . "%")
-        ->orderBy('employees.first_name', 'desc')->get();
+        ->orderBy('employees.first_name', 'asc')->get();
         return $rows;
     }
 

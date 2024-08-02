@@ -74,9 +74,14 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
 
       //Projects
       Route::get("/whip/projects-list",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'index']);
-
+      Route::get("/whip/add-new-project",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'add_new_project_view']);
+      //Project Information
+      Route::get("/whip/project-information/{id}",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'project_information_view']);
       //EMPLOYEES
       Route::get("/whip/employees-record",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'index']);
+
+      // POSITION
+      Route::get("/whip/whip-positions",[App\Http\Controllers\systems\lls_whip\whip\PositionsController::class, 'index']);
 
       
 
@@ -111,23 +116,36 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::post("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  
       Route::get("/lls/search-query",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'search_query']);  
    //SURVEY
-   Route::post("/lls/g-e-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
+      Route::post("/lls/g-e-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
       // Route::post("/lls/get-survey",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
 
    //COMPLIANT REPORTS
-   Route::post("/lls/generate-compliant-report",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'generate_compliant_report']);
+      Route::post("/lls/generate-compliant-report",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'generate_compliant_report']);
    //Dashboard
-   Route::get("/lls/c-b-g-i",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_inside']);
-   Route::get("/lls/c-b-g-o",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_outside']);
+      Route::get("/lls/c-b-g-i",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_inside']);
+      Route::get("/lls/c-b-g-o",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_outside']);
 
    //ACTIONS WHIP
    //Contractor
       Route::post("/whip/insert-contr",[App\Http\Controllers\systems\lls_whip\whip\ContractorController::class, 'insert_contr']);
       Route::get("/whip/g-a-c",[App\Http\Controllers\systems\lls_whip\whip\ContractorController::class, 'get_all_contractors']);
+      Route::post("/whip/d-c",[App\Http\Controllers\systems\lls_whip\whip\ContractorController::class, 'delete_contractors']);
+      Route::get("/whip/search-query",[App\Http\Controllers\systems\lls_whip\whip\ContractorController::class, 'search_query']);  
    //Projects
       Route::post("/whip/insert-proj",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'insert_project']);
       Route::get("/whip/g-a-p",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'get_all_projects']);
       Route::get("/whip/g-c-p/{id}",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'get_contractor_projects']);
+      Route::post("/whip/d-p",[App\Http\Controllers\systems\lls_whip\whip\ProjectsController::class, 'delete_projects']);
+
+   //Employee Project
+      Route::post("/whip/g-p-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'get_project_employee']);
+
+
+   //WHIP POSITIONS
+      Route::post("/whip/i-u-p",[App\Http\Controllers\systems\lls_whip\whip\PositionsController::class, 'insert_update_position']);
+   //EMPLOYEES 
+      Route::post("/whip/i-u-e-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'insert_or_update_establishment_employee']);  
+  
 });
 
       /// DOCUMENT TRACKING SYSTEM
