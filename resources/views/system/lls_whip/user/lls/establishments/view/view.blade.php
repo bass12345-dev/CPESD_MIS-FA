@@ -21,6 +21,9 @@
 @endsection
 @section('js')
 @include('system.lls_whip.includes._js.location_js')
+@include('system.lls_whip.includes._js.typeahead_search_employee')
+@include('system.lls_whip.includes._js.add_employee_ajax')
+@include('system.lls_whip.includes._js.employment_is_required')
 <script>
 var information_table = $('#table-information');
 var year_now;
@@ -117,11 +120,7 @@ $('button#multi-delete').on('click', function() {
 });
 
 
-$(document).on('click', 'button.add-employee', function() {
-    $('h2.title').text('Add Employee');
-    $('form#add_update_form')[0].reset();
-    $('input[name=employee]').val($(this).data('employee-name')).attr('disabled',false);
-});
+
 
 
 $('#add_update_form').on('submit', function(e) {
@@ -148,15 +147,7 @@ $('#add_update_form').on('submit', function(e) {
         
 });
 
-$(document).on('change' , 'select[name=employment_status]', function(){
-    var status = $('select[name=employment_status] :selected').val();
-    if(status == 5){
-        $('input[name=end]').prop('required' , false);
-        $('input[name=end]').val('');
-    }else {
-        $('input[name=end]').prop('required' , true);
-    }
-});
+
 
 function load_survey_data($this) {
     survey($this.value);
@@ -343,6 +334,7 @@ $(document).ready(function() {
     });
 });
 
+//UpdateoNClick
 $(document).on('click', 'button.update-establishment-employee', function() {
     $('form#add_update_form').find('input[name=establishment_employee_id]').val($(this).data('id'));
     var status = $(this).data('status');
@@ -352,7 +344,6 @@ $(document).on('click', 'button.update-establishment-employee', function() {
     $('select[name=employment_nature]').val($(this).data('nature'));
     $('select[name=position]').val($(this).data('position'));
     $('select[name=employment_status]').val(status);
-    $('select[name=year_employed]').val($(this).data('year'));
     $('select[name=employment_level]').val($(this).data('level'));
     $('input[name=start]').val(moment($(this).data('start')).format('YYYY-MM'));
     var end = $(this).data('end') === '-' ? '' : $(this).data('end');
@@ -362,74 +353,7 @@ $(document).on('click', 'button.update-establishment-employee', function() {
     }else {
         $('input[name=end]').prop('required' , false);
     }
-
-
 });
 
-
-
-$('#the-basics .typeahead').typeahead({
-    hint: true,
-    highlight: true,
-    minLength: 1
-}, {
-    name: 'states',
-    source: function(query, process, processAsync) {
-
-        return $.ajax({
-            url: base_url + '/admin/act/lls/search-query?key=' + $('input[name="employee"]').val(),
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-
-                /**
-                 * Capitalize eveery first letter 
-                 *
-                 * @param {Object}  data from back end
-                 *
-                 * @returns {Object}
-                 */
-                processAsync($.map(data, function(row) {
-                    var full_name = row.first_name + ' ' + row.middle_name + ' ' +
-                        row.last_name + ' ' + row.extension;
-                    full_name = capitalizeFirstLetter(full_name);
-
-
-                    return [{
-                        'employee_id': row.employee_id,
-                        'full_name': full_name
-                    }];
-                }));
-            },
-            error: function(jqXHR, except) {}
-        });
-
-    },
-    name: 'employee',
-    displayKey: 'full_name',
-    templates: {
-        header: '<div class="header-typeahead">Employees</div>',
-        empty: [
-            '<div class="tt-suggestion tt-selectable">No Record <i class="fa-regular fa-face-sad-tear"></i> <a href="javascript:;" data-toggle="modal" data-target="#add_employee_modal1">Add New Record</a></div>'
-        ].join('\n'),
-        suggestion: function(data) {
-            return '<li>' + data.full_name + '</li>'
-        }
-    },
-}).bind('typeahead:selected', function(obj, data, name) {
-    $('input[name="employee_id"]').val(data.employee_id);
-    $('input[name="employee"]').val(data.full_name);
-});
-
-
-
-$('#add_employee_form').on('submit', function(e) {
-    e.preventDefault();
-    $(this).find('button').prop('disabled', true);
-    $(this).find('button').html('<span class="loader"></span>')
-    var url = '/admin/act/lls/i-e';
-    let form = $(this);
-    _insertAjax(url, form, table);
-});
 </script>
 @endsection

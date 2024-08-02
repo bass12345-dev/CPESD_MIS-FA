@@ -74,6 +74,26 @@ class ContractorsService
     }
 
 
+    public function update_establishment_employee(array $where,array $items){
+        $update = $this->customRepository->update_item($this->conn,$this->contractor_employee_table,$where,$items);
+
+        if ($update) {
+                // Registration successful
+                $data = [
+                    'message' => 'Employee Updated Successfully', 
+                    'response' => true
+                ];
+            }else {
+                $data = [
+                    'message' => 'Something Wrong/No Changes Applied', 
+                    'response' => false
+                ];
+                
+            }
+       return $data;
+    }
+
+
     public function full_address($row)
     {
 

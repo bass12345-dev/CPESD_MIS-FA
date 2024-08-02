@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\CustomRepository;
 use App\Repositories\whip\EmployeeQuery;
 use App\Services\lls\EstablishmentService;
-use App\Services\user\USerService;
+use App\Services\user\UserService;
 use App\Services\whip\ContractorsService;
 use Carbon\Carbon;
 
@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     protected $order_by_key = 'estab_emp_id';
 
 
-    public function __construct(CustomRepository $customRepository, EmployeeQuery $employeeQuery, USerService $uSerService, EstablishmentService $establishmentService, ContractorsService $contractorsService)
+    public function __construct(CustomRepository $customRepository, EmployeeQuery $employeeQuery, UserService $uSerService, EstablishmentService $establishmentService, ContractorsService $contractorsService)
     {
         $this->customRepository     = $customRepository;
         $this->employeeQuery        = $employeeQuery;
@@ -39,7 +39,7 @@ class EmployeeController extends Controller
         $this->contractor_employee_table   = 'contractor_employee';
     }
 
-    public function insert_or_update_establishment_employee(Request $request)
+    public function insert_or_update_project_employee(Request $request)
     {
 
         $items  = array(
@@ -61,8 +61,8 @@ class EmployeeController extends Controller
             if (empty($request->input('contractor_employee_id'))) {
                 $resp = $this->contractorsService->insert_contractor_employee($items);
             } else {
-                // $where = array('contractor_employee_id' => $request->input('contractor_employee_id'));
-                // $resp = $this->contractorsService->update_establishment_employee($where, $items);
+                $where = array('contractor_employee_id' => $request->input('contractor_employee_id'));
+                $resp = $this->contractorsService->update_establishment_employee($where, $items);
             }
         } else {
             $resp = [

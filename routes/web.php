@@ -145,7 +145,7 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
    //WHIP POSITIONS
       Route::post("/whip/i-u-p",[App\Http\Controllers\systems\lls_whip\whip\PositionsController::class, 'insert_update_position']);
    //EMPLOYEES 
-      Route::post("/whip/i-u-e-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'insert_or_update_establishment_employee']);  
+      Route::post("/whip/i-u-p-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'insert_or_update_project_employee']);  
   
 });
 

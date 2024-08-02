@@ -51,7 +51,7 @@ class ProjectsController extends Controller
         $data['year_now']                = Carbon::now()->format('Y');
         $data['barangay']                = config('app.barangay');
         $data['level_of_employment']     = config('app.level_of_employment');
-        $data['nature_of_employment']    = config('app.lls_nature_of_employment');
+        $data['nature_of_employment']    = config('app.whip_nature_of_employment');
         $data['positions']               =  $this->customRepository->q_get_where_order($this->conn,$this->position_table,array('type' => 'whip'),'position','asc')->get();
         $data['employment_status']       = $this->customRepository->q_get_order($this->conn,$this->status_table,'status','asc')->get();
         return view('system.lls_whip.user.whip.projects.view.view')->with($data);

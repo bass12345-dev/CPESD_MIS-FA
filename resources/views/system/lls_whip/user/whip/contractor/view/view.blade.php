@@ -7,10 +7,7 @@
             @include('system.lls_whip.user.whip.contractor.view.sections.information')
             @include('system.lls_whip.user.whip.contractor.view.projects_section.tables.projects_table')
         </div>
-        <div class="row">
-            @include('system.lls_whip.user.whip.contractor.view.employee_section.tables.employee_table')
-            
-        </div>
+        
     </div>
 </div>
 @include('system.lls_whip.user.whip.contractor.view.projects_section.modals.add_project_modal')

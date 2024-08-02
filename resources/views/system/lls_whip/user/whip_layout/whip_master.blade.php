@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	@include('system.global_includes.meta')
-	@include('system.lls_Whip.includes.css')
+	@include('system.lls_whip.includes.css')
 </head>
 <body>
 	@include('system.lls_whip.user.whip_layout.includes.header_top_area')

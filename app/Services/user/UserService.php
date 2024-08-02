@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\IpUtils;
 use Illuminate\Support\Facades\Http;
 
-class USerService
+class UserService
 {
     
     protected $conn;
