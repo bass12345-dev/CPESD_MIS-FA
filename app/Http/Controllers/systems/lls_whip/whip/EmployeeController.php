@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     protected $establishmentService;
     protected $contractorsService;
     protected $conn;
-    protected $est_employee_table;
+    protected $contractor_employee_table;
 
     protected $employee_table;
     protected $order_by_asc = 'asc';
@@ -36,7 +36,7 @@ class EmployeeController extends Controller
         $this->contractorsService   = $contractorsService;
         $this->conn                 = config('app._database.lls_whip');
         $this->employee_table       = 'employees';
-        $this->est_employee_table   = 'establishment_employee';
+        $this->contractor_employee_table   = 'contractor_employee';
     }
 
     public function insert_or_update_establishment_employee(Request $request)
@@ -74,6 +74,23 @@ class EmployeeController extends Controller
 
 
         return response()->json($resp);
+    }
+
+
+    public function delete_project_employee(Request $request)
+    {
+
+        $id = $request->input('id')['id'];
+        if (is_array($id)) {
+            foreach ($id as $row) {
+               $where = array('contractor_employee_id' => $row);
+               $this->customRepository->delete_item($this->conn,$this->contractor_employee_table,$where);
+            }
+            $data = array('message' => 'Deleted Succesfully', 'response' => true);
+        } else {
+            $data = array('message' => 'Error', 'response' => false);
+        }
+        return response()->json($data);
     }
 
 

@@ -139,6 +139,7 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
 
    //Employee Project
       Route::post("/whip/g-p-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'get_project_employee']);
+      Route::post("/whip/d-p-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'delete_project_employee']);  
 
 
    //WHIP POSITIONS
