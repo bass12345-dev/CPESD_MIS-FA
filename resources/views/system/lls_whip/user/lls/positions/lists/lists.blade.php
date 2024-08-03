@@ -16,111 +16,23 @@
 </div>
 @endsection
 @section('js')
+@include('system.lls_whip.includes._js.position_js')
 <script>
-      $(document).ready(function() {
-	    table =  $('#data-table-basic').DataTable({
-            responsive: true,
-            ordering: false,
-            processing: true,
-            searchDelay: 500,
-            pageLength: 25,
-            language: {
-                "processing": '<div class="d-flex justify-content-center "><img class="top-logo mt-4" src="{{asset("assets/img/dts/peso_logo.png")}}"></div>'
-            },
-            "dom": "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'B><'col-sm-12 col-md-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            buttons: datatables_buttons(),
-            ajax: {
-            url: base_url + "/admin/act/lls/a-p",
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            dataSrc: ""
-        },
-        columns: [
-                {
-                    data: 'position_id'
-                },
-                {
-                    data: 'position'
-                },
-                {
-                    data: 'created'
-                },
-                {
-                    data: null
-                },
-            ],
-            'select': {
-                        'style': 'multi',
-                    },
-            columnDefs: [{
-                            'targets': 0,
-                            'checkboxes': {
-                                'selectRow': true
-                            }
-                },
-                
-                {
-                    targets: -1,
-                    data: null,
-                    orderable: false,
-                    className: 'text-center',
-                    render: function (data, type, row) {
-                        //return '<button class="btn btn-success">Update</button> <button class="btn btn-success">Delete</button>';
-                        return '<div class="actions">\
-                                <div ><button class="btn btn-success update_position" \
-                                data-id="'+data.position_id+'"\
-                                data-position="'+data.position+'"\
-                                ><i class="fas fa-pen"></i></button> </div>\
-                                </div>\
-                                ';
-                    }
-                }
-            ]
-
-         });
-	});
-
-    $(document).on('click', 'button.update_position', function(){
-        $('form#add_update_form').find('input[name=position]').val($(this).data('position'));
-        $('form#add_update_form').find('input[name=position_id]').val($(this).data('id'));
-    })
-
-
-    
-    $('button#multi-delete').on('click', function() {
-        var button_text = 'Delete selected items';
-        var text = '';
-        var url = '/admin/act/lls/d-p';
-        let items = get_select_items_datatable();
-        var data = {
-            id: items,
-        };
-
-        if (items.length == 0) {
-            toast_message_error('Please Select at Least One')
-        } else {
-            delete_item(data, url, button_text, text, table);
-        }
+    $(document).ready(function () {
+        var url = "/admin/act/lls/a-p";
+        table = position_table(url);
     });
 
-
-    
-     $('#add_update_form').on('submit', function(e){
+    $('#add_update_form').on('submit', function (e) {
         e.preventDefault();
-        $(this).find('button').prop('disabled',true);
+        $(this).find('button').prop('disabled', true);
         $(this).find('button').html('<span class="loader"></span>')
         var url = '/admin/act/lls/i-u-p';
         let form = $(this);
-        if(!$('form#add_update_form').find('input[name=position_id]').val()){
-            _insertAjax(url,form,table);
-        }else {
-            _updatetAjax(url,form,table);
-        }
+        add_update_ajax(url, form, table);
     });
 
-  
+
 
 
 </script>

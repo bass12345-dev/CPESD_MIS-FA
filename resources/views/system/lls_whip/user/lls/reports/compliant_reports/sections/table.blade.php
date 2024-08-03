@@ -25,6 +25,7 @@
                         <th>Compliance Status</th>
                         <th>Total Rank and File Inside</th>
                         <th>Total Rank and File Employee</th>
+                        <th>Survey</th>
                     </tr>
                 </thead>
             </table>

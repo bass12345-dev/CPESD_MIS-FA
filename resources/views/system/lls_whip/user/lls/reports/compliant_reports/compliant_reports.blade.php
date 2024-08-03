@@ -88,6 +88,9 @@ function generate_compliant_report(date){
             {
                 data: null
             },
+            {
+                data: null
+            },
            
 
         ],
@@ -123,7 +126,7 @@ function generate_compliant_report(date){
                 }
             },
             {
-                targets: -2,
+                targets: -3,
                 data: null,
                 orderable: false,
                 className: 'text-center',
@@ -134,7 +137,7 @@ function generate_compliant_report(date){
             },
 
             {
-                targets: -1,
+                targets: -2,
                 data: null,
                 orderable: false,
                 className: 'text-center',
@@ -143,6 +146,18 @@ function generate_compliant_report(date){
                    
                 }
             },
+            {
+                targets: -1,
+                data: null,
+                orderable: false,
+                className: 'text-center',
+                render: function(data, type, row) {
+                    return '<a href="javascript:;">View Survey</a>';
+                   
+                }
+            },
+
+            
 
           
 

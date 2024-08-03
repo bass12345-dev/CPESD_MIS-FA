@@ -64,7 +64,7 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
 
 
       Route::get("/sample",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'sample']);
-
+      Route::get("/sample2",[App\Http\Controllers\systems\lls_whip\lls\CompliantController::class, 's']);
    //WHIP
       Route::get("/whip/dashboard",[App\Http\Controllers\systems\lls_whip\whip\DashboardController::class, 'index']);
       //Contractor
@@ -115,6 +115,9 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::post("/lls/d-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'delete_establishment_employee']);  
       Route::post("/lls/g-a-e-e",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_employees']);  
       Route::get("/lls/search-query",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'search_query']);  
+
+      Route::get("/lls/g-g-e-i/{id}",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_gender_establishment_inside']);
+      Route::get("/lls/g-g-e-o/{id}",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_gender_establishment_outside']);    
    //SURVEY
       Route::post("/lls/g-e-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
       // Route::post("/lls/get-survey",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
@@ -144,6 +147,7 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
 
    //WHIP POSITIONS
       Route::post("/whip/i-u-p",[App\Http\Controllers\systems\lls_whip\whip\PositionsController::class, 'insert_update_position']);
+      Route::get("/whip/a-p",[App\Http\Controllers\systems\lls_whip\whip\PositionsController::class, 'get_all_positions']);
    //EMPLOYEES 
       Route::post("/whip/i-u-p-e",[App\Http\Controllers\systems\lls_whip\whip\EmployeeController::class, 'insert_or_update_project_employee']);  
   

@@ -26,6 +26,7 @@ class EmployeeController extends Controller
     protected $order_by_asc = 'asc';
     protected $order_by_desc = 'desc';
     protected $order_by_key = 'estab_emp_id';
+    protected $default_city;
     
 
     public function __construct(CustomRepository $customRepository, EmployeeQuery $employeeQuery, USerService $uSerService , EstablishmentService $establishmentService){
@@ -36,6 +37,7 @@ class EmployeeController extends Controller
         $this->conn                 = config('app._database.lls_whip');
         $this->employee_table       = 'employees';
         $this->est_employee_table   = 'establishment_employee';
+        $this->default_city         = '1004209000-City of Oroquieta';
     }
     public function index(Request $request){
         $data['title'] = 'Employees Records';
@@ -209,6 +211,40 @@ class EmployeeController extends Controller
     }
 
 
+    //GENDER
+
+    public function get_gender_establishment_inside($id) {  
+
+        $res = $this->employeeQuery->gender_inside($id,$this->default_city);
+        $gender = [];
+        $total = [];
+        foreach ($res as $row) {
+            $gender[] = $row->gender;
+            $total[] = $row->g;
+        }
+       $data['label'] = $gender;
+       $data['total']    = $total;
+       $data['color'] = ['rgb(41,134,204)','rgb(201,0,118)'];
+       return response()->json($data);
+       
+    }
+
+
+    public function get_gender_establishment_outside($id) {  
+
+        $res = $this->employeeQuery->gender_outside($id,$this->default_city);
+        $gender = [];
+        $total = [];
+        foreach ($res as $row) {
+            $gender[] = $row->gender;
+            $total[] = $row->g ;
+        }
+       $data['label'] = $gender;
+       $data['total']    = $total;
+       $data['color'] = ['rgb(41,134,204)','rgb(201,0,118)'];
+       return response()->json($data);
+       
+    }
 
 
 
