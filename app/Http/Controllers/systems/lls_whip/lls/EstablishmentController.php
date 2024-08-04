@@ -55,7 +55,7 @@ class EstablishmentController extends Controller
         $data['title']                  = $data['row']->establishment_name;
         $data['level_of_employment']    = config('app.level_of_employment');
         $data['nature_of_employment']   = config('app.lls_nature_of_employment');
-        $data['positions']              =  $this->customRepository->q_get_order($this->conn,$this->position_table,'position','asc')->get();
+        $data['positions']              =  $this->customRepository->q_get_where_order($this->conn,$this->position_table,array('type' => 'lls'),'position','asc')->get();
         $data['employment_status']      = $this->customRepository->q_get_order($this->conn,$this->employment_status_table,'status','asc')->get();
         return view('system.lls_whip.user.lls.establishments.view.view')->with($data);
     }

@@ -9,7 +9,9 @@
             @include('system.lls_whip.user.lls.establishments.view.sections.information')
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="row">@include('system.lls_whip.user.lls.establishments.view.sections.gender_charts')</div>
-                <!-- <div class="row">2</div> -->
+                <div class="row">
+                    @include('system.lls_whip.user.lls.establishments.view.sections.positions_charts')
+                </div>
             </div>
         </div>
         <hr>
@@ -116,7 +118,10 @@
             delete_item(data, url, button_text, text, table);
             year_now = $('select#select_year :selected').val();
             setTimeout(() => {
-                survey(year_now);
+              
+                // load_positions_chart();
+                // load_gender_outside_chart();
+                // load_gender_inside_chart();
             }, 1000);
         }
 
@@ -145,6 +150,9 @@
 
         setTimeout(() => {
             survey(year_now);
+            load_positions_chart();
+            load_gender_outside_chart();
+            load_gender_inside_chart();
         }, 1000);
 
 
@@ -428,6 +436,39 @@
             },
         });
     }
+
+    function load_positions_chart() {
+
+        var id = $('input[name=establishment_id]').val();
+
+        $.ajax({
+            url: base_url + "/admin/act/lls/g-e-p/" + id,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                try {
+                    new Chart(document.getElementById("positions-chart"), {
+                        type: 'bar',
+                        data: {
+                            labels: data.label,
+                            datasets: [{
+                                label: '',
+                                backgroundColor: '#222E3C',
+                                borderColor: 'rgb(23, 125, 255)',
+                                data: data.total
+                            },]
+                        },
+
+                    });
+                } catch (error) { }
+            },
+            error: function (xhr, status, error) {
+
+                toast_message_error('Gender Pie Chart is not displaying... Please Reload the Page')
+            },
+        });
+    }
+    load_positions_chart();
     load_gender_outside_chart();
     load_gender_inside_chart();
 </script>

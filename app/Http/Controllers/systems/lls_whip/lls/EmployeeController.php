@@ -247,6 +247,23 @@ class EmployeeController extends Controller
     }
 
 
+    public function get_establishment_positions($id) {  
+
+        $res = $this->employeeQuery->establishment_positions($id);
+        $gender = [];
+        $total = [];
+        foreach ($res as $row) {
+            $gender[] = $row->position;
+            $total[] = $row->c ;
+        }
+       $data['label'] = $gender;
+       $data['total']    = $total;
+       $data['color'] = ['rgb(41,134,204)','rgb(201,0,118)'];
+       return response()->json($data);
+       
+    }
+
+
 
 
     public function search_query(){

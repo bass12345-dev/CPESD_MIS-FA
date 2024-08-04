@@ -283,6 +283,22 @@ class EmployeeQuery
     return $rows;
   }
 
+  public function establishment_positions($id){
+    
+    $rows = DB::connection(config('app._database.lls_whip'))->table('establishment_employee as establishment_employee')
+      ->leftJoin('positions', 'positions.position_id', '=', 'establishment_employee.position_id')
+      ->select(
+        //Employee
+        'positions.position as position',
+        DB::raw('COUNT(establishment_employee.position_id) as c'),
+      )
+      ->where('establishment_employee.establishment_id', $id)
+      ->groupBy('establishment_employee.position_id')
+      ->get();
+    return $rows;
+    
+  }
+
 
 
 
