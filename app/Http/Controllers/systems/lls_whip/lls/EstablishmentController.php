@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EstablishmentStoreRequest;
 use App\Http\Requests\lls\SurveyStoreRequest;
 use App\Repositories\CustomRepository;
+use App\Repositories\lls\EmployeeQuery;
 use App\Services\lls\EstablishmentService;
 use App\Services\lls\UserService;
 use Illuminate\Http\Request;
@@ -15,11 +16,10 @@ use Illuminate\Support\Facades\DB;
 class EstablishmentController extends Controller
 {
     protected $conn;
-    
     protected $users;
-    
     protected $dts;
     protected $customRepository;
+    protected $employeeQuery;
     protected $establishmentService;
     protected $establishments_table;
     protected $survey_table;
@@ -27,11 +27,12 @@ class EstablishmentController extends Controller
     protected $employment_status_table;
     protected $order_by_asc = 'asc';
     protected $order_by_key = 'establishment_code';
-    public function __construct(CustomRepository $customRepository, EstablishmentService $establishmentService){
+    public function __construct(CustomRepository $customRepository, EstablishmentService $establishmentService,  EmployeeQuery $employeeQuery){
         $this->conn                 = config('app._database.lls_whip');
         $this->users                = env('DB_DATABASE', '');
         $this->dts                  = config('app._database.dts');
         $this->customRepository     = $customRepository;
+        $this->employeeQuery        = $employeeQuery;
         $this->establishmentService = $establishmentService;
         $this->establishments_table = 'establishments';
         $this->survey_table         = 'survey';
@@ -174,7 +175,14 @@ class EstablishmentController extends Controller
     }
 
 
-    
+    function generate_survey(Request $request){
+        $id         = $request->input('id');
+        $date       = $request->input('date').'-01';
+        $data['inside'] = $this->employeeQuery->get_survey_inside($this->conn,$id,$date,config('app.default_city'));
+        $data['outside'] = $this->employeeQuery->get_survey_outside($this->conn,$id,$date,config('app.default_city'));
+        return $data;
+    }
+
     public function sample(){
         // $rows =  DB::select("select cpesd_mis_users_db.users.first_name,dts.documents.document_name
         //     from cpesd_mis_users_db.users INNER JOIN dts.documents 

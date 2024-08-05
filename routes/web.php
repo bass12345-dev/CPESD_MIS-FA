@@ -82,8 +82,8 @@ Route::middleware([SessionGuard::class, AdminCheck::class])->prefix('/admin')->g
 
       // POSITION
       Route::get("/whip/whip-positions",[App\Http\Controllers\systems\lls_whip\whip\PositionsController::class, 'index']);
-
-      
+      //REPORTS
+      Route::get("/whip/compliant-reports",[App\Http\Controllers\systems\lls_whip\whip\CompliantController::class, 'index']);
 
 
 });
@@ -120,8 +120,8 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
       Route::get("/lls/g-g-e-o/{id}",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_gender_establishment_outside']); 
       Route::get("/lls/g-e-p/{id}",[App\Http\Controllers\systems\lls_whip\lls\EmployeeController::class, 'get_establishment_positions']);   
    //SURVEY
-      Route::post("/lls/g-e-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
-      // Route::post("/lls/get-survey",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'get_survey_by_year']);
+      Route::post("/lls/g-e-s",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'generate_survey']);
+     
 
    //COMPLIANT REPORTS
       Route::post("/lls/generate-compliant-report",[App\Http\Controllers\systems\lls_whip\lls\EstablishmentController::class, 'generate_compliant_report']);

@@ -95,6 +95,27 @@
 		background-color: red;
 	}
 
+	.notika-bg-orange {
+		background-color: #FF8343;
+	}
+
+	.notika-bg-nude {
+		background-color: #F1DEC6;
+	}
+
+	.notika-bg-bluesh {
+		background-color: #179BAE;
+	}
+
+	.notika-bg-bluesh1 {
+		background-color: #3FA2F6;
+	}
+
+	.notika-bg-sage {
+		background-color: #ACE1AF;
+	}
+
+
 	.header_title_container {
 		margin-bottom: 40px; 
 		text-align:center; 

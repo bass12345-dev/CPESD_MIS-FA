@@ -14,6 +14,8 @@
                         </li>
                         <li><a data-toggle="tab" href="#employees"><i class="notika-icon notika-mail"></i>Employees Record</a>
                         </li>
+                        <li><a data-toggle="tab" href="#compliant"><i class="notika-icon notika-mail"></i>Compliant</a>
+                        </li>
         
                     </ul>
                     <div class="tab-content custom-menu-content">
@@ -47,6 +49,12 @@
                         <div id="employees" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li><a href="{{url('admin/whip/employees-record')}}">Manage Employees Record</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="compliant" class="tab-pane notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                <li><a href="{{url('admin/whip/compliant-reports')}}">Compliant Report</a>
                                 </li>
                             </ul>
                         </div>

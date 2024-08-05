@@ -32,15 +32,10 @@
 <script>
     var information_table = $('#table-information');
     var year_now;
-    var survey_table = $('table.survey-information');
-    $(document).ready(function () {
-        $('button.edit-information').prop('disabled', false);
-        $('button.edit-survey').prop('disabled', false);
-        year_now = $('select#select_year :selected').val();
-        survey(year_now);
 
-    });
-    $(document).on('click', 'button.edit-information', function () {
+
+
+    $(document).on('click', 'button.edit-information', function() {
 
         information_table.find('input[type=hidden]').prop("type", "text");
         information_table.find('select').attr('hidden', false)
@@ -50,7 +45,7 @@
         $(this).addClass('hidden');
     });
 
-    $(document).on('click', 'button.cancel-edit', function () {
+    $(document).on('click', 'button.cancel-edit', function() {
         information_table.find('input[type=text]').prop("type", "hidden");
         information_table.find('span.title').attr('hidden', false);
         information_table.find('select').attr('hidden', true)
@@ -59,7 +54,7 @@
         $('button.edit-information').removeClass('hidden');
     });
 
-    $(document).on('click', 'button.submit', function () {
+    $(document).on('click', 'button.submit', function() {
         let form = {
             establishment_id: $('input[name=establishment_id]').val(),
             establishment_code: $('input[name=establishment_code]').val(),
@@ -81,11 +76,11 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            beforeSend: function () {
+            beforeSend: function() {
                 $('button.submit').prop('disabled', true);
                 $('button.submit').html('<span class="loader"></span>')
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.response) {
                     toast_message_success(data.message);
                     setTimeout(() => {
@@ -93,7 +88,7 @@
                     }, 1500);
                 }
             },
-            error: function (err) {
+            error: function(err) {
                 alert('Something Wrong')
             }
 
@@ -103,7 +98,7 @@
 
 
 
-    $('button#multi-delete').on('click', function () {
+    $('button#multi-delete').on('click', function() {
         var button_text = 'Delete selected items';
         var text = '';
         var url = '/admin/act/lls/d-e-e';
@@ -118,7 +113,7 @@
             delete_item(data, url, button_text, text, table);
             year_now = $('select#select_year :selected').val();
             setTimeout(() => {
-              
+
                 // load_positions_chart();
                 // load_gender_outside_chart();
                 // load_gender_inside_chart();
@@ -131,7 +126,7 @@
 
 
 
-    $('#add_update_form').on('submit', function (e) {
+    $('#add_update_form').on('submit', function(e) {
         e.preventDefault();
 
         $(this).find('button[type="submit"]').prop('disabled', true);
@@ -149,7 +144,7 @@
         }
 
         setTimeout(() => {
-            survey(year_now);
+
             load_positions_chart();
             load_gender_outside_chart();
             load_gender_inside_chart();
@@ -160,51 +155,7 @@
 
 
 
-    function load_survey_data($this) {
-        survey($this.value);
-    }
-
-
-
-
-    function survey(year) {
-
-        let items = {
-            year: year,
-            id: $('input[name=establishment_id]').val(),
-        }
-
-        $.ajax({
-            url: base_url + '/admin/act/lls/g-e-s',
-            method: 'POST',
-            data: items,
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
-            beforeSend: function () {
-                $('#select_year').after('<span class="text-warning loading_survey" >Getting Survey...</span>');
-            }
-        }).done(function (resp) {
-            $('span.loading_survey').remove();
-
-            var table = $('table.survey-information');
-            var result = Object.keys(resp).map((key) => [key, resp[key]]);
-            $.each(result, function (i, row) {
-                table.find('span.' + row[0]).text(row[1]);
-                if (row[0] == 'inside_total' || row[0] == 'outside_total') {
-                    table.find('strong.' + row[0]).text(row[1]);
-                }
-
-            });
-
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            alert('Something Wrong! Please Reload The Page')
-        });
-    }
-
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         table = $('#data-table-basic').DataTable({
             responsive: true,
             ordering: false,
@@ -227,107 +178,107 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 dataSrc: "",
-                error: function (xhr, textStatus, errorThrown) {
+                error: function(xhr, textStatus, errorThrown) {
                     toast_message_error('Employees List is not displaying... Please Reload the Page')
                 }
             },
             columns: [{
-                data: 'establishment_employee_id'
-            },
+                    data: 'establishment_employee_id'
+                },
 
-            {
-                data: null
-            },
-            {
-                data: null
-            },
-            {
-                data: 'full_address'
-            },
-            {
-                data: 'position'
-            },
-            {
-                data: null
-            },
-            {
-                data: 'status_of_employment'
-            },
-            {
-                data: 'start_date'
-            },
-            {
-                data: 'end_date'
-            },
-            {
-                data: null
-            },
-            {
-                data: null
-            },
+                {
+                    data: null
+                },
+                {
+                    data: null
+                },
+                {
+                    data: 'full_address'
+                },
+                {
+                    data: 'position'
+                },
+                {
+                    data: null
+                },
+                {
+                    data: 'status_of_employment'
+                },
+                {
+                    data: 'start_date'
+                },
+                {
+                    data: 'end_date'
+                },
+                {
+                    data: null
+                },
+                {
+                    data: null
+                },
             ],
             'select': {
                 'style': 'multi',
             },
             columnDefs: [{
-                'targets': 0,
-                'checkboxes': {
-                    'selectRow': true
-                }
-            },
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                },
 
-            {
-                targets: 1,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function (data, type, row) {
-                    return '<a href="' + base_url + '/admin/lls/employee/' + row.employee_id +
-                        '">' + row.full_name + '</a>';
+                {
+                    targets: 1,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return '<a href="' + base_url + '/admin/lls/employee/' + row.employee_id +
+                            '">' + row.full_name + '</a>';
 
-                }
-            },
-            {
-                targets: 2,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function (data, type, row) {
-                    return capitalizeFirstLetter(row.gender);
+                    }
+                },
+                {
+                    targets: 2,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return capitalizeFirstLetter(row.gender);
 
-                }
-            },
+                    }
+                },
 
-            {
-                targets: 5,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function (data, type, row) {
-                    return capitalizeFirstLetter(row.nature_of_employment);
+                {
+                    targets: 5,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        return capitalizeFirstLetter(row.nature_of_employment);
 
-                }
-            },
-            {
-                targets: -2,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function (data, type, row) {
-                    var result = row.level_of_employment.replaceAll('_', ' ');
-                    return capitalizeFirstLetter(result);
+                    }
+                },
+                {
+                    targets: -2,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        var result = row.level_of_employment.replaceAll('_', ' ');
+                        return capitalizeFirstLetter(result);
 
-                }
-            },
+                    }
+                },
 
-            {
-                targets: -1,
-                data: null,
-                orderable: false,
-                className: 'text-center',
-                render: function (data, type, row) {
-                    //return '<button class="btn btn-success">Update</button> <button class="btn btn-success">Delete</button>';
-                    return '<div class="actions">\
+                {
+                    targets: -1,
+                    data: null,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        //return '<button class="btn btn-success">Update</button> <button class="btn btn-success">Delete</button>';
+                        return '<div class="actions">\
                                 <div ><button class="btn btn-success update-establishment-employee" data-toggle="modal" data-target="#add_employee_modal" \
                                 data-id="' + row.establishment_employee_id + '"\
                                 data-employee-id="' + row.employee_id + '"\
@@ -341,15 +292,15 @@
                                 ><i class="fas fa-pen"></i></button> </div>\
                                 </div>\
                                 ';
+                    }
                 }
-            }
             ]
 
         });
     });
 
     //UpdateoNClick
-    $(document).on('click', 'button.update-establishment-employee', function () {
+    $(document).on('click', 'button.update-establishment-employee', function() {
         $('form#add_update_form').find('input[name=establishment_employee_id]').val($(this).data('id'));
         var status = $(this).data('status');
         $('input[name=employee_id]').val($(this).data('employee-id'))
@@ -378,7 +329,7 @@
             url: base_url + "/admin/act/lls/g-g-e-i/" + id,
             method: 'GET',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 try {
                     new Chart(document.getElementById("inside-gender-chart"), {
                         type: 'pie',
@@ -389,7 +340,7 @@
                                 backgroundColor: data.color,
                                 borderColor: 'rgb(23, 125, 255)',
                                 data: data.total
-                            },]
+                            }, ]
                         },
 
                     });
@@ -397,7 +348,7 @@
 
                 }
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
 
                 toast_message_error('Gender Pie Chart is not displaying... Please Reload the Page')
 
@@ -413,7 +364,7 @@
             url: base_url + "/admin/act/lls/g-g-e-o/" + id,
             method: 'GET',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 try {
                     new Chart(document.getElementById("outside-gender-chart"), {
                         type: 'pie',
@@ -424,13 +375,13 @@
                                 backgroundColor: data.color,
                                 borderColor: 'rgb(23, 125, 255)',
                                 data: data.total
-                            },]
+                            }, ]
                         },
 
                     });
-                } catch (error) { }
+                } catch (error) {}
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
 
                 toast_message_error('Gender Pie Chart is not displaying... Please Reload the Page')
             },
@@ -445,7 +396,7 @@
             url: base_url + "/admin/act/lls/g-e-p/" + id,
             method: 'GET',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 try {
                     new Chart(document.getElementById("positions-chart"), {
                         type: 'bar',
@@ -456,20 +407,23 @@
                                 backgroundColor: '#222E3C',
                                 borderColor: 'rgb(23, 125, 255)',
                                 data: data.total
-                            },]
+                            }, ]
                         },
 
                     });
-                } catch (error) { }
+                } catch (error) {}
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
 
-                toast_message_error('Gender Pie Chart is not displaying... Please Reload the Page')
+                toast_message_error('Position Bar Chart is not displaying... Please Reload the Page')
             },
         });
     }
     load_positions_chart();
     load_gender_outside_chart();
     load_gender_inside_chart();
+    $(document).ready(function() {
+        $('button.edit-information').prop('disabled', false);
+    });
 </script>
 @endsection

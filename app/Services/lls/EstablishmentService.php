@@ -237,16 +237,17 @@ class EstablishmentService
         $data = [];
         foreach ($establishments as $row) {
                 $data[] = array(
-                    'establishment_name' => $row->establishment_name,
-                    'establishment_id'  => $row->establishment_id,
-                    'is_compliant'      => $this->compliant_calc($row->establishment_id,$year)
+                    'establishment_name'    => $row->establishment_name,
+                    'establishment_id'      => $row->establishment_id,
+                    'is_compliant'          => $this->compliant_calc($row->establishment_id,$year),
+                    // 'survey'                => $this->survey_report($row->establishment_id,$year)
                 );
                 
         }
 
        return $data;
     }
-
+  
     function compliant_calc($id,$year){
         $count_inside = $this->employeeQuery->count_inside($this->conn,$id,$year,$this->default_city);
         $count_outside = $this->employeeQuery->count_outside($this->conn,$id,$year,$this->default_city);
