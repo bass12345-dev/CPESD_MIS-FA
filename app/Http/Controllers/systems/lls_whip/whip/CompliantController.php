@@ -9,7 +9,7 @@ class CompliantController extends Controller
 {
     public function index()
     {
-        $data['title'] = 'Compliant Reports';
+        $data['title'] = 'Compliant Report';
         return view('system.lls_whip.user.whip.reports.compliant_reports.compliant_reports')->with($data);
     }
 

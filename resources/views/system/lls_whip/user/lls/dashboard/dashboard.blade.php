@@ -64,6 +64,34 @@
       error: function (xhr, status, error) {},
    }); 
   }
+
+  function load_positions_chart(){
+    $.ajax({
+      url: base_url +  "/admin/act/lls/c-b-p",
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        try {
+            new Chart(document.getElementById("positions-chart"), {
+               type: 'bar',
+               data: {
+                  labels: data.label,
+                  datasets: [{
+                     label: '',
+                     backgroundColor: 'rgb(41,134,204)',
+                     borderColor: 'rgb(23, 125, 255)',
+                     data: data.total
+                  }, ]
+               },
+              
+            });
+         } catch (error) {}
+      },
+      error: function (xhr, status, error) {},
+   }); 
+  }
+
+  load_positions_chart();
   load_gender_outside_chart()
   load_gender_inside_chart();
 </script>

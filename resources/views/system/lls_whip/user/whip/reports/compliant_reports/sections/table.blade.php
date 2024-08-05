@@ -20,7 +20,8 @@
             <table id="data-table-basic" class="table table-striped" >
                 <thead>
                     <tr>
-                        <th>Establishment</th>
+                        <th>Contractor</th>
+                        <th>Project</th>
                         <th>Compliance Percentage</th>
                         <th>Compliance Status</th>
                         <th>Total Rank and File Inside</th>

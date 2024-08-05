@@ -203,6 +203,7 @@
                 table.find('strong.outside_total').html(outside);
                 }else {
                     table.find('span.title1').html('-');
+                    table.find('strong.title1').html('-');
                 }
             },
             error: function(xhr, status, error) {

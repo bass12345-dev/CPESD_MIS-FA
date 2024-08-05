@@ -128,6 +128,8 @@ Route::middleware([SessionGuard::class])->prefix('/admin/act')->group(function (
    //Dashboard
       Route::get("/lls/c-b-g-i",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_inside']);
       Route::get("/lls/c-b-g-o",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_gender_outside']);
+      Route::get("/lls/c-b-p",[App\Http\Controllers\systems\lls_whip\lls\DashboardController::class, 'count_all_employees_by_positions']);
+
 
    //ACTIONS WHIP
    //Contractor

@@ -137,28 +137,42 @@ class EmployeeQuery
 
   public function inside($conn, $default_city)
   {
-    $rows = DB::connection($conn)->table('employees as employees')
-          ->select(
-            'employees.city as city',
-          )
-          ->where('city', $default_city)
-          ->count();
+    $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
+      ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
+      ->select(
+        //Employee
+        'employees.city as city',
+        DB::raw('COUNT(establishment_employee.employee_id) as c'),
+      )
+      ->where('city', $default_city)
+      ->where('establishment_employee.status_of_employment_id', 5)
+      ->where('establishment_employee.level_of_employment', 'rank_and_file')
+      ->groupBy('establishment_employee.employee_id')
+      ->groupBy('city')
+      ->get();
     return $rows;
   }
 
   public function outside($conn, $default_city)
   {
-    $rows = DB::connection($conn)->table('employees as employees')
+    $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
+      ->leftJoin('employees', 'employees.employee_id', '=', 'establishment_employee.employee_id')
       ->select(
+        //Employee
         'employees.city as city',
+        DB::raw('COUNT(establishment_employee.employee_id) as c'),
       )
-      ->where('city', '!=', $default_city)
-      ->count();
+      ->where('city', '!=',$default_city)
+      ->where('establishment_employee.status_of_employment_id', 5)
+      ->where('establishment_employee.level_of_employment', 'rank_and_file')
+      ->groupBy('establishment_employee.employee_id')
+      ->groupBy('city')
+      ->get();
     return $rows;
   }
 
 
-  public function countByGenderEmployedInside($conn, $where, $default_city)
+  public function countByGenderEmployedInside($conn,$where ,$default_city)
   {
     $rows = DB::connection($conn)->table('employees as employees')
       ->leftJoin('establishment_employee', 'establishment_employee.employee_id', '=', 'employees.employee_id')
@@ -170,7 +184,6 @@ class EmployeeQuery
       ->where('city', $default_city)
       ->where('establishment_employee.status_of_employment_id', 5)
       ->where('establishment_employee.level_of_employment', 'rank_and_file')
-      // ->groupBy('employees.employee_id')
       ->count();
     return $rows;
   }
@@ -194,8 +207,23 @@ class EmployeeQuery
 
 
 
+  public function employeess_by_positions($conn)
+  {
 
-
+    $rows = DB::connection($conn)->table('establishment_employee as establishment_employee')
+      ->join('positions', 'positions.position_id', '=', 'establishment_employee.position_id')
+      ->select(
+        //Employee
+        'positions.position as position',
+        'positions.type as type',
+        DB::raw('COUNT(establishment_employee.position_id) as c'),
+      )
+      ->groupBy('establishment_employee.position_id')
+      ->groupBy('position')
+      ->groupBy('type')
+      ->get();
+    return $rows;
+  }
 
 
   //REPORTS
@@ -249,7 +277,7 @@ class EmployeeQuery
         'establishment_employee.nature_of_employment as nature_of_employment'
       )
       ->where('establishment_employee.establishment_id', $id)
-      ->where('city',$default_city)
+      ->where('city', $default_city)
       ->where('employment_status.employ_stat_id', 5)
       ->whereDate('establishment_employee.start_date', '<=', $date)
       ->where('establishment_employee.level_of_employment', 'rank_and_file')

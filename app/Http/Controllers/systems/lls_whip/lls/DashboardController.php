@@ -30,14 +30,19 @@ class DashboardController extends Controller
     public function index(){
         $data['title']              = 'LLS Dashboard';
         $data['positions']          = $this->customRepository->q_get($this->conn,$this->position_table)->count();
-        $data['establishments']          = $this->customRepository->q_get($this->conn,$this->establishment_table)->count();
+        $data['establishments']     = $this->customRepository->q_get($this->conn,$this->establishment_table)->count();
         $data['status']             = $this->customRepository->q_get($this->conn,$this->status_table)->count();
-        $data['inside']             = $this->employeeQuery->inside($this->conn,$this->default_city);
-        $data['outside']            = $this->employeeQuery->outside($this->conn,$this->default_city);
+        $data['inside']             = count($this->employeeQuery->inside($this->conn,$this->default_city));
+        $data['outside']            = count($this->employeeQuery->outside($this->conn,$this->default_city));
         return view('system.lls_whip.user.lls.dashboard.dashboard')->with($data);
+
+        $s = $this->employeeQuery->inside($this->conn,$this->default_city);
+
     }
 
     public function count_all_employees_by_gender_inside(){
+
+
         $total = array();
         $gender = ['male','female'];
         foreach($gender as $row) {
@@ -59,6 +64,22 @@ class DashboardController extends Controller
             array_push($total, $res);
         }
        $data['label'] = $gender;
+       $data['total']    = $total;
+       $data['color'] = ['rgb(41,134,204)','rgb(201,0,118)'];
+       return response()->json($data);
+    }
+
+
+    public function count_all_employees_by_positions(){
+
+        $res = $this->employeeQuery->employeess_by_positions($this->conn);
+        $positions = [];
+        $total = [];
+        foreach ($res as $row) {
+            $positions[] = $row->position;
+            $total[] = $row->c ;
+        }
+       $data['label'] = $positions;
        $data['total']    = $total;
        $data['color'] = ['rgb(41,134,204)','rgb(201,0,118)'];
        return response()->json($data);

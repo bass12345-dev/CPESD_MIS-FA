@@ -84,8 +84,8 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Total</strong></td>
-                                    <td><strong class="inside_total"></strong></td>
-                                    <td><strong class="outside_total"></strong></td>
+                                    <td><strong class="title1 inside_total">-</strong></td>
+                                    <td><strong class="title1 outside_total">-</strong></td>
                                 </tr>
                             </table>
                         </div>

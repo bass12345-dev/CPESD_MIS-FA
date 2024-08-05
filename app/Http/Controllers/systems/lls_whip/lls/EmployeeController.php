@@ -62,6 +62,7 @@ class EmployeeController extends Controller
         foreach ($es as $row) {
            $items[] = array(
                     'employee_id'           => $row->employee_id,
+                    'gender'                => $row->gender,
                     'full_name'             => $this->uSerService->user_full_name($row),
                     'full_address'          => $this->uSerService->full_address($row),
                     'contact_number'       => $row->contact_number,
